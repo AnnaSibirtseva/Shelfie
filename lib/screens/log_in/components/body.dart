@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../components/widgets/already_have_account.dart';
 import '../../../components/widgets/password_text_field.dart';
 import '../../../components/widgets/rounded_text_field.dart';
 import 'background.dart';
@@ -22,7 +23,9 @@ class Body extends StatelessWidget {
                         onChanged: (String value) {},
                         hintText: 'Почта',
                         icon: Icons.email_outlined),
-                    const PasswordTextField()
+                    const PasswordTextField(),
+                    SizedBox(height: size.height * 0.05),
+                    const AlreadyHaveAnAccountCheck(),
                   ],
                 ))));
   }
