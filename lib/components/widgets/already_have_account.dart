@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../screens/log_in/log_in_page.dart';
+import '../../screens/sign_up/sign_up_page.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
   final bool login;
@@ -23,9 +24,11 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
               color: Colors.black38),
         ),
         GestureDetector(
-          onTap: !login ? () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const LogInPage())) :
-              () => {},
+          onTap: !login
+              ? () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const LogInPage()))
+              : () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const SignUpPage())),
           child: Text(
             login ? "ЗАРЕГИСТРИРОВАТЬСЯ" : "ВОЙТИ",
             style: TextStyle(

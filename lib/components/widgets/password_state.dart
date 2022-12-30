@@ -19,6 +19,7 @@ class PasswordState extends State<PasswordTextField> {
           border: Border.all(color: Colors.indigo.shade600)),
       child: TextField(
         cursorColor: Colors.indigo.shade600,
+        style: const TextStyle(fontSize: 19),
         decoration: InputDecoration(
           hintText: 'Пароль',
           hintStyle: const TextStyle(color: Colors.black38, fontSize: 20),

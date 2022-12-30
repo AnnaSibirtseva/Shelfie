@@ -16,7 +16,7 @@ class RoundedTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+      margin: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
       padding: const EdgeInsets.symmetric(horizontal: 15),
       width: size.width * 0.75,
       decoration: BoxDecoration(
@@ -26,6 +26,7 @@ class RoundedTextField extends StatelessWidget {
       child: TextField(
         keyboardType: TextInputType.emailAddress,
         onChanged: onChanged,
+        style: const TextStyle(fontSize: 19),
         cursorColor: Colors.indigo.shade600,
         decoration: InputDecoration(
           icon: Icon(
