@@ -10,8 +10,8 @@ class PasswordState extends State<PasswordTextField> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      // padding: const EdgeInsets.symmetric(horizontal: 15),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      //padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.75,
       decoration: BoxDecoration(
           color: Colors.white,

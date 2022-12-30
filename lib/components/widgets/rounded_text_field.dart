@@ -17,7 +17,7 @@ class RoundedTextField extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       width: size.width * 0.75,
       decoration: BoxDecoration(
           color: Colors.white,
