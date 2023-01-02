@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../components/bottom_menu/bottom_bar_item.dart';
 
 import '../../components/bottom_menu/bottom_bar_bubble.dart';
+import '../collections/collection_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePage extends State<HomePage> {
   int _selectedTab = 0;
   static const List<Widget> _list = <Widget>[
-    Text('Подборки'),
+    CollectionsPage(),
     Text('Поиск'),
     Text('Профиль')
   ];

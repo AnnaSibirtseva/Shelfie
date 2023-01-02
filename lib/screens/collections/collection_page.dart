@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'components/body.dart';
+
+
 class CollectionsPage extends StatefulWidget {
   const CollectionsPage({Key? key}) : super(key: key);
 
@@ -10,6 +13,8 @@ class CollectionsPage extends StatefulWidget {
 class _CollectionsPage extends State<CollectionsPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+        body: Body());
   }
 }
