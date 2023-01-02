@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/widgets/password_text_field.dart';
+import '../constants.dart';
 
 class PasswordState extends State<PasswordTextField> {
   bool _showEye = false;
@@ -16,17 +17,17 @@ class PasswordState extends State<PasswordTextField> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.indigo.shade600)),
+          border: Border.all(color: primaryColor)),
       child: TextField(
-        cursorColor: Colors.indigo.shade600,
+        cursorColor: primaryColor,
         style: const TextStyle(fontSize: 19),
         decoration: InputDecoration(
           hintText: 'Пароль',
-          hintStyle: const TextStyle(color: Colors.black38, fontSize: 20),
+          hintStyle: const TextStyle(color: grayColor, fontSize: 20),
           border: InputBorder.none,
           icon: const Icon(
             Icons.lock_outline_rounded,
-            color: Colors.black38,
+            color: grayColor,
           ),
           suffixIcon: _showEye
               ? GestureDetector(
@@ -38,11 +39,11 @@ class PasswordState extends State<PasswordTextField> {
                     child: _passwordEncrypted
                         ? const Icon(
                             Icons.visibility_rounded,
-                            color: Colors.black38,
+                            color: grayColor,
                           )
                         : const Icon(
                             Icons.visibility_off_rounded,
-                            color: Colors.black38,
+                            color: grayColor,
                           ),
                   ),
                   onTap: () {

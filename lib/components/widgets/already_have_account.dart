@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../screens/log_in/log_in_page.dart';
 import '../../screens/sign_up/sign_up_page.dart';
+import '../constants.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
   final bool login;
@@ -21,7 +22,7 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
           style: const TextStyle(
               fontSize: 14.0,
               fontWeight: FontWeight.w600,
-              color: Colors.black38),
+              color: grayColor),
         ),
         GestureDetector(
           onTap: !login
@@ -33,7 +34,7 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
             login ? "ЗАРЕГИСТРИРОВАТЬСЯ" : "ВОЙТИ",
             style: TextStyle(
               decoration: TextDecoration.underline,
-              color: Colors.indigo.shade600,
+              color: primaryColor,
               fontWeight: FontWeight.bold,
             ),
           ),

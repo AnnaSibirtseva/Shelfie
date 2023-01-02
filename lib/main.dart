@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie/screens/log_in/log_in_page.dart';
 
+import 'components/constants.dart';
+
+
 void main() {
   runApp(const MyApp());
 }
@@ -16,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Shelfie',
       theme: ThemeData(
         fontFamily: 'VelaSans',
-        primaryColor: Colors.indigo.shade600,
+        primaryColor: primaryColor,
       ),
       home: const LogInPage(),
     );

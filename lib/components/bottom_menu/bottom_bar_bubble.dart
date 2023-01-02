@@ -11,7 +11,7 @@ class BottomBarBubble extends StatefulWidget {
     this.selectedIndex = 0,
     this.height = 71,
     this.bubbleSize = 10,
-    this.color = colorPrimary,
+    this.color = primaryColor,
     this.onSelect,
   }) : super(key: key);
 
@@ -89,7 +89,7 @@ class _BottomBarBubbleState extends State<BottomBarBubble>
     return Container(
       height: widget.height,
       decoration: const BoxDecoration(
-          color: colorSecondary,
+          color: secondaryColor,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25), topRight: Radius.circular(25))),
       child: Stack(

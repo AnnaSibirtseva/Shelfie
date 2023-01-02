@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants.dart';
 
 class RoundedTextField extends StatelessWidget {
   final String hintText;
@@ -22,18 +23,18 @@ class RoundedTextField extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.indigo.shade600)),
+          border: Border.all(color: primaryColor)),
       child: TextField(
         keyboardType: TextInputType.emailAddress,
         onChanged: onChanged,
         style: const TextStyle(fontSize: 19),
-        cursorColor: Colors.indigo.shade600,
+        cursorColor: primaryColor,
         decoration: InputDecoration(
           icon: Icon(
             icon,
-            color: Colors.black38,
+            color: grayColor,
           ),
-          hintStyle: const TextStyle(color: Colors.black38, fontSize: 20),
+          hintStyle: const TextStyle(color: grayColor, fontSize: 20),
           hintText: hintText,
           border: InputBorder.none,
         ),

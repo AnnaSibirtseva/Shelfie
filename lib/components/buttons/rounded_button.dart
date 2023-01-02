@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 class RoundedButton extends StatelessWidget {
   final String text;
   final VoidCallback press;
@@ -27,7 +29,7 @@ class RoundedButton extends StatelessWidget {
       ),
       style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
-          primary: Colors.indigo.shade600,
+          primary: primaryColor,
           // Moves text in the button.
           padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10)),
       onPressed: press,
