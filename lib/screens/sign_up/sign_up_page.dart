@@ -6,10 +6,10 @@ class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => _LogInPage();
+  State<SignUpPage> createState() => _SignUpPage();
 }
 
-class _LogInPage extends State<SignUpPage> {
+class _SignUpPage extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

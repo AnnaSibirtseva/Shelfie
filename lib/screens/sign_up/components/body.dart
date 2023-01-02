@@ -12,6 +12,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    // todo check constraints
     return Background(
         body: Center(
             child: SingleChildScrollView(
