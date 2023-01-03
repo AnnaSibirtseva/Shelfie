@@ -41,16 +41,10 @@ class Collection {
   }
 
   String getName() {
-    if (_name.length > 25) {
-      return _name.substring(0, 25) + '...';
-    }
     return _name;
   }
 
   String getDescription() {
-    if (_description.length > 80) {
-      return _description.substring(0, 80) + '...';
-    }
     return _description;
   }
 }
