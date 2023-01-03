@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../components/constants.dart';
+import '../../components/widgets/error.dart';
+import '../../components/widgets/loading.dart';
 import '../../models/collection.dart';
 import 'components/body.dart';
 
@@ -32,7 +34,6 @@ class _CollectionsPage extends State<CollectionsPage> {
                 jsonDecode(utf8.decode(response.bodyBytes)))
             .collections;
       } else {
-        // todo handle exception
         throw Exception();
       }
     } finally {
@@ -42,7 +43,6 @@ class _CollectionsPage extends State<CollectionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return FutureBuilder<List<Collection>>(
         future: _futureCollections,
         builder:
@@ -54,20 +54,10 @@ class _CollectionsPage extends State<CollectionsPage> {
                   collection: snapshot.data!,
                 ));
           } else if (snapshot.hasError) {
-            // todo create error screen
-            throw Exception();
+            return WebErrorWidget(errorMessage: snapshot.error.toString());
           } else {
             // By default, show a loading spinner.
-            return Scaffold(
-              backgroundColor: Colors.white,
-              body: Center(
-                child: Image.asset(
-                  "assets/images/shelves.gif",
-                  height: 125.0,
-                  width: 125.0,
-                ),
-              ),
-            );
+            return const LoadingWidget();
           }
         });
   }
