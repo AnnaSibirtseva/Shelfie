@@ -9,6 +9,7 @@ const secondaryColor = Color(0xFFE8EAF6);
 const menuIconsGrayColor = Color(0xFFADADAD);
 const grayColor = Colors.black38;
 const blackColor = Colors.black;
+const whiteColor = Colors.white;
 
 const defaultCollectionImg = 'https://im.wampi.ru/2023/01/02/image43d81c00455799a6.png';
 const defaultCollectionName = '-';
