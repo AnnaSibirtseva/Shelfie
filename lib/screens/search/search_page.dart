@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import '../../components/buttons/filter_button.dart';
 import '../../components/constants.dart';
+import 'components/list_book_card.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -38,6 +39,13 @@ class _SearchPage extends State<SearchPage> {
               ),
               searchField(size),
             ],
+          ),
+          Column(
+            children: [
+              SizedBox(height: 100),
+              ListBookCard(press: () {  },),
+              ListBookCard(press: () {  },)
+            ],
           )
         ],
       ),
@@ -54,7 +62,7 @@ class _SearchPage extends State<SearchPage> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: primaryColor)),
+          border: Border.all(color: primaryColor, width: 1.5)),
       child: TextField(
         keyboardType: TextInputType.emailAddress,
         controller: _searchController,

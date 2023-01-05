@@ -24,7 +24,7 @@ class FilterButton extends StatelessWidget {
         decoration: BoxDecoration(
             color: pressed ? primaryColor : whiteColor,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: primaryColor)),
+            border: Border.all(color: primaryColor, width: 1.5)),
         child: SizedBox(
           height: 20,
           width: 20,
