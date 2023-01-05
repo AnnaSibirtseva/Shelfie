@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../../components/constants.dart';
+import '../../../components/widgets/status.dart';
+import '../../../models/book_status.dart';
 
 class ListBookCard extends StatelessWidget {
   final VoidCallback press;
@@ -75,19 +77,7 @@ class ListBookCard extends StatelessWidget {
                             children: [
                               ratingWidget(),
                               const Spacer(),
-                              GestureDetector(
-                                  onTap: () {
-                                    print('ONE');
-                                  },
-                                  onDoubleTap: () {
-                                    print('TWO');
-                                  },
-                                  child: const Icon(
-                                    Icons.add_circle_outline_rounded,
-                                    color: primaryColor,
-                                    size: 40,
-                                  ),
-                              ),
+                              StatusWidget(bookState: BookStatus.InProgress),
                             ],
                           ),
                         ),
