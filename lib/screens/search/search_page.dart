@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../components/buttons/filter_button.dart';
+import '../../components/buttons/scan_button.dart';
 import '../../components/constants.dart';
 import 'components/list_book_card.dart';
 
@@ -30,7 +31,7 @@ class _SearchPage extends State<SearchPage> {
     Size size = MediaQuery.of(context).size;
     // keyboard ScrollViewDismissBehavior on drag
     return Scaffold(
-      body: Stack(
+      body: SingleChildScrollView(reverse: false, child: Stack(
         children: [
           Row(
             children: [
@@ -43,11 +44,13 @@ class _SearchPage extends State<SearchPage> {
           Column(
             children: [
               SizedBox(height: 100),
+              ScanButton(),
               ListBookCard(press: () {  },),
               ListBookCard(press: () {  },)
             ],
           )
         ],
+      ),
       ),
     );
   }
@@ -58,7 +61,7 @@ class _SearchPage extends State<SearchPage> {
       margin: const EdgeInsets.only(top: 30, bottom: 20, left: 10, right: 20),
       padding: const EdgeInsets.only(left: 20, right: 7, top: 5, bottom: 5),
       width: size.width * 0.71,
-      height: 60,
+      height:  size.width * 0.15,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),

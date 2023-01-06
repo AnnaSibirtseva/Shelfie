@@ -30,7 +30,7 @@ class StatusWidgetState extends State<StatusWidget> {
         },
         onDoubleTap: () {
           setState(() {
-            if (bookState == BookStatus.None) {
+            if (bookState != BookStatus.Finished) {
               bookState = BookStatus.Finished;
             }
           });
@@ -38,8 +38,7 @@ class StatusWidgetState extends State<StatusWidget> {
         child: SizedBox(
           height: 35,
           width: 35,
-          child: Image.asset(
-              getStateIcon(bookState)),
+          child: Image.asset(getStateIcon(bookState)),
         ));
   }
 

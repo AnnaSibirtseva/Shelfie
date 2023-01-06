@@ -19,8 +19,8 @@ class FilterButton extends StatelessWidget {
         margin: const EdgeInsets.only(left: 20, bottom: 20, top: 30),
         padding: const EdgeInsets.symmetric(horizontal: 12),
         //padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-        width: 60,
-        height: 60,
+        width: size.width * 0.15,
+        height: size.width * 0.15,
         decoration: BoxDecoration(
             color: pressed ? primaryColor : whiteColor,
             borderRadius: BorderRadius.circular(20),

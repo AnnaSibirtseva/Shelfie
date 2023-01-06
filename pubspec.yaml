@@ -38,6 +38,7 @@ dependencies:
   salomon_bottom_bar: ^3.1.0
   http: ^0.13.4
   mvc_pattern: ^7.0.0
+  flutter_barcode_scanner: ^2.0.0
 
 dev_dependencies:
   flutter_test:
