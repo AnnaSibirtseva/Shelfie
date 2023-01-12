@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'components/body.dart';
+import 'package:auto_route/auto_route.dart';
+import '../../components/routes/route.gr.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:shelfie/components/routes/route.gr.dart';
 
 import '../constants.dart';
 import 'button_state.dart';
@@ -33,9 +35,7 @@ class FilterButton extends StatelessWidget {
               : Image.asset('assets/icons/blue_filter.png'),
         ),
       ),
-      onTap: () {
-
-      },
+      onTap: () => context.router.push(FilterRoute()),
     );
   }
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shelfie/components/routes/route.gr.dart';
 
 import '../../../components/buttons/rounded_button.dart';
 import '../../../components/widgets/already_have_account.dart';
 import '../../../components/widgets/password_text_field.dart';
 import '../../../components/widgets/rounded_text_field.dart';
 import '../../home/home_page.dart';
+import 'package:auto_route/auto_route.dart';
 import 'background.dart';
 
 class Body extends StatelessWidget {
@@ -28,9 +30,7 @@ class Body extends StatelessWidget {
                     const PasswordTextField(),
                     RoundedButton(
                         text: 'Войти',
-                        press: () =>  Navigator.push( context,
-                            MaterialPageRoute(builder: (context) =>
-                                const HomePage()))),
+                        press: () => context.router.pushNamed('/home/')),
                     SizedBox(height: size.height * 0.05),
                     const AlreadyHaveAnAccountCheck(),
                   ],

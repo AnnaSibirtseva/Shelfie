@@ -6,6 +6,8 @@ import '../../components/buttons/filter_button.dart';
 import '../../components/buttons/scan_button.dart';
 import '../../components/constants.dart';
 import 'components/list_book_card.dart';
+import 'package:auto_route/auto_route.dart';
+import '../../components/routes/route.gr.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
