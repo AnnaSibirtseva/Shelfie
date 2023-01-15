@@ -35,7 +35,7 @@ class FilterButton extends StatelessWidget {
               : Image.asset('assets/icons/blue_filter.png'),
         ),
       ),
-      onTap: () => context.router.push(FilterRoute()),
+      onTap: () => pressed ? context.router.pop() : context.router.push(FilterRoute()),
     );
   }
 }

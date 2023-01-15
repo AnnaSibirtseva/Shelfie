@@ -24,7 +24,6 @@ class _SearchPage extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-
     _searchController.addListener(_searchBooks);
   }
 

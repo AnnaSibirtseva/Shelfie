@@ -57,7 +57,7 @@ class ScanButton extends StatelessWidget {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#3949AB', 'Cancel', true, ScanMode.BARCODE);
-
+      // todo Прверить что не -1
       showDialog(
         //if set to true allow to close popup by tapping out of the popup
           barrierDismissible: false,
