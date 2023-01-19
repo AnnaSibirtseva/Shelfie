@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shelfie/components/routes/route.gr.dart';
 import 'package:auto_route/auto_route.dart';
 
-import 'filter_text.dart';
-import 'filter_list.dart';
+import 'conponents/filter_text.dart';
+import 'conponents/filter_list.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
