@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:shelfie/components/constants.dart';
 import '../../components/buttons/filter_button.dart';
 import '../../components/routes/route.gr.dart';
+import 'body.dart';
 
 
 class FilterPage extends StatefulWidget {
@@ -30,8 +31,8 @@ class _FilterPage extends State<FilterPage> {
           ),
           Column(
             children: [
-              SizedBox(height: 100),
-
+              SizedBox(height: size.height * 0.1),
+              Body(),
             ],
           )
         ],
