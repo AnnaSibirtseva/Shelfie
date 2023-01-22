@@ -26,7 +26,6 @@ class _FilterList extends State<FilterList> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
-      //height: size.height * 0.8,
       width: size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +46,7 @@ class _FilterList extends State<FilterList> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Flexible(
                         child: Text(selectedItemsList[item].toString(),
                             maxLines: 1,
@@ -56,7 +55,7 @@ class _FilterList extends State<FilterList> {
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold)),
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       InkWell(
                           child: const Icon(
                             Icons.close,
@@ -90,9 +89,10 @@ class _FilterList extends State<FilterList> {
                             maxLines: 2,
                           ),
                           leading: Container(
-                            padding: EdgeInsets.all(5),
+                            margin: const EdgeInsets.only(left: 10),
+                            padding: const EdgeInsets.all(3),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(10),
                                 color: selectedItemsList.contains(data[index])
                                     ? primaryColor
                                     : secondaryColor),

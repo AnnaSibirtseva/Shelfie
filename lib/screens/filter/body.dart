@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 
 import 'conponents/filter_text.dart';
 import 'conponents/filter_list.dart';
+import 'conponents/slider.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class Body extends StatelessWidget {
           FilterList(),
           FilterText(text: 'Страна', icon: 'flag',),
           FilterText(text: 'Рейтинг', icon: 'star',),
+          SliderWidget(),
           FilterText(text: 'Другое', icon: 'info',),
         ],
       ),
