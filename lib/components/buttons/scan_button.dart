@@ -15,7 +15,7 @@ class ScanButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
-      width: size.width * 0.52,
+      width: size.width * 0.50,
       height: size.height * 0.04,
       // Indents top and bottom.
       //margin: const EdgeInsets.symmetric(vertical: 30),
@@ -28,12 +28,12 @@ class ScanButton extends StatelessWidget {
               child: Image.asset('assets/icons/code_scanner.png'),
             ),
             SizedBox(
-              width: size.width * 0.03,
+              width: size.width * 0.025,
             ),
             Text(
               'Сканировать ISBN',
               style: TextStyle(
-                  fontSize: size.width * 0.035, fontWeight: FontWeight.w600, color: Colors.white),
+                  fontSize: size.width * 0.032, fontWeight: FontWeight.w600, color: Colors.white),
             ),
           ],
         ),

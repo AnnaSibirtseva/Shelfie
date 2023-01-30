@@ -50,19 +50,19 @@ class Body extends StatelessWidget {
                       ),
                     )),
                 Positioned(
-                  top: 5,
+                  top: 0,
                   right: 0,
                   left: 0,
                   bottom: 0,
                   child: Row(
                   children: [
-                    SizedBox(width: size.width * 0.2,),
+                    SizedBox(width: size.height * 0.2,),
                     Flexible(
                       child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: size.height * 0.17,),
+                            SizedBox(height: size.height * 0.2,),
                             Text(
                               'Джейк Хэйлл',
                               maxLines: 1,
