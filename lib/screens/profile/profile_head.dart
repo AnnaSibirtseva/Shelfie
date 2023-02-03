@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
 
 class ProfileHead extends StatefulWidget {
+  //final User user;
+
   const ProfileHead({Key? key}) : super(key: key);
 
   @override
@@ -14,7 +16,7 @@ class _ProfileHead extends State<ProfileHead> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Flexible(
-        child: Container(
+        child: SizedBox(
       height: size.height * 0.3,
       child: Stack(
         children: <Widget>[

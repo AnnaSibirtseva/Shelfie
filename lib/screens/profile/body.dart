@@ -6,7 +6,6 @@ import 'package:shelfie/models/statistic.dart';
 import 'package:shelfie/screens/profile/profile_head.dart';
 import 'package:shelfie/screens/profile/statistic_row.dart';
 
-
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
 
@@ -22,19 +21,9 @@ class Body extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-            ProfileHead(),
-          StatisticRow(userStat: Statistic(42, 23, 12)),
-          
-          // Expanded(
-          //   child: ListView.builder(
-          //     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag
-          //     itemCount: collection.length,
-          //     itemBuilder: (context, index) => CollectionCard(
-          //       press: () => {},
-          //       collection: collection[index],
-          //     ),
-          //   ),
-          // ),
+          ProfileHead(),
+          StatisticRow(userStat: Statistic(4200, 23, 12)),
+
         ],
       ),
     );
