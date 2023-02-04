@@ -6,6 +6,8 @@ import 'package:shelfie/models/statistic.dart';
 import 'package:shelfie/screens/profile/profile_head.dart';
 import 'package:shelfie/screens/profile/statistic_row.dart';
 
+import 'menu.dart';
+
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
 
@@ -23,7 +25,16 @@ class Body extends StatelessWidget {
         children: [
           ProfileHead(),
           StatisticRow(userStat: Statistic(4200, 23, 12)),
-
+          Padding(
+            padding: const EdgeInsets.only(top: 15, left: 10),
+            child: Text('Общее'.toUpperCase(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+          ),
+          const Menu(titles: ['Книги', 'Рецензии', 'Цитаты', 'Сборники', 'Достижения', 'Статистика']),
+          Padding(
+            padding: const EdgeInsets.only(top: 15, left: 10),
+            child: Text('дополнительно'.toUpperCase(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+          ),
+          const Menu(titles: ['Настройки', 'О приложении', 'Выйти']),
         ],
       ),
     );

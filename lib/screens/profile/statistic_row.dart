@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/models/statistic.dart';
 
 import 'stat_card.dart';
@@ -31,37 +28,7 @@ class StatisticRow extends StatelessWidget {
             press: () {},
             countNum: stats[index],
           ),
-
       ),
-
-
     );
   }
-
-// Widget buildStatListItem(Size size, String icon, int num) {
-//   return Container(
-//     decoration: BoxDecoration(
-//         borderRadius: BorderRadius.circular(15),
-//         color: secondaryColor),
-//     child: Row(
-//       children: [
-//         SizedBox(
-//           height: size.height * 0.12,
-//           width: size.width * 0.12,
-//           child: Image.asset('assets/images/$icon.png'),
-//         ),
-//         Text(
-//           num.toString(),
-//           textAlign: TextAlign.center,
-//           style: TextStyle(
-//               fontFamily: 'VelaSansExtraBold',
-//               //color: Colors.black,
-//               fontSize: size.width / 13,
-//               fontWeight: FontWeight.w800),
-//         ),
-//       ],
-//     ),
-//   );
-// }
-
 }
