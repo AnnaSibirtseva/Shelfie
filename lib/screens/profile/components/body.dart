@@ -1,13 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/models/statistic.dart';
-import 'package:shelfie/screens/profile/profile_head.dart';
 import 'package:shelfie/screens/profile/profile_page.dart';
-import 'package:shelfie/screens/profile/statistic_row.dart';
 
-import 'menu.dart';
+import 'menu/menu.dart';
+import 'profile_head.dart';
+import 'stats/statistic_row.dart';
 
 class Body extends StatelessWidget {
 

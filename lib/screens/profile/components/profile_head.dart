@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/models/user.dart';
 
-import 'profile_page.dart';
+import '../profile_page.dart';
 
 class ProfileHead extends StatefulWidget {
 

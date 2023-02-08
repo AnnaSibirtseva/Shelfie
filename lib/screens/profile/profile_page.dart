@@ -8,7 +8,7 @@ import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
 import 'package:shelfie/models/user.dart';
 import '../../components/routes/route.gr.dart';
-import 'body.dart';
+import 'components/body.dart';
 
 late final User user;
 
