@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/models/statistic.dart';
 import 'package:shelfie/screens/profile/profile_head.dart';
+import 'package:shelfie/screens/profile/profile_page.dart';
 import 'package:shelfie/screens/profile/statistic_row.dart';
 
 import 'menu.dart';
@@ -25,7 +26,7 @@ class Body extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ProfileHead(),
-          StatisticRow(userStat: Statistic(4200, 23, 12)),
+          StatisticRow(userStat: user.getStatistics()),
           Padding(
             padding: const EdgeInsets.only(top: 15, left: 10),
             child: Text('Общее'.toUpperCase(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),

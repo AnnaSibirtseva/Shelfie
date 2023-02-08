@@ -31,7 +31,7 @@ class _ProfilePage extends State<ProfilePage> {
   Future<User> getUser() async {
     var client = http.Client();
     try {
-      var response = await client.get(Uri.http(url, '/users/profile/${3}'));
+      var response = await client.get(Uri.http(url, '/users/profile/${1}'));
       if (response.statusCode == 200) {
         return User.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
       } else {

@@ -8,7 +8,7 @@ class User {
   late String _email;
   late String _profileImageUrl;
   late String _bannerImageUrl;
-  late List<Statistic> _statistics;
+  late Statistic _statistics;
 
   User(this._name, this._email, this._profileImageUrl,
       this._bannerImageUrl, this._statistics);
@@ -35,7 +35,7 @@ class User {
       json['email'] as String,
       profileImageUrl,
       bannerImageUrl,
-      [],
+      Statistic.fromJson(json['statistics']),
     );
   }
 
@@ -53,5 +53,9 @@ class User {
 
   String getEmail() {
     return _email;
+  }
+
+  Statistic getStatistics() {
+    return _statistics;
   }
 }
