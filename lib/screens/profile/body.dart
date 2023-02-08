@@ -9,6 +9,7 @@ import 'package:shelfie/screens/profile/statistic_row.dart';
 import 'menu.dart';
 
 class Body extends StatelessWidget {
+
   const Body({Key? key}) : super(key: key);
 
   @override

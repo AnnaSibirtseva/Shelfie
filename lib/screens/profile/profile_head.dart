@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
+import 'package:shelfie/models/user.dart';
+
+import 'profile_page.dart';
 
 class ProfileHead extends StatefulWidget {
-  //final User user;
 
   const ProfileHead({Key? key}) : super(key: key);
 
@@ -23,10 +25,10 @@ class _ProfileHead extends State<ProfileHead> {
           Container(
             height: size.height * 0.2,
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              borderRadius: BorderRadius.all(Radius.circular(15)),
               image: DecorationImage(
                 image: NetworkImage(
-                    'https://www.goodmorningimagesforlover.com/wp-content/uploads/2018/11/create-facebook-cover-photo-for-whatsapp.jpg'),
+                  user.getProfileImageUrl()),
                 fit: BoxFit.cover,
               ),
             ),
@@ -41,7 +43,7 @@ class _ProfileHead extends State<ProfileHead> {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     image: NetworkImage(
-                        'https://im.wampi.ru/2023/01/26/image736cca3df952241c.png'),
+                        user.getProfileImageUrl()),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -65,7 +67,7 @@ class _ProfileHead extends State<ProfileHead> {
                             height: size.height * 0.2,
                           ),
                           Text(
-                            'Джейк Хэйлл',
+                            user.getName(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -75,7 +77,7 @@ class _ProfileHead extends State<ProfileHead> {
                                 fontWeight: FontWeight.w800),
                           ),
                           Text(
-                            'jake.hayle@goоgle.com',
+                            user.getEmail(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

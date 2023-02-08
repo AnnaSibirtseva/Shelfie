@@ -38,4 +38,20 @@ class User {
       [],
     );
   }
+
+  String getProfileImageUrl() {
+    return _profileImageUrl;
+  }
+
+  String getBannerImageUrl() {
+    return _bannerImageUrl;
+  }
+
+  String getName() {
+    return _name;
+  }
+
+  String getEmail() {
+    return _email;
+  }
 }
