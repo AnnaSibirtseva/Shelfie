@@ -6,7 +6,7 @@ class StatusWidget extends StatefulWidget {
   final BookStatus bookState;
 
   @override
-  StatusWidgetState createState() => StatusWidgetState(bookState);
+  StatusWidgetState createState() => StatusWidgetState();
 
   const StatusWidget({Key? key, required this.bookState}) : super(key: key);
 }
@@ -14,7 +14,13 @@ class StatusWidget extends StatefulWidget {
 class StatusWidgetState extends State<StatusWidget> {
   BookStatus bookState = BookStatus.None;
 
-  StatusWidgetState(this.bookState);
+  StatusWidgetState();
+
+  @override
+  void initState() {
+    super.initState();
+    bookState = widget.bookState;
+  }
 
   @override
   Widget build(BuildContext context) {
