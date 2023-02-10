@@ -5,18 +5,22 @@ import 'package:shelfie/models/user.dart';
 import '../profile_page.dart';
 
 class ProfileHead extends StatefulWidget {
+  final User user;
 
-  const ProfileHead({Key? key}) : super(key: key);
+  const ProfileHead({Key? key, required this.user}) : super(key: key);
 
   @override
   _ProfileHead createState() => _ProfileHead();
 }
 
 class _ProfileHead extends State<ProfileHead> {
+
   // todo: change to gesture detectors and add photo-changers.
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    User user = widget.user;
+
     return Flexible(
         child: SizedBox(
       height: size.height * 0.3,

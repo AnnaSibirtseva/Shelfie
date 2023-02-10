@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/screens/profile/profile_page.dart';
+import 'package:shelfie/models/user.dart';
 
 import 'menu/menu.dart';
 import 'profile_head.dart';
 import 'stats/statistic_row.dart';
 
 class Body extends StatelessWidget {
+  final User user;
 
-  const Body({Key? key}) : super(key: key);
+  const Body({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class Body extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          ProfileHead(),
+          ProfileHead(user: user),
           StatisticRow(userStat: user.getStatistics()),
           Padding(
             padding: const EdgeInsets.only(top: 15, left: 10),

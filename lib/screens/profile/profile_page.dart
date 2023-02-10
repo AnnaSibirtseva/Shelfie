@@ -10,8 +10,6 @@ import 'package:shelfie/models/user.dart';
 import '../../components/routes/route.gr.dart';
 import 'components/body.dart';
 
-late final User user;
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -48,9 +46,8 @@ class _ProfilePage extends State<ProfilePage> {
         future: _futureUser,
         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
           if (snapshot.hasData) {
-            user = snapshot.data!;
-            return const Scaffold(
-                body: SingleChildScrollView(reverse: false, child: Body()));
+            return Scaffold(
+                body: SingleChildScrollView(reverse: false, child: Body(user: snapshot.data!)));
           } else if (snapshot.hasError) {
             return WebErrorWidget(errorMessage: snapshot.error.toString());
           } else {
