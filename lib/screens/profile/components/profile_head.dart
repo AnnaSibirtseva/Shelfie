@@ -29,7 +29,7 @@ class _ProfileHead extends State<ProfileHead> {
           Container(
             height: size.height * 0.2,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderRadius: BorderRadius.all(const Radius.circular(15)),
               image: DecorationImage(
                 image: NetworkImage(
                   user.getProfileImageUrl()),
@@ -44,6 +44,7 @@ class _ProfileHead extends State<ProfileHead> {
               child: Container(
                 height: size.height * 0.2,
                 decoration: BoxDecoration(
+                  border: Border.all(color: secondaryColor),
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     image: NetworkImage(

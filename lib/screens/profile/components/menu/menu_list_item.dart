@@ -18,7 +18,7 @@ class MenuListItem extends StatelessWidget {
     return InkWell(
       onTap: press,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
+        margin: const EdgeInsets.symmetric(vertical: 3),
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: secondaryColor),
