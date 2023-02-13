@@ -100,7 +100,7 @@ class _SearchPage extends State<SearchPage> {
                       const SizedBox(height: 100),
                       const ScanButton(),
                       for (int i = 0; i < books.length; ++i)
-                        if (books.length > i) ListBookCard(press: () {  }, book: books[i],)
+                        if (books.length > i) ListBookCard(press: () => context.router.push(const BookInfoRoute()), book: books[i],)
                     ],
                   )
                 ],

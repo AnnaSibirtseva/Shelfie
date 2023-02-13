@@ -11,17 +11,18 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i4;
-import 'package:flutter/material.dart' as _i9;
+import 'package:flutter/material.dart' as _i10;
+import 'package:shelfie/screens/book/book_info/book_info_page.dart' as _i8;
 import 'package:shelfie/screens/collections/collection_page.dart' as _i5;
 import 'package:shelfie/screens/filter/filter_page.dart' as _i7;
 import 'package:shelfie/screens/home/home_page.dart' as _i3;
 import 'package:shelfie/screens/log_in/log_in_page.dart' as _i1;
-import 'package:shelfie/screens/profile/profile_page.dart' as _i8;
+import 'package:shelfie/screens/profile/profile_page.dart' as _i9;
 import 'package:shelfie/screens/search/search_page.dart' as _i6;
 import 'package:shelfie/screens/sign_up/sign_up_page.dart' as _i2;
 
 class AppRouter extends _i4.RootStackRouter {
-  AppRouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey])
+  AppRouter([_i10.GlobalKey<_i10.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
@@ -62,9 +63,13 @@ class AppRouter extends _i4.RootStackRouter {
       return _i4.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i7.FilterPage());
     },
+    BookInfoRoute.name: (routeData) {
+      return _i4.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i8.BookInfoPage());
+    },
     ProfileRoute.name: (routeData) {
       return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i8.ProfilePage());
+          routeData: routeData, child: const _i9.ProfilePage());
     }
   };
 
@@ -107,6 +112,8 @@ class AppRouter extends _i4.RootStackRouter {
                     path: '', parent: SearchRouter.name),
                 _i4.RouteConfig(FilterRoute.name,
                     path: 'filters', parent: SearchRouter.name),
+                _i4.RouteConfig(BookInfoRoute.name,
+                    path: 'bookInfo', parent: SearchRouter.name),
                 _i4.RouteConfig('*#redirect',
                     path: '*',
                     parent: SearchRouter.name,
@@ -216,7 +223,15 @@ class FilterRoute extends _i4.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.ProfilePage]
+/// [_i8.BookInfoPage]
+class BookInfoRoute extends _i4.PageRouteInfo<void> {
+  const BookInfoRoute() : super(BookInfoRoute.name, path: 'bookInfo');
+
+  static const String name = 'BookInfoRoute';
+}
+
+/// generated route for
+/// [_i9.ProfilePage]
 class ProfileRoute extends _i4.PageRouteInfo<void> {
   const ProfileRoute() : super(ProfileRoute.name, path: '');
 
