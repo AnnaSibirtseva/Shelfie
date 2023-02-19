@@ -32,7 +32,7 @@ class _BookMainInfo extends State<BookMainInfo> {
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
                 image: DecorationImage(
                   image: NetworkImage(
-                      'https://i.artfile.ru/2595x1730_930608_[www.ArtFile.ru].jpg'),
+                      'https://www.fonstola.ru/images/202005/fonstola.ru_386613.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),

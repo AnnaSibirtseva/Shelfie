@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'book_main_info.dart';
+import 'stat_row.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -14,7 +15,9 @@ class Body extends StatelessWidget {
         height: size.height,
         width: size.width,
         child: Column(
-          children: [BookMainInfo()],
+          children: [
+            BookMainInfo(),
+            StatisticRow()],
         ));
   }
 }
