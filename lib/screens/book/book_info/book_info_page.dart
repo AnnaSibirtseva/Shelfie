@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import '../../../components/routes/route.gr.dart';
+import 'components/body.dart';
 
 class BookInfoPage extends StatefulWidget {
   const BookInfoPage({Key? key}) : super(key: key);
@@ -40,6 +41,6 @@ class _BookInfoPage extends State<BookInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text('BOOK BABY'),));
+    return Scaffold(body: Center(child: Body(),));
   }
 }
