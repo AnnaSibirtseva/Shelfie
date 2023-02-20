@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
+import 'package:shelfie/models/book_status.dart';
 
 class StatusTabBar extends StatefulWidget {
   const StatusTabBar({Key? key}) : super(key: key);
@@ -15,11 +16,10 @@ class _StackOverState extends State<StatusTabBar>
 
   late TabController _tabController;
   List tabsText = ['Буду', 'Читаю', 'Перестал', 'Прочитал', 'Не читаю'];
-  List tabsIcons = ['https://ie.wampi.ru/2023/02/20/image0b3013dedfe131f4c7.png'];
 
   @override
   void initState() {
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 5, vsync: this, initialIndex: getStateIcon(BookStatus.Dropped));
     super.initState();
   }
 
@@ -63,5 +63,20 @@ class _StackOverState extends State<StatusTabBar>
         ],
       ),
     );
+  }
+
+  int getStateIcon(BookStatus status) {
+    switch (status) {
+      case BookStatus.Planning:
+        return 0;
+      case BookStatus.InProgress:
+        return 1;
+      case BookStatus.Dropped:
+        return 2;
+      case BookStatus.Finished:
+        return 3;
+      case BookStatus.None:
+        return 4;
+    }
   }
 }
