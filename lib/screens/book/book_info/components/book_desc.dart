@@ -25,16 +25,15 @@ class _BookDescState extends State<BookDesc> {
     Size size = MediaQuery.of(context).size;
 
     return Container(
-      height: descTextShowFlag ? size.height * 0.4 : size.height * 0.3,
+      height: descTextShowFlag ? size.height * 0.4 : size.height * 0.25,
       width: size.width,
       //padding: const EdgeInsets.only(bottom: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('Описание',
+          const Text('Описание',
               textAlign: TextAlign.start,
-              maxLines: descTextShowFlag ? 12 : 6,
-              style: const TextStyle(
+              style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold)),
           const SizedBox(height: 5),

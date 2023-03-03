@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shelfie/screens/book/book_info/components/stat_bar.dart';
 
 import 'book_desc.dart';
 import 'book_main_info.dart';
@@ -21,8 +22,10 @@ class Body extends StatelessWidget {
             BookMainInfo(),
             StatisticRow(),
             StatusTabBar(),
-
-            BookDesc(),
+            Flexible(
+              child: BookDesc(),
+            ),
+            Flexible(child: BookStatisticsTabBar()),
           ],
         ));
   }
