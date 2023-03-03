@@ -32,7 +32,7 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const SignUpPage())),
           child: Text(
             login ? "ЗАРЕГИСТРИРОВАТЬСЯ" : "ВОЙТИ",
-            style: TextStyle(
+            style: const TextStyle(
               decoration: TextDecoration.underline,
               color: primaryColor,
               fontWeight: FontWeight.bold,

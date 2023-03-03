@@ -28,7 +28,7 @@ class _StackOverState extends State<StatusTabBar>
     Size size = MediaQuery.of(context).size;
 
     return Container(
-      height: size.height * 0.2,
+     height: size.height * 0.1,
       width: size.width,
       padding: const EdgeInsets.symmetric(vertical: 13),
       child: Column(

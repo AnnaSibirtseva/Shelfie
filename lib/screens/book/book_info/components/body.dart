@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'book_desc.dart';
 import 'book_main_info.dart';
 import 'stat_row.dart';
 import 'status_tab_bar.dart';
@@ -21,6 +22,7 @@ class Body extends StatelessWidget {
             StatisticRow(),
             StatusTabBar(),
 
+            BookDesc(),
           ],
         ));
   }

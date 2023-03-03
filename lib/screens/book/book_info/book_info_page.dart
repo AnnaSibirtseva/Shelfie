@@ -21,6 +21,7 @@ class _BookInfoPage extends State<BookInfoPage> {
     super.initState();
     //_futureCollections = getCollections();
   }
+
   //
   // Future<List<Collection>> getCollections() async {
   //   var client = http.Client();
@@ -41,6 +42,13 @@ class _BookInfoPage extends State<BookInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Body(),));
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
+          reverse: false,
+          child: Body(),
+        ),
+      ),
+    );
   }
 }
