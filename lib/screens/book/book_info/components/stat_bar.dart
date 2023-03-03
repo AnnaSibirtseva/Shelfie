@@ -25,7 +25,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
     Size size = MediaQuery.of(context).size;
 
     return Container(
-      height: size.height * 0.4,
+      height: size.height * 0.5,
       width: size.width,
       //padding: const EdgeInsets.symmetric(vertical: 13),
       child: Column(
@@ -65,7 +65,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
                 // first tab bar view widget
                 Center(
                   child: Text(
-                    'Place Bid',
+                    'Вкладка Рецензий',
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,
@@ -76,7 +76,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
                 // second tab bar view widget
                 Center(
                   child: Text(
-                    'Buy Now',
+                    'Вкладка Цитат',
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,
