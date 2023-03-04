@@ -5,7 +5,9 @@ import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
 
+import '../../../../../components/widgets/cards/quote_card.dart';
 import '../../../../../components/widgets/cards/review_card.dart';
+import '../../../../../models/book_quote.dart';
 import '../../../../../models/book_review.dart';
 import '../../../../../models/user.dart';
 
@@ -19,7 +21,6 @@ class BookStatisticsTabBar extends StatefulWidget {
 class _StackOverState extends State<BookStatisticsTabBar>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  List tabsText = ['Рецензии', 'Цитаты'];
 
   late Future<BookReviewList> _futureReviewList;
 
@@ -67,7 +68,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
       BuildContext context, BookReviewList reviewList) {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
-      height: size.height * 0.55,
+      height: size.height * 0.56,
       width: size.width,
       //padding: const EdgeInsets.symmetric(vertical: 13),
       child: Column(
@@ -95,9 +96,8 @@ class _StackOverState extends State<BookStatisticsTabBar>
               unselectedLabelStyle:
                   const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
               tabs: [
-                for (String tab in tabsText)
-                  // todo add number of stat
-                  Tab(text: tab)
+                  Tab(text: 'Рецензии  ' + reviewList.count.toString()),
+                  Tab(text: 'Цитаты  ')
               ],
             ),
           ),
@@ -117,7 +117,15 @@ class _StackOverState extends State<BookStatisticsTabBar>
                 ),
 
                 // second tab bar view widget
-                Center(),
+                SingleChildScrollView(
+                  reverse: false,
+                  child: Column(
+                    children: [
+                      //for (BookReview review in reviewList.reviews)
+                        QuoteCard(quote: new BookQuote(1, 'Fjdjkhfkjgkfj  fgf g fg  h f g fg', false))
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
