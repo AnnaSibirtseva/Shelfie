@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String url = 'indedov-001-site1.atempurl.com';
+const String url = 'indedov3-001-site1.gtempurl.com';
 
 const int iconSplitPart = 5;
 

@@ -4,13 +4,13 @@ import 'package:shelfie/components/constants.dart';
 import '../../../models/book_review.dart';
 
 class ReviewCard extends StatelessWidget {
-  final VoidCallback press;
+  //final VoidCallback press;
   final BookReview review;
 
   const ReviewCard({
     Key? key,
     required this.review,
-    required this.press,
+    //required this.press,
   }) : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class ReviewCard extends StatelessWidget {
 
     Size size = MediaQuery.of(context).size;
     return InkWell(
-      onTap: press,
+      //onTap: press,
       child: Container(
         decoration: const BoxDecoration(
             color: secondaryColor,

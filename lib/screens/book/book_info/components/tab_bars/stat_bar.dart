@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/models/book_status.dart';
+import 'package:shelfie/components/widgets/error.dart';
+import 'package:shelfie/components/widgets/loading.dart';
 
 import '../../../../../components/widgets/cards/review_card.dart';
 import '../../../../../models/book_review.dart';
@@ -18,24 +21,60 @@ class _StackOverState extends State<BookStatisticsTabBar>
   late TabController _tabController;
   List tabsText = ['Рецензии', 'Цитаты'];
 
+  late Future<BookReviewList> _futureReviewList;
+
+  Future<BookReviewList> getReviewList() async {
+    var client = http.Client();
+    try {
+      var response =
+          await client.get(Uri.http(url, '/interactions/reviews/${1}', {'take': '10'}));
+      if (response.statusCode == 200) {
+        return BookReviewList.fromJson(
+            jsonDecode(utf8.decode(response.bodyBytes)));
+      } else {
+        throw Exception();
+      }
+    } finally {
+      client.close();
+    }
+  }
+
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     super.initState();
+    _futureReviewList = getReviewList();
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    return FutureBuilder<BookReviewList>(
+        future: _futureReviewList,
+        builder:
+            (BuildContext context, AsyncSnapshot<BookReviewList> snapshot) {
+          if (snapshot.hasData) {
+            return Flexible(child: buildInteractionsTabBar(context, snapshot.data!));
+          } else if (snapshot.hasError) {
+            return WebErrorWidget(errorMessage: snapshot.error.toString());
+          } else {
+            // By default, show a loading spinner.
+            return const LoadingWidget();
+          }
+        });
+  }
 
-    return Container(
-      height: size.height * 0.5,
+  Widget buildInteractionsTabBar(
+      BuildContext context, BookReviewList reviewList) {
+    Size size = MediaQuery.of(context).size;
+    return SizedBox(
+      height: size.height * 0.55,
       width: size.width,
       //padding: const EdgeInsets.symmetric(vertical: 13),
       child: Column(
         children: [
           Container(
             height: 45,
+            margin: const EdgeInsets.only(bottom: 15),
             decoration: BoxDecoration(
               color: secondaryColor,
               borderRadius: BorderRadius.circular(
@@ -54,7 +93,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
               labelColor: Colors.white,
               unselectedLabelColor: Colors.black,
               unselectedLabelStyle:
-                  TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
               tabs: [
                 for (String tab in tabsText)
                   // todo add number of stat
@@ -67,20 +106,18 @@ class _StackOverState extends State<BookStatisticsTabBar>
               controller: _tabController,
               children: [
                 // first tab bar view widget
-                Center(
-                  child: ReviewCard(review: new BookReview(1, new User.userInfo(1, 'Caаааааааааааааааааааааааt', defaultBookCoverImg), 'ffff', 8.8), press: () {  },)
+                SingleChildScrollView(
+                  reverse: false,
+                  child: Column(
+                    children: [
+                      for (BookReview review in reviewList.reviews)
+                        ReviewCard(review: review)
+                    ],
+                  ),
                 ),
 
                 // second tab bar view widget
-                Center(
-                  child: Text(
-                    'Вкладка Цитат',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
+                Center(),
               ],
             ),
           ),

@@ -14,8 +14,8 @@ class Body extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
         margin: EdgeInsets.only(
-            left: 15, right: 15, top: 15, bottom: size.height * 0.1),
-        height: size.height * 1.6,
+            left: 15, right: 15, top: 15, bottom: size.height * 0.01),
+        height: size.height * 1.3,
         width: size.width,
         child: Column(
           children: [
