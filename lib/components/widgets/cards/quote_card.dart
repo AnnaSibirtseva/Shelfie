@@ -25,11 +25,9 @@ class _QuoteCardState extends State<QuoteCard> {
   void onQuoteClick() {
     if (!quote.isQuoteSaved()) {
       // add to quotes
-      quote.reverseQuoteSaved();
-      setState(() {
-
-      });
     }
+    quote.reverseQuoteSaved();
+    setState(() {});
   }
 
   @override
@@ -58,20 +56,21 @@ class _QuoteCardState extends State<QuoteCard> {
               quote.getQuoteText(),
               textAlign: TextAlign.justify,
             ),
-            if (!quote.isQuoteSaved())
-              Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const SizedBox(height: 15),
-                GestureDetector(
-                  onTap: onQuoteClick,
-                  child: SizedBox(
-                    height: 30,
-                    child: Image.asset('assets/images/save_quote.png'),
-                  ),
-                )
-              ],
-            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const SizedBox(height: 15),
+                  GestureDetector(
+                    onTap: onQuoteClick,
+                    child: SizedBox(
+                      height: 30,
+                      child: quote.isQuoteSaved()
+                          ? Image.asset('assets/images/unsave_quote.png')
+                          : Image.asset('assets/images/save_quote.png'),
+                    ),
+                  )
+                ],
+              ),
           ],
         ),
       ),
