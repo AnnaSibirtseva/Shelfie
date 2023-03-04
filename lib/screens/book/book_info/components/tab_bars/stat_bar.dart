@@ -9,7 +9,6 @@ import '../../../../../components/widgets/cards/quote_card.dart';
 import '../../../../../components/widgets/cards/review_card.dart';
 import '../../../../../models/book_quote.dart';
 import '../../../../../models/book_review.dart';
-import '../../../../../models/user.dart';
 
 class BookStatisticsTabBar extends StatefulWidget {
   const BookStatisticsTabBar({Key? key}) : super(key: key);
@@ -23,14 +22,31 @@ class _StackOverState extends State<BookStatisticsTabBar>
   late TabController _tabController;
 
   late Future<BookReviewList> _futureReviewList;
+  late Future<BookQuotesList> _futureQuoteList;
 
   Future<BookReviewList> getReviewList() async {
     var client = http.Client();
     try {
-      var response =
-          await client.get(Uri.http(url, '/interactions/reviews/${1}', {'take': '10'}));
+      var response = await client
+          .get(Uri.http(url, '/interactions/reviews/${1}', {'take': '10'}));
       if (response.statusCode == 200) {
         return BookReviewList.fromJson(
+            jsonDecode(utf8.decode(response.bodyBytes)));
+      } else {
+        throw Exception();
+      }
+    } finally {
+      client.close();
+    }
+  }
+
+  Future<BookQuotesList> getQuoteList() async {
+    var client = http.Client();
+    try {
+      var response = await client
+          .get(Uri.http(url, '/interactions/quotes/${1}', {'take': '10'}));
+      if (response.statusCode == 200) {
+        return BookQuotesList.fromJson(
             jsonDecode(utf8.decode(response.bodyBytes)));
       } else {
         throw Exception();
@@ -45,6 +61,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     super.initState();
     _futureReviewList = getReviewList();
+    _futureQuoteList = getQuoteList();
   }
 
   @override
@@ -52,11 +69,26 @@ class _StackOverState extends State<BookStatisticsTabBar>
     return FutureBuilder<BookReviewList>(
         future: _futureReviewList,
         builder:
-            (BuildContext context, AsyncSnapshot<BookReviewList> snapshot) {
-          if (snapshot.hasData) {
-            return Flexible(child: buildInteractionsTabBar(context, snapshot.data!));
-          } else if (snapshot.hasError) {
-            return WebErrorWidget(errorMessage: snapshot.error.toString());
+            (BuildContext context, AsyncSnapshot<BookReviewList> reviewSnapshot) {
+          if (reviewSnapshot.hasData) {
+            return FutureBuilder<BookQuotesList>(
+                future: _futureQuoteList,
+                builder: (BuildContext context,
+                    AsyncSnapshot<BookQuotesList> quoteSnapshot) {
+                  if (quoteSnapshot.hasData) {
+                    return Flexible(
+                        child: buildInteractionsTabBar(
+                            context, reviewSnapshot.data!, quoteSnapshot.data!));
+                  } else if (quoteSnapshot.hasError) {
+                    return WebErrorWidget(
+                        errorMessage: quoteSnapshot.error.toString());
+                  } else {
+                    // By default, show a loading spinner.
+                    return const LoadingWidget();
+                  }
+                });
+          } else if (reviewSnapshot.hasError) {
+            return WebErrorWidget(errorMessage: reviewSnapshot.error.toString());
           } else {
             // By default, show a loading spinner.
             return const LoadingWidget();
@@ -64,8 +96,8 @@ class _StackOverState extends State<BookStatisticsTabBar>
         });
   }
 
-  Widget buildInteractionsTabBar(
-      BuildContext context, BookReviewList reviewList) {
+  Widget buildInteractionsTabBar(BuildContext context,
+      BookReviewList reviewList, BookQuotesList quotesList) {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
       height: size.height * 0.56,
@@ -96,8 +128,8 @@ class _StackOverState extends State<BookStatisticsTabBar>
               unselectedLabelStyle:
                   const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
               tabs: [
-                  Tab(text: 'Рецензии  ' + reviewList.count.toString()),
-                  Tab(text: 'Цитаты  ')
+                Tab(text: 'Рецензии  ' + reviewList.count.toString()),
+                Tab(text: 'Цитаты  ' + quotesList.count.toString())
               ],
             ),
           ),
@@ -121,8 +153,8 @@ class _StackOverState extends State<BookStatisticsTabBar>
                   reverse: false,
                   child: Column(
                     children: [
-                      //for (BookReview review in reviewList.reviews)
-                        QuoteCard(quote: new BookQuote(1, 'Fjdjkhfkjgkfj  fgf g fg  h f g fg', false))
+                      for (BookQuote quote in quotesList.quotes)
+                        QuoteCard(quote: quote)
                     ],
                   ),
                 ),
