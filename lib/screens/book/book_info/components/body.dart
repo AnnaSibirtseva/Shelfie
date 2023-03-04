@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/screens/book/book_info/components/stat_bar.dart';
+import 'tab_bars/stat_bar.dart';
 
 import 'book_desc.dart';
 import 'book_main_info.dart';
 import 'stat_row.dart';
-import 'status_tab_bar.dart';
+import 'tab_bars/status_tab_bar.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class Body extends StatelessWidget {
     return Container(
         margin: EdgeInsets.only(
             left: 15, right: 15, top: 15, bottom: size.height * 0.1),
-        height: size.height * 1.5,
+        height: size.height * 1.6,
         width: size.width,
         child: Column(
           children: [

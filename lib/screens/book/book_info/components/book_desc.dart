@@ -25,9 +25,8 @@ class _BookDescState extends State<BookDesc> {
     Size size = MediaQuery.of(context).size;
 
     return Container(
-      height: descTextShowFlag ? size.height * 0.5 : size.height * 0.25,
+      height: descTextShowFlag ? size.height * 0.37 : size.height * 0.25,
       width: size.width,
-      //padding: const EdgeInsets.only(bottom: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

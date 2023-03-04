@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/models/book_status.dart';
 
+import '../../../../../components/widgets/cards/review_card.dart';
+import '../../../../../models/book_review.dart';
+import '../../../../../models/user.dart';
+
 class BookStatisticsTabBar extends StatefulWidget {
   const BookStatisticsTabBar({Key? key}) : super(key: key);
 
@@ -64,13 +68,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
               children: [
                 // first tab bar view widget
                 Center(
-                  child: Text(
-                    'Вкладка Рецензий',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  child: ReviewCard(review: new BookReview(1, new User.userInfo(1, 'Caаааааааааааааааааааааааt', defaultBookCoverImg), 'ffff', 8.8), press: () {  },)
                 ),
 
                 // second tab bar view widget

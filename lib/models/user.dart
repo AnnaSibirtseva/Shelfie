@@ -10,10 +10,26 @@ class User {
   late String _bannerImageUrl;
   late Statistic _statistics;
 
-  User(this._name, this._email, this._profileImageUrl,
-      this._bannerImageUrl, this._statistics);
+  User(this._name, this._email, this._profileImageUrl, this._bannerImageUrl,
+      this._statistics);
 
   User.byId(this._id);
+
+  User.userInfo(this._id, this._name, this._profileImageUrl);
+
+  factory User.userInfoFromJson(dynamic json) {
+    String profileImageUrl;
+    if (json['profileImageUrl'] != null) {
+      profileImageUrl = json['profileImageUrl'] as String;
+    } else {
+      profileImageUrl = defaultCollectionImg;
+    }
+    return User.userInfo(
+      json['id'] as int,
+      json['name'] as String,
+      profileImageUrl,
+    );
+  }
 
   factory User.fromJson(dynamic json) {
     String profileImageUrl;
