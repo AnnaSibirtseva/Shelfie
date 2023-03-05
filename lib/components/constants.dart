@@ -11,7 +11,19 @@ const grayColor = Colors.black38;
 const blackColor = Colors.black;
 const whiteColor = Colors.white;
 
-const defaultCollectionImg = 'https://im.wampi.ru/2023/01/02/image43d81c00455799a6.png';
-const defaultBookCoverImg = 'http://funart.pro/uploads/posts/2021-07/1626892739_41-funart-pro-p-koshka-v-ochkakh-zhivotnie-krasivo-foto-63.jpg';
+const defaultCollectionImg =
+    'https://im.wampi.ru/2023/01/02/image43d81c00455799a6.png';
+const defaultBookCoverImg =
+    'http://funart.pro/uploads/posts/2021-07/1626892739_41-funart-pro-p-koshka-v-ochkakh-zhivotnie-krasivo-foto-63.jpg';
 const defaultCollectionName = '-';
 const defaultCollectionDesc = '-';
+
+const List mainUserMenu = [
+  'Книги',
+  'Рецензии',
+  'Цитаты',
+  'Сборники',
+  'Достижения',
+  'Статистика'
+];
+const List extraUserMenu = ['Настройки', 'О приложении', 'Выйти'];

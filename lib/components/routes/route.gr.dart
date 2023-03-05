@@ -11,18 +11,22 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i4;
-import 'package:flutter/material.dart' as _i10;
+import 'package:flutter/material.dart' as _i12;
 import 'package:shelfie/screens/book/book_info/book_info_page.dart' as _i8;
 import 'package:shelfie/screens/collections/collection_page.dart' as _i5;
 import 'package:shelfie/screens/filter/filter_page.dart' as _i7;
 import 'package:shelfie/screens/home/home_page.dart' as _i3;
 import 'package:shelfie/screens/log_in/log_in_page.dart' as _i1;
+import 'package:shelfie/screens/profile/interactions/user_quotes_page.dart'
+    as _i10;
+import 'package:shelfie/screens/profile/interactions/user_review_page.dart'
+    as _i11;
 import 'package:shelfie/screens/profile/profile_page.dart' as _i9;
 import 'package:shelfie/screens/search/search_page.dart' as _i6;
 import 'package:shelfie/screens/sign_up/sign_up_page.dart' as _i2;
 
 class AppRouter extends _i4.RootStackRouter {
-  AppRouter([_i10.GlobalKey<_i10.NavigatorState>? navigatorKey])
+  AppRouter([_i12.GlobalKey<_i12.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
@@ -70,6 +74,14 @@ class AppRouter extends _i4.RootStackRouter {
     ProfileRoute.name: (routeData) {
       return _i4.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i9.ProfilePage());
+    },
+    UserQuotesRoute.name: (routeData) {
+      return _i4.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i10.UserQuotesPage());
+    },
+    UserReviewRoute.name: (routeData) {
+      return _i4.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i11.UserReviewPage());
     }
   };
 
@@ -126,6 +138,10 @@ class AppRouter extends _i4.RootStackRouter {
               children: [
                 _i4.RouteConfig(ProfileRoute.name,
                     path: '', parent: ProfileRouter.name),
+                _i4.RouteConfig(UserQuotesRoute.name,
+                    path: 'userQuotes', parent: ProfileRouter.name),
+                _i4.RouteConfig(UserReviewRoute.name,
+                    path: 'userReviews', parent: ProfileRouter.name),
                 _i4.RouteConfig('*#redirect',
                     path: '*',
                     parent: ProfileRouter.name,
@@ -236,4 +252,20 @@ class ProfileRoute extends _i4.PageRouteInfo<void> {
   const ProfileRoute() : super(ProfileRoute.name, path: '');
 
   static const String name = 'ProfileRoute';
+}
+
+/// generated route for
+/// [_i10.UserQuotesPage]
+class UserQuotesRoute extends _i4.PageRouteInfo<void> {
+  const UserQuotesRoute() : super(UserQuotesRoute.name, path: 'userQuotes');
+
+  static const String name = 'UserQuotesRoute';
+}
+
+/// generated route for
+/// [_i11.UserReviewPage]
+class UserReviewRoute extends _i4.PageRouteInfo<void> {
+  const UserReviewRoute() : super(UserReviewRoute.name, path: 'userReviews');
+
+  static const String name = 'UserReviewRoute';
 }

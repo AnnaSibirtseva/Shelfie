@@ -5,8 +5,9 @@ import 'menu_list_item.dart';
 class Menu extends StatelessWidget {
 
   final List titles;
+  final List routes;
 
-  const Menu({Key? key, required this.titles}) : super(key: key);
+  const Menu({Key? key, required this.titles, required this.routes}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class Menu extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     for (var item = 0; item < titles.length; item++)
-                      MenuListItem(press: () {}, text: titles[item])
+                      MenuListItem(press: routes[item], text: titles[item])
                   ])
 
 

@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:shelfie/components/routes/route.gr.dart';
 
 import '../constants.dart';
-import 'button_state.dart';
 
 class FilterButton extends StatelessWidget {
   final bool pressed;
@@ -35,7 +34,7 @@ class FilterButton extends StatelessWidget {
               : Image.asset('assets/icons/blue_filter.png'),
         ),
       ),
-      onTap: () => pressed ? context.router.pop() : context.router.push(FilterRoute()),
+      onTap: () => pressed ? context.router.pop() : context.router.push(const FilterRoute()),
     );
   }
 }
