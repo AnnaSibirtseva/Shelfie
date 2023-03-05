@@ -3,8 +3,8 @@ import 'package:shelfie/components/routes/route.gr.dart';
 
 import '../../../components/buttons/rounded_button.dart';
 import '../../../components/widgets/already_have_account.dart';
-import '../../../components/widgets/password_text_field.dart';
-import '../../../components/widgets/rounded_text_field.dart';
+import '../../../components/text_fields/password_text_field.dart';
+import '../../../components/text_fields/rounded_text_field.dart';
 import '../../home/home_page.dart';
 import 'package:auto_route/auto_route.dart';
 import 'background.dart';
