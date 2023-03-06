@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../image_constants.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({Key? key}) : super(key: key);
@@ -14,8 +15,8 @@ class LoadingWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
-              "assets/images/shelves.gif",
+            Image.network(
+              shelvesGif,
               height: 125.0,
               width: 125.0,
             ),

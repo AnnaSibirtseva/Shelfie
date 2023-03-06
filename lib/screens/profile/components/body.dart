@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/routes/route.gr.dart';
 import 'package:shelfie/models/user.dart';
 
 import '../../../components/constants.dart';
