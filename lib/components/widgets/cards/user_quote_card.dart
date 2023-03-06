@@ -62,6 +62,7 @@ class _UserQuoteCardState extends State<UserQuoteCard> {
               textAlign: TextAlign.justify,
               style: TextStyle(fontSize: size.width / 22, fontWeight: FontWeight.bold),
             ),
+            const Divider(color: Colors.white70,),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,

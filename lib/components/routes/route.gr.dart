@@ -19,7 +19,7 @@ import 'package:shelfie/screens/home/home_page.dart' as _i3;
 import 'package:shelfie/screens/log_in/log_in_page.dart' as _i1;
 import 'package:shelfie/screens/profile/interactions/quotes/user_quotes_page.dart'
     as _i10;
-import 'package:shelfie/screens/profile/interactions/user_review_page.dart'
+import 'package:shelfie/screens/profile/interactions/reviews/user_review_page.dart'
     as _i11;
 import 'package:shelfie/screens/profile/profile_page.dart' as _i9;
 import 'package:shelfie/screens/search/search_page.dart' as _i6;

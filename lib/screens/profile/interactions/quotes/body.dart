@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
 
 import '../../../../components/widgets/cards/user_quote_card.dart';
 import '../../../../components/widgets/dialogs/add_quote_dialog.dart';

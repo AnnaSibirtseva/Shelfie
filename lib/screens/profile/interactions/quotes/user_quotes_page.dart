@@ -45,7 +45,6 @@ class _UserQuotesPage extends State<UserQuotesPage> {
         future: _futureQuotesList,
         builder: (BuildContext context, AsyncSnapshot<UserQuotesList> snapshot) {
           if (snapshot.hasData) {
-            print((snapshot.data!).quotes);
             return Scaffold(
               body: SingleChildScrollView(
                   reverse: false,
