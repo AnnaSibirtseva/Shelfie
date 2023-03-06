@@ -7,7 +7,7 @@ import 'package:shelfie/screens/sign_up/sign_up_page.dart';
 
 import '../../screens/book/book_info/book_info_page.dart';
 import '../../screens/filter/filter_page.dart';
-import '../../screens/profile/interactions/user_quotes_page.dart';
+import '../../screens/profile/interactions/quotes/user_quotes_page.dart';
 import '../../screens/profile/interactions/user_review_page.dart';
 import '../../screens/profile/profile_page.dart';
 

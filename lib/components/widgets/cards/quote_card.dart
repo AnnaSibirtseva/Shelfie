@@ -43,7 +43,7 @@ class _QuoteCardState extends State<QuoteCard> {
               image: NetworkImage(
                   'https://ie.wampi.ru/2023/03/04/imageef4a214a62549bba.png'),
               alignment: Alignment.topRight,
-              fit: BoxFit.contain,
+              //fit: BoxFit.contain,
             ),
             borderRadius: BorderRadius.all(Radius.circular(15))),
         padding: const EdgeInsets.all(15),

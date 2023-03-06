@@ -15,11 +15,10 @@ class HeaderWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         SizedBox(
-          height: size.height * 0.05,
+          height: size.height * 0.03,
         ),
         Row(
           children: <Widget>[
-            SizedBox(width: size.width * 0.075),
             SizedBox(
               height: size.height * 0.09,
               width: size.width * 0.09,
