@@ -18,13 +18,13 @@ class Body extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     List mainRoutes = [
       // user books page
-      () => {},
+      () => context.router.push(const UserBooksRoute()),
       // user reviews page
       () => context.router.push(const UserReviewRoute()),
       // user quotes page
       () => context.router.push(const UserQuotesRoute()),
       // user collections page
-      () => {},
+      () => context.router.push(const UserCollectionsRoute()),
       // user achievements page
       () => {},
       // user stat page

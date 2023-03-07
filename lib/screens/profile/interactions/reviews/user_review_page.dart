@@ -6,10 +6,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
-import 'package:shelfie/models/user.dart';
 import '../../../../components/routes/route.gr.dart';
 import '../../../../models/user_review.dart';
-import '../header_widget.dart';
 import 'body.dart';
 
 class UserReviewPage extends StatefulWidget {

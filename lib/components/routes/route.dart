@@ -7,6 +7,8 @@ import 'package:shelfie/screens/sign_up/sign_up_page.dart';
 
 import '../../screens/book/book_info/book_info_page.dart';
 import '../../screens/filter/filter_page.dart';
+import '../../screens/profile/interactions/books/user_books_page.dart';
+import '../../screens/profile/interactions/collections/user_collections_page.dart';
 import '../../screens/profile/interactions/quotes/user_quotes_page.dart';
 import '../../screens/profile/interactions/reviews/user_review_page.dart';
 import '../../screens/profile/profile_page.dart';
@@ -64,6 +66,8 @@ import '../../screens/profile/profile_page.dart';
             AutoRoute(path: '', page: ProfilePage),
             AutoRoute(path: 'userQuotes', page: UserQuotesPage),
             AutoRoute(path: 'userReviews', page: UserReviewPage),
+            AutoRoute(path: 'userBooks', page: UserBooksPage),
+            AutoRoute(path: 'userCollections', page: UserCollectionsPage),
             RedirectRoute(path: '*', redirectTo: ''),
           ],
         ),
