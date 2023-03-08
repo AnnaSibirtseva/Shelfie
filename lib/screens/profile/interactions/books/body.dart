@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../header_widget.dart';
-import 'page_title.dart';
 
 class Body extends StatelessWidget {
 
@@ -19,7 +18,9 @@ class Body extends StatelessWidget {
       width: size.width,
       child: Column(
         children: [
-          const PageTitleWidget(),
+          const HeaderWidget(
+              text: 'Книги',
+              icon: 'book',),
         ],
       ),
     );

@@ -7,6 +7,7 @@ import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
 import '../../../../components/routes/route.gr.dart';
+import 'body.dart';
 //import '../../../../models/user_books.dart';
 
 class UserBooksPage extends StatefulWidget {
@@ -47,7 +48,7 @@ class _UserBooksPage extends State<UserBooksPage> {
     return Scaffold(
       body: SingleChildScrollView(
           reverse: false,
-          child: Text('Books')),
+          child: Body()),
     );
 
     // return FutureBuilder<UserBookssList>(

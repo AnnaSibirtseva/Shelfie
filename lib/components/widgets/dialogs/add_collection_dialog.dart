@@ -5,8 +5,8 @@ import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
 import '../../text_fields/input_text_field.dart';
 
-class AddQuoteDialog extends Dialog {
-  const AddQuoteDialog({Key? key}) : super(key: key);
+class AddCollectionDialog extends Dialog {
+  const AddCollectionDialog({Key? key}) : super(key: key);
 
   @override
   Dialog build(BuildContext context) {
@@ -19,7 +19,7 @@ class AddQuoteDialog extends Dialog {
         child: Container(
           padding: const EdgeInsets.all(15),
           width: size.width * 0.8,
-          height: size.height * 0.6,
+          height: size.height * 0.52,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -30,7 +30,7 @@ class AddQuoteDialog extends Dialog {
                     size: size.width / 15,
                   ),
                   const Spacer(),
-                  Text('Новая цитата',
+                  Text('Новый сборник',
                       style: TextStyle(
                           fontFamily: 'VelaSansExtraBold',
                           fontSize: size.width / 20,
@@ -46,50 +46,30 @@ class AddQuoteDialog extends Dialog {
               const SizedBox(height: 10),
               Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  '📔 Произведение:',
+                child: Tooltip(
+                  message: 'Прямая ссылка на изображение',
+                  child: Text(
+                  '🖼️ Обложка:',
                   style: TextStyle(
-                      color: grayColor,
                       fontSize: size.width / 22,
                       fontWeight: FontWeight.bold),
-                ),
+                )),
               ),
-              const SizedBox(height: 10),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  '"' 'Странная история доктора Джекилла и мистера Хайда' '"',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: size.width / 24, fontWeight: FontWeight.w500),
-                ),
-              ),
-              const SizedBox(height: 5),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  '- ' 'Роберт Стивенсон' ' -',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: size.width / 24, fontWeight: FontWeight.bold),
-                ),
+              InputTextField(
+                onChanged: (String value) {}, maxLen: 0, height: 0.1,
               ),
               const SizedBox(height: 15),
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  '🖋️ Цитата:',
+                  '🖋️ Название:',
                   style: TextStyle(
-                      color: grayColor,
                       fontSize: size.width / 22,
                       fontWeight: FontWeight.bold),
                 ),
               ),
               InputTextField(
-                maxLen: 1500,
-                height: 0.2,
+                  maxLen: 50, height: 0.1,
                 onChanged: (String value) {},
               ),
               Row(
