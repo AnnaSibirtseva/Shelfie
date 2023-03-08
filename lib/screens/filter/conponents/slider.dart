@@ -44,7 +44,7 @@ class _Slider extends State<SliderWidget> {
               ),
               Text('${_value.round()}/10',
                   textAlign: TextAlign.start,
-                  style: TextStyle(fontSize: size.width * 0.045, fontWeight: FontWeight.bold))
+                  style: TextStyle(fontSize: size.width * 0.042, fontWeight: FontWeight.bold))
             ],
           ),
         )
