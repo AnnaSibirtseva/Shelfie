@@ -30,7 +30,7 @@ class _UserQuoteCardState extends State<UserQuoteCard> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Dismissible(
-      key: Key(quote.getQuoteText()),
+      key: Key(quote.id.toString()),
       confirmDismiss: (DismissDirection direction) async {
         return await showDialog(
           context: context,

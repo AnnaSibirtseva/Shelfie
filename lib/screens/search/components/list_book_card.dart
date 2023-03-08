@@ -79,7 +79,7 @@ class ListBookCard extends StatelessWidget {
                           children: [
                             ratingWidget(),
                             const Spacer(),
-                            StatusWidget(bookState: book.getStat()),
+                            StatusWidget(bookState: book.getStatus()),
                           ],
                         ),
                       ),
@@ -95,6 +95,7 @@ class ListBookCard extends StatelessWidget {
   }
 
   Widget ratingWidget() {
+    String rating = book.getRating() == null ? '-' : book.getRating().toString();
     return Row(
       children: [
         const Icon(
@@ -102,7 +103,7 @@ class ListBookCard extends StatelessWidget {
           color: primaryColor,
           size: 30,
         ),
-        Text(book.getRating().toString() + '/10',
+        Text(rating + '/10',
             textAlign: TextAlign.start,
             style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold))
       ],

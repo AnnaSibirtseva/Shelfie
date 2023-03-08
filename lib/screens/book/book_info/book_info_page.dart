@@ -7,19 +7,21 @@ import '../../../components/routes/route.gr.dart';
 import 'components/body.dart';
 
 class BookInfoPage extends StatefulWidget {
-  const BookInfoPage({Key? key}) : super(key: key);
+  final int bookId;
+
+  const BookInfoPage(this.bookId, {Key? key,}) : super(key: key);
 
   @override
   State<BookInfoPage> createState() => _BookInfoPage();
 }
 
 class _BookInfoPage extends State<BookInfoPage> {
-  //late Future<List<Collection>> _futureCollections;
+  late int bookId;
 
   @override
   void initState() {
     super.initState();
-    //_futureCollections = getCollections();
+    bookId = widget.bookId;
   }
 
   //

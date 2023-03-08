@@ -1,14 +1,16 @@
 class UserQuote {
+  late int id;
   late int _bookId;
   late String _bookTitle;
   late String _bookCoverUrl;
   late List<String> _bookAuthors;
   late String _text;
 
-  UserQuote(this._bookId, this._bookTitle, this._bookCoverUrl, this._bookAuthors, this._text);
+  UserQuote(this.id, this._bookId, this._bookTitle, this._bookCoverUrl, this._bookAuthors, this._text);
 
   factory UserQuote.fromJson(dynamic json) {
     return UserQuote(
+      json['id'] as int,
       json['bookId'] as int,
       json['bookTitle'] as String,
       json['bookCoverImageUrl'] as String,

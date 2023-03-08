@@ -11,9 +11,9 @@ class StatisticRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    List icons = ['book', 'review', 'achieve'];
-    List titles = ['Моя библиотека', 'Рецензии', 'Достижения'];
-    List stats = [userStat.getBookCount(), userStat.getReviewCount(), userStat.getAchievementCount()];
+    List icons = ['book', 'review', 'quote'];
+    List titles = ['Моя библиотека', 'Рецензии', 'Цитаты'];
+    List stats = [userStat.getBookCount(), userStat.getReviewCount(), userStat.getQuoteCount()];
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: size.height * 0.005),

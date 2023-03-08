@@ -4,15 +4,17 @@ class BookReview {
   late int _id;
   late User _reviewAuthor;
   late String _reviewText;
+  late String _reviewTitle;
   late double _rating;
 
-  BookReview(this._id, this._reviewAuthor, this._reviewText, this._rating);
+  BookReview(this._id, this._reviewAuthor, this._reviewText, this._reviewTitle, this._rating);
 
   factory BookReview.fromJson(dynamic json) {
     return BookReview(
       json['id'] as int,
       User.userInfoFromJson(json['userInfo']),
       json['reviewText'] as String,
+      json['reviewTitle'] as String,
       json['rating'].toDouble(),
     );
   }

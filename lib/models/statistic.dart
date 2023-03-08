@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 class Statistic {
   late int _bookCount;
   late int _reviewCount;
-  late int _achievementCount;
+  late int _quoteCountCount;
 
 
-  Statistic(this._bookCount, this._reviewCount, this._achievementCount);
+  Statistic(this._bookCount, this._reviewCount, this._quoteCountCount);
 
   factory Statistic.fromJson(dynamic json) {
     return Statistic(
       json['bookCount'] as int,
       json['reviewCount'] as int,
-      json['achievementCount'] as int,
+      json['quoteCount'] as int,
     );
   }
 
@@ -25,8 +25,8 @@ class Statistic {
     return _reviewCount;
   }
 
-  int getAchievementCount() {
-    return _achievementCount;
+  int getQuoteCount() {
+    return _quoteCountCount;
   }
 
 }

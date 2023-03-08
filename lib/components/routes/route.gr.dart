@@ -72,8 +72,10 @@ class AppRouter extends _i4.RootStackRouter {
           routeData: routeData, child: const _i7.FilterPage());
     },
     BookInfoRoute.name: (routeData) {
+      final args = routeData.argsAs<BookInfoRouteArgs>();
       return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i8.BookInfoPage());
+          routeData: routeData,
+          child: _i8.BookInfoPage(args.bookId, key: args.key));
     },
     ProfileRoute.name: (routeData) {
       return _i4.AdaptivePage<dynamic>(
@@ -256,10 +258,26 @@ class FilterRoute extends _i4.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.BookInfoPage]
-class BookInfoRoute extends _i4.PageRouteInfo<void> {
-  const BookInfoRoute() : super(BookInfoRoute.name, path: 'bookInfo');
+class BookInfoRoute extends _i4.PageRouteInfo<BookInfoRouteArgs> {
+  BookInfoRoute({required int bookId, _i14.Key? key})
+      : super(BookInfoRoute.name,
+            path: 'bookInfo',
+            args: BookInfoRouteArgs(bookId: bookId, key: key));
 
   static const String name = 'BookInfoRoute';
+}
+
+class BookInfoRouteArgs {
+  const BookInfoRouteArgs({required this.bookId, this.key});
+
+  final int bookId;
+
+  final _i14.Key? key;
+
+  @override
+  String toString() {
+    return 'BookInfoRouteArgs{bookId: $bookId, key: $key}';
+  }
 }
 
 /// generated route for

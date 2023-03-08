@@ -27,3 +27,5 @@ const List mainUserMenu = [
   'Статистика'
 ];
 const List extraUserMenu = ['Настройки', 'О приложении', 'Выйти'];
+
+

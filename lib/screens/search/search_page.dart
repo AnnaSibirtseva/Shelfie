@@ -10,6 +10,7 @@ import '../../components/buttons/filter_button.dart';
 import '../../components/buttons/scan_button.dart';
 import '../../components/constants.dart';
 import '../../models/book.dart';
+import '../../models/inherited_id.dart';
 import 'components/list_book_card.dart';
 import 'package:auto_route/auto_route.dart';
 import '../../components/routes/route.gr.dart';
@@ -28,6 +29,7 @@ class _SearchPage extends State<SearchPage> {
 
   List<Book> books = [];
   String query = "c";
+  int id = 0;
 
   @override
   void initState() {
@@ -59,9 +61,8 @@ class _SearchPage extends State<SearchPage> {
         });
     try {
       var response = await client
-          .post(Uri.http(url, '/books/search/'),
-          headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-          body: jsonString);
+          .get(Uri.http(url, '/books/search/', {'take': '10'}),
+          headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
         return BookList.fromJson(
             jsonDecode(utf8.decode(response.bodyBytes)))
@@ -76,6 +77,8 @@ class _SearchPage extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final inheritedWidget = IdInheritedWidget.of(context);
+    id = inheritedWidget.id;
     Size size = MediaQuery.of(context).size;
     // keyboard ScrollViewDismissBehavior on drag
     return FutureBuilder<List<Book>>(
@@ -100,7 +103,7 @@ class _SearchPage extends State<SearchPage> {
                       const SizedBox(height: 100),
                       const ScanButton(),
                       for (int i = 0; i < books.length; ++i)
-                        if (books.length > i) ListBookCard(press: () => context.router.push(const BookInfoRoute()), book: books[i],)
+                        if (books.length > i) ListBookCard(press: () => context.router.push(BookInfoRoute(bookId: books[i].getId())), book: books[i],)
                     ],
                   )
                 ],

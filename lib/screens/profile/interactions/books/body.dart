@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../header_widget.dart';
+import 'books_tab_bar.dart';
 
 class Body extends StatelessWidget {
 
@@ -21,6 +22,7 @@ class Body extends StatelessWidget {
           const HeaderWidget(
               text: 'Книги',
               icon: 'book',),
+          BooksTabBar(),
         ],
       ),
     );

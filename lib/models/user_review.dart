@@ -1,4 +1,5 @@
 class UserReview {
+  late int _id;
   late int _bookId;
   late String _bookTitle;
   late String _bookCoverUrl;
@@ -6,7 +7,7 @@ class UserReview {
   late String _text;
   late double _rating;
 
-  UserReview(this._bookId, this._bookTitle, this._bookCoverUrl, this._bookAuthors, this._text, this._rating);
+  UserReview(this._id, this._bookId, this._bookTitle, this._bookCoverUrl, this._bookAuthors, this._text, this._rating);
 
   factory UserReview.fromJson(dynamic json) {
     String reviewText = '-';
@@ -14,6 +15,7 @@ class UserReview {
       reviewText = json['reviewText'] as String;
     }
     return UserReview(
+      json['id'] as int,
       json['bookId'] as int,
       json['bookTitle'] as String,
       json['bookCoverImageUrl'] as String,

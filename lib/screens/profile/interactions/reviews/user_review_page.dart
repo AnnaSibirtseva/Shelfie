@@ -7,6 +7,7 @@ import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
 import '../../../../components/routes/route.gr.dart';
+import '../../../../models/inherited_id.dart';
 import '../../../../models/user_review.dart';
 import 'body.dart';
 
@@ -18,19 +19,17 @@ class UserReviewPage extends StatefulWidget {
 }
 
 class _UserReviewPage extends State<UserReviewPage> {
-  late Future<UserReviewsList> _futureReviewList;
 
   @override
   void initState() {
     super.initState();
-    _futureReviewList = getUserReviewsList();
   }
 
-  Future<UserReviewsList> getUserReviewsList() async {
+  Future<UserReviewsList> getUserReviewsList(int id) async {
     var client = http.Client();
     try {
       var response =
-          await client.get(Uri.http(url, '/interactions/reviews/by-user/${1}'));
+          await client.get(Uri.http(url, '/interactions/reviews/'), headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
         return UserReviewsList.fromJson(
             jsonDecode(utf8.decode(response.bodyBytes)));
@@ -44,8 +43,9 @@ class _UserReviewPage extends State<UserReviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    final inheritedWidget = IdInheritedWidget.of(context);
     return FutureBuilder<UserReviewsList>(
-        future: _futureReviewList,
+        future: getUserReviewsList(inheritedWidget.id),
         builder:
             (BuildContext context, AsyncSnapshot<UserReviewsList> snapshot) {
           if (snapshot.hasData) {

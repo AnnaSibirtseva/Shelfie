@@ -6,6 +6,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
+import '../../../../models/inherited_id.dart';
 import '../../../../models/user_quote.dart';
 import 'body.dart';
 
@@ -17,18 +18,16 @@ class UserQuotesPage extends StatefulWidget {
 }
 
 class _UserQuotesPage extends State<UserQuotesPage> {
-  late Future<UserQuotesList> _futureQuotesList;
 
   @override
   void initState() {
     super.initState();
-    _futureQuotesList = getQuotesList();
   }
 
-  Future<UserQuotesList> getQuotesList() async {
+  Future<UserQuotesList> getQuotesList(int id) async {
     var client = http.Client();
     try {
-      var response = await client.get(Uri.http(url, '/interactions/quotes/by-user/${1}'));
+      var response = await client.get(Uri.http(url, '/interactions/quotes/'), headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
         return UserQuotesList.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
       } else {
@@ -41,8 +40,9 @@ class _UserQuotesPage extends State<UserQuotesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final inheritedWidget = IdInheritedWidget.of(context);
     return FutureBuilder<UserQuotesList>(
-        future: _futureQuotesList,
+        future: getQuotesList(inheritedWidget.id),
         builder: (BuildContext context, AsyncSnapshot<UserQuotesList> snapshot) {
           if (snapshot.hasData) {
             return Scaffold(

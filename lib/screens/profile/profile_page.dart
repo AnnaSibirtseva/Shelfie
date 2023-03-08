@@ -8,6 +8,7 @@ import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
 import 'package:shelfie/models/user.dart';
 import '../../components/routes/route.gr.dart';
+import '../../models/inherited_id.dart';
 import 'components/body.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -18,18 +19,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePage extends State<ProfilePage> {
-  late Future<User> _futureUser;
 
   @override
   void initState() {
     super.initState();
-    _futureUser = getUser();
   }
 
-  Future<User> getUser() async {
+  Future<User> getUser(int id) async {
     var client = http.Client();
     try {
-      var response = await client.get(Uri.http(url, '/users/profile/${1}'));
+      var response = await client.get(Uri.http(url, '/users/profile/$id'));
       if (response.statusCode == 200) {
         return User.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
       } else {
@@ -42,8 +41,9 @@ class _ProfilePage extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final inheritedWidget = IdInheritedWidget.of(context);
     return FutureBuilder<User>(
-        future: _futureUser,
+        future: getUser(inheritedWidget.id),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
