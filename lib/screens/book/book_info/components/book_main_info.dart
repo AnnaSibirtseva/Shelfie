@@ -4,8 +4,12 @@ import 'package:shelfie/components/widgets/status.dart';
 import 'package:shelfie/models/book_status.dart';
 import 'package:shelfie/models/user.dart';
 
+import '../../../../models/book.dart';
+
 class BookMainInfo extends StatefulWidget {
-  const BookMainInfo({Key? key}) : super(key: key);
+  final Book book;
+
+  const BookMainInfo({Key? key, required this.book}) : super(key: key);
 
   @override
   _BookMainInfo createState() => _BookMainInfo();
@@ -16,7 +20,7 @@ class _BookMainInfo extends State<BookMainInfo> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    //User user = widget.user;
+    Book book = widget.book;
 
     return Container(
         margin: EdgeInsets.symmetric(vertical: size.height * 0.01),
@@ -32,7 +36,7 @@ class _BookMainInfo extends State<BookMainInfo> {
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
                 image: DecorationImage(
                   image: NetworkImage(
-                      'https://covertopia.com/wp-content/uploads/2015/05/000227_Alt.jpg'),
+                      book.getImageUrl()),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -50,39 +54,39 @@ class _BookMainInfo extends State<BookMainInfo> {
                     Row(
                       children: [
                         Expanded(
-                          child: Text('Длинноооое Название',
+                          child: Text(book.getTitle(),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20.0)),
                         ),
-                        ratingWidget(3)
+                        ratingWidget(book.getRating())
                       ],
                     ),
+                    for (int i = 0; i < book.getAuthors().length; i++)
                     Text(
                         // todo do sth with no authors or more than 1.
-                        'А. Б. Авторов',
+                        book.getAuthors()[i],
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(fontSize: 16.0)),
                     const SizedBox(height: 5),
                     Flexible(
-                      child: tenStarWidget(5.1),
+                      child: tenStarWidget(book.getUserRating() == null ? 0 : book.getUserRating()!),
                     ),
                     const SizedBox(height: 5),
                     Wrap(
                       runSpacing: 5,
                       children: [
-                        infoText('Язык оригинала:'),
-                        infoText('Возрастные ограничения: '),
+                        infoText('Язык оригинала: ' + (book.getLanguage() == null ? '-' : book.getLanguage()!)),
+                        infoText('Возрастные ограничения: ' + (book.getAgeRest() == null ? '-' : book.getAgeRest()!)),
                         Wrap(
                           spacing: 5,
                           runSpacing: 5,
                           children: [
                             infoText('Жанры:'),
-                            genreWidget('Лучший'),
-                            genreWidget('Фантастика'),
-                            genreWidget('Роман'),
+                            for (int i = 0; i < book.getGenreList().genres.length; ++i)
+                              genreWidget(book.getGenreList().genres[i].getGenreName()),
                           ],
                         ),
                       ],
@@ -99,29 +103,15 @@ class _BookMainInfo extends State<BookMainInfo> {
     return Text(text, style: const TextStyle(fontSize: 12.0));
   }
 
-  Widget tenStarWidget(double rating) {
+  Widget tenStarWidget(int rating) {
     return Wrap(
       spacing: 0.005,
       children: [
-        for (int i = 0; i <= rating; ++i) starIcon(true),
+        for (int i = 0; i < rating; ++i) starIcon(true),
         for (int i = rating.round(); i < 10; ++i) starIcon(false),
-        // Text(rating.toString() + '/10',
-        //     textAlign: TextAlign.start,
-        //     style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold))
       ],
     );
   }
-
-  //Expanded(
-  //                       child: Align(
-  //                         alignment: Alignment.bottomLeft,
-  //                         child: Row(
-  //                           children: [
-  //                             StatusWidget(bookState: BookStatus.Planning),
-  //                           ],
-  //                         ),
-  //                       ),
-  //                     ),
 
   GestureDetector starIcon(bool filled) {
     return GestureDetector(
@@ -133,7 +123,7 @@ class _BookMainInfo extends State<BookMainInfo> {
         ));
   }
 
-  Widget ratingWidget(double rating) {
+  Widget ratingWidget(double? rating) {
     return Row(
       children: [
         const Icon(
@@ -141,7 +131,7 @@ class _BookMainInfo extends State<BookMainInfo> {
           color: primaryColor,
           size: 30,
         ),
-        Text(rating.toString(),
+        Text(rating == null ? '-' : rating.toString(),
             textAlign: TextAlign.start,
             style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold))
       ],

@@ -13,9 +13,9 @@ class Book {
   late double? _rating;
   late int? _userRating;
   late BookStatus _status;
-  late String _description;
-  late String _language;
-  late String _ageRestriction;
+  late String? _description;
+  late String? _language;
+  late String? _ageRestriction;
   late BookStatistic _statistics;
 
   Book(this._id, this._title, this._authors, this._coverImageUrl, this._genres,
@@ -53,7 +53,7 @@ class Book {
         coverImageUrl,
         GenresList.fromJson(json),
         json['averageRating']?.toDouble(),
-        json['userRating']?.toInteger(),
+        json['userRating'] as int?,
         json['status'] as String);
   }
 
@@ -67,13 +67,13 @@ class Book {
         json['title'] as String,
         coverImageUrl,
         (json['authors'] as List).map((e) => e as String).toList(),
-        json['userRating']?.toInteger(),
+        json['userRating'] as int?,
         json['averageRating']?.toDouble(),
         GenresList.fromJson(json),
-        json['language'] as String,
-        json['ageRestriction'] as String,
+        json['language'] as String?,
+        json['ageRestriction'] as String?,
         BookStatistic.fromJson(json['statistics']),
-        json['description'] as String,
+        json['description'] as String?,
         json['status'] as String);
   }
 
@@ -109,15 +109,15 @@ class Book {
     return _userRating;
   }
 
-  String getDesc() {
+  String? getDesc() {
     return _description;
   }
 
-  String getLanguage() {
+  String? getLanguage() {
     return _language;
   }
 
-  String getAgeRest() {
+  String? getAgeRest() {
     return _ageRestriction;
   }
 

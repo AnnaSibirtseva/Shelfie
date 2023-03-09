@@ -2,16 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shelfie/components/constants.dart';
+import 'package:shelfie/components/widgets/cards/quote_card.dart';
 import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
+import 'package:shelfie/models/book_quote.dart';
 
-import '../../../../../components/widgets/cards/quote_card.dart';
 import '../../../../../components/widgets/cards/review_card.dart';
-import '../../../../../models/book_quote.dart';
+import '../../../../../models/book.dart';
 import '../../../../../models/book_review.dart';
 
+/*
+когда появится кнопка показать больше, просто будут заново инициализироваться
+ */
 class BookStatisticsTabBar extends StatefulWidget {
-  const BookStatisticsTabBar({Key? key}) : super(key: key);
+  final Book book;
+  final BookReviewList reviewList;
+  final BookQuotesList quoteList;
+
+  const BookStatisticsTabBar(
+      {Key? key,
+      required this.book,
+      required this.reviewList,
+      required this.quoteList})
+      : super(key: key);
 
   @override
   _StackOverState createState() => _StackOverState();
@@ -20,15 +33,16 @@ class BookStatisticsTabBar extends StatefulWidget {
 class _StackOverState extends State<BookStatisticsTabBar>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late BookReviewList _reviewList;
+  late BookQuotesList _quoteList;
 
-  late Future<BookReviewList> _futureReviewList;
-  late Future<BookQuotesList> _futureQuoteList;
-
-  Future<BookReviewList> getReviewList() async {
+  Future<BookReviewList> getReviewList(int id, take, skip) async {
     var client = http.Client();
     try {
-      var response = await client
-          .get(Uri.http(url, '/interactions/reviews/${1}', {'take': '10'}));
+      var response = await client.get(
+          Uri.http(url, '/interactions/reviews/${widget.book.getId()}',
+              {'take': take.toString(), 'skip': skip.toString()}),
+          headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
         return BookReviewList.fromJson(
             jsonDecode(utf8.decode(response.bodyBytes)));
@@ -40,11 +54,13 @@ class _StackOverState extends State<BookStatisticsTabBar>
     }
   }
 
-  Future<BookQuotesList> getQuoteList() async {
+  Future<BookQuotesList> getQuoteList(int id, take, skip) async {
     var client = http.Client();
     try {
-      var response = await client
-          .get(Uri.http(url, '/interactions/quotes/${1}', {'take': '10'}));
+      var response = await client.get(
+          Uri.http(url, '/interactions/quotes/${widget.book.getId()}',
+              {'take': take.toString(), 'skip': skip.toString()}),
+          headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
         return BookQuotesList.fromJson(
             jsonDecode(utf8.decode(response.bodyBytes)));
@@ -60,47 +76,20 @@ class _StackOverState extends State<BookStatisticsTabBar>
   void initState() {
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     super.initState();
-    _futureReviewList = getReviewList();
-    _futureQuoteList = getQuoteList();
+    _reviewList = widget.reviewList;
+    _quoteList = widget.quoteList;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<BookReviewList>(
-        future: _futureReviewList,
-        builder:
-            (BuildContext context, AsyncSnapshot<BookReviewList> reviewSnapshot) {
-          if (reviewSnapshot.hasData) {
-            return FutureBuilder<BookQuotesList>(
-                future: _futureQuoteList,
-                builder: (BuildContext context,
-                    AsyncSnapshot<BookQuotesList> quoteSnapshot) {
-                  if (quoteSnapshot.hasData) {
-                    return Flexible(
-                        child: buildInteractionsTabBar(
-                            context, reviewSnapshot.data!, quoteSnapshot.data!));
-                  } else if (quoteSnapshot.hasError) {
-                    return WebErrorWidget(
-                        errorMessage: quoteSnapshot.error.toString());
-                  } else {
-                    // By default, show a loading spinner.
-                    return const LoadingWidget();
-                  }
-                });
-          } else if (reviewSnapshot.hasError) {
-            return WebErrorWidget(errorMessage: reviewSnapshot.error.toString());
-          } else {
-            // By default, show a loading spinner.
-            return const LoadingWidget();
-          }
-        });
+    return buildInteractionsTabBar(context, _reviewList, _quoteList);
   }
 
   Widget buildInteractionsTabBar(BuildContext context,
       BookReviewList reviewList, BookQuotesList quotesList) {
     Size size = MediaQuery.of(context).size;
-    return SizedBox(
-      height: size.height * 0.56,
+    return Flexible(child: SizedBox(
+      height: size.height * 0.5,
       width: size.width,
       //padding: const EdgeInsets.symmetric(vertical: 13),
       child: Column(
@@ -163,6 +152,6 @@ class _StackOverState extends State<BookStatisticsTabBar>
           ),
         ],
       ),
-    );
+    ));
   }
 }

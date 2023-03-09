@@ -1,10 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
 
 class BookDesc extends StatefulWidget {
-  const BookDesc({Key? key}) : super(key: key);
+  final String desc;
+  const BookDesc({Key? key, required this.desc}) : super(key: key);
 
   @override
   _BookDescState createState() => _BookDescState();
@@ -12,12 +11,12 @@ class BookDesc extends StatefulWidget {
 
 class _BookDescState extends State<BookDesc> {
   bool descTextShowFlag = false;
-  String descText =
-      'Воистину «рукописи не горят». Произведения Михаила Булгакова не печатали долгое время, но с момента снятия запрета, они стали бестселлерами! Их покупают, читают и перечитывают, цитируют повсеместно, экранизируют, делают театральные постановки, а главное - они по-прежнему актуальны! Потому что, как говорил Воланд: «Люди, как люди. Любят деньги, но ведь это всегда было... Человечество любит деньги, из чего бы те ни были сделаны, из кожи ли, из бумаги ли, из бронзы или золота. Ну, легкомысленны ну, что...';
+  late String descText;
 
   @override
   void initState() {
     super.initState();
+    descText = widget.desc;
   }
 
   @override
@@ -25,10 +24,12 @@ class _BookDescState extends State<BookDesc> {
     Size size = MediaQuery.of(context).size;
 
     return Container(
-      height: descTextShowFlag ? size.height * 0.37 : size.height * 0.25,
+      margin: const EdgeInsets.only(bottom: 15),
+      //height: descTextShowFlag ? size.height * 0.37 : size.height * 0.25,
       width: size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           const Text('Описание',
               textAlign: TextAlign.start,
@@ -39,7 +40,7 @@ class _BookDescState extends State<BookDesc> {
           Text(descText,
               textAlign: TextAlign.justify,
               maxLines: descTextShowFlag ? 12 : 6),
-          InkWell(
+          if (descText != '-' && descText.isNotEmpty) InkWell(
             onTap: () {
               setState(() {
                 descTextShowFlag = !descTextShowFlag;

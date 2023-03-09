@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
 
+import '../../../../models/book.dart';
+
 class StatisticRow extends StatelessWidget {
-  const StatisticRow({Key? key}) : super(key: key);
+  final Book book;
+  final int revCount;
+  final int quoCount;
+
+  const StatisticRow(
+      {Key? key,
+      required this.book,
+      required this.revCount,
+      required this.quoCount})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     List titles = ['Среднее время чтения', 'Прочитали', 'Рецензий', 'Цитат'];
-    List stats = ['20 дней', 4302, 647, 1755];
+    List stats = [
+      book.getStatistics().getReadingTime(),
+      book.getStatistics().getReadCount() ?? 0,
+      revCount,
+      quoCount
+    ];
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: size.height * 0.005),

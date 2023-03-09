@@ -14,7 +14,7 @@ const whiteColor = Colors.white;
 const defaultCollectionImg =
     'https://im.wampi.ru/2023/01/02/image43d81c00455799a6.png';
 const defaultBookCoverImg =
-    'http://funart.pro/uploads/posts/2021-07/1626892739_41-funart-pro-p-koshka-v-ochkakh-zhivotnie-krasivo-foto-63.jpg';
+    'https://covertopia.com/wp-content/uploads/2015/05/000227_Alt.jpg';
 const defaultCollectionName = '-';
 const defaultCollectionDesc = '-';
 
