@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -27,45 +28,31 @@ class _SearchPage extends State<SearchPage> {
 
   late Future<List<Book>> _futureBooks;
 
-  List<Book> books = [];
   String query = "c";
-  int id = 0;
 
   @override
   void initState() {
     super.initState();
     _searchController.addListener(_searchBooks);
-    _futureBooks = searchBooks();
   }
 
   void _searchBooks() {
     final queryText = _searchController.text;
     if (queryText.isNotEmpty) {
       query = queryText;
-      _futureBooks = searchBooks();
+      //_futureBooks = searchBooks();
     }
     setState(() {});
   }
 
-  Future<List<Book>> searchBooks() async {
+  Future<List<Book>> searchBooks(int id) async {
     var client = http.Client();
-    final jsonString = json.encode(
-        {
-          "query": query,
-          "genreNames": [],
-          "countries": [],
-          "otherFilters": [],
-          "minRating": 0,
-          "take": 7,
-          "skip": 0
-        });
     try {
-      var response = await client
-          .get(Uri.http(url, '/books/search/', {'take': '10'}),
+      var response = await client.get(
+          Uri.http(url, '/books/search/', {'take': '10'}),
           headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
-        return BookList.fromJson(
-            jsonDecode(utf8.decode(response.bodyBytes)))
+        return BookList.fromJson(jsonDecode(utf8.decode(response.bodyBytes)))
             .foundBooks;
       } else {
         throw Exception();
@@ -75,39 +62,47 @@ class _SearchPage extends State<SearchPage> {
     }
   }
 
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final inheritedWidget = IdInheritedWidget.of(context);
-    id = inheritedWidget.id;
     Size size = MediaQuery.of(context).size;
     // keyboard ScrollViewDismissBehavior on drag
     return FutureBuilder<List<Book>>(
-        future: _futureBooks,
-        builder:
-            (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
+        future: searchBooks(inheritedWidget.id),
+        builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
           if (snapshot.hasData) {
-            books = snapshot.data!;
             return Scaffold(
-              body: SingleChildScrollView(reverse: false, child: Stack(
-                children: [
-                  Row(
-                    children: [
-                      const FilterButton(
-                        pressed: false,
-                      ),
-                      searchField(size),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      const SizedBox(height: 100),
-                      const ScanButton(),
-                      for (int i = 0; i < books.length; ++i)
-                        if (books.length > i) ListBookCard(press: () => context.router.push(BookInfoRoute(bookId: books[i].getId())), book: books[i],)
-                    ],
-                  )
-                ],
-              ),
+              body: SingleChildScrollView(
+                reverse: false,
+                child: Stack(
+                  children: [
+                    Row(
+                      children: [
+                        const FilterButton(
+                          pressed: false,
+                        ),
+                        searchField(size),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        const SizedBox(height: 100),
+                        const ScanButton(),
+                        for (int i = 0; i < snapshot.data!.length; ++i)
+                          if (snapshot.data!.length > i)
+                            ListBookCard(
+                              press: () => (context.router.push(
+                                  BookInfoRoute(bookId: snapshot.data![i].getId())).then(onGoBack)),
+                              book: snapshot.data![i],
+                            )
+                      ],
+                    )
+                  ],
+                ),
               ),
             );
           } else if (snapshot.hasError) {
@@ -125,7 +120,7 @@ class _SearchPage extends State<SearchPage> {
       margin: const EdgeInsets.only(top: 30, bottom: 20, left: 10, right: 20),
       padding: const EdgeInsets.only(left: 20, right: 7, top: 5, bottom: 5),
       width: size.width * 0.71,
-      height:  size.width * 0.15,
+      height: size.width * 0.15,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),

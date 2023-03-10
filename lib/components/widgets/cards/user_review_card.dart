@@ -110,6 +110,12 @@ class _UserReviewCardState extends State<UserReviewCard> {
            // const Divider(color: Colors.white70,),
             const SizedBox(height: 15),
             Text(
+              review.getTitle(),
+              textAlign: TextAlign.justify,
+              style: TextStyle(fontSize: size.width / 22, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 5),
+            Text(
               review.getReviewText(),
               textAlign: TextAlign.justify,
               style: TextStyle(fontSize: size.width / 24, fontWeight: FontWeight.normal),

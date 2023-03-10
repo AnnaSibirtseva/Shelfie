@@ -27,7 +27,7 @@ class _UserQuotesPage extends State<UserQuotesPage> {
   Future<UserQuotesList> getQuotesList(int id) async {
     var client = http.Client();
     try {
-      var response = await client.get(Uri.http(url, '/interactions/quotes/'), headers: {'userId': id.toString()});
+      var response = await client.get(Uri.http(url, '/interactions/quotes/', {'take': '50'}), headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
         return UserQuotesList.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
       } else {

@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
 
 import '../../../../../models/book_status.dart';
 import '../../../../../models/book.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import '../../../../../models/inherited_id.dart';
 
 class StatusTabBar extends StatefulWidget {
   final Book book;
@@ -17,6 +23,7 @@ class _StackOverState extends State<StatusTabBar>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   List tabsText = ['Буду', 'Читаю', 'Перестал', 'Прочитал', 'Не читаю'];
+  late int id;
 
   @override
   void initState() {
@@ -25,12 +32,37 @@ class _StackOverState extends State<StatusTabBar>
         vsync: this,
         initialIndex: getStateIcon(widget.book.getStatus()));
     super.initState();
-    _tabController.addListener(() {});
+    _tabController.addListener(() async {
+      await changeStatus(getStatFromIndex(_tabController.index));
+    });
+  }
+
+  Future<void> changeStatus(String status) async {
+    var client = http.Client();
+    final jsonString =
+        json.encode({"bookId": widget.book.getId(), "bookStatus": status});
+    try {
+      var response = await client.post(
+          Uri.http(url, '/interactions/books/update-status'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            'userId': id.toString()
+          },
+          body: jsonString);
+      if (response.statusCode != 200) {
+        //TODO: show message
+      }
+    } finally {
+      client.close();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    final inheritedWidget = IdInheritedWidget.of(context);
+    id = inheritedWidget.id;
 
     return Container(
       height: size.height * 0.1,
@@ -84,6 +116,21 @@ class _StackOverState extends State<StatusTabBar>
         return 3;
       case BookStatus.None:
         return 4;
+    }
+  }
+
+  String getStatFromIndex(int index) {
+    switch (index) {
+      case 0:
+        return 'Planning';
+      case 1:
+        return 'InProgress';
+      case 2:
+        return 'Dropped';
+      case 3:
+        return 'Finished';
+      default:
+        return 'None';
     }
   }
 }

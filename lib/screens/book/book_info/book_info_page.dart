@@ -56,11 +56,10 @@ class _BookInfoPage extends State<BookInfoPage> {
         builder: (BuildContext context, AsyncSnapshot<Book> snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
-              body: Center(
-                child: SingleChildScrollView(
+               body: SingleChildScrollView(
                   reverse: false,
                   child: Body(book: snapshot.data!),
-                ),
+
               ),
             );
           } else if (snapshot.hasError) {

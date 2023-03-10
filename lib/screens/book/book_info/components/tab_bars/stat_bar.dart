@@ -82,14 +82,14 @@ class _StackOverState extends State<BookStatisticsTabBar>
 
   @override
   Widget build(BuildContext context) {
-    return buildInteractionsTabBar(context, _reviewList, _quoteList);
+    return Flexible(child: buildInteractionsTabBar(context, _reviewList, _quoteList));
   }
 
   Widget buildInteractionsTabBar(BuildContext context,
       BookReviewList reviewList, BookQuotesList quotesList) {
     Size size = MediaQuery.of(context).size;
-    return Flexible(child: SizedBox(
-      height: size.height * 0.5,
+    return SizedBox(
+      height: size.height * 0.6,
       width: size.width,
       //padding: const EdgeInsets.symmetric(vertical: 13),
       child: Column(
@@ -141,6 +141,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
                 SingleChildScrollView(
                   reverse: false,
                   child: Column(
+
                     children: [
                       for (BookQuote quote in quotesList.quotes)
                         QuoteCard(quote: quote)
@@ -152,6 +153,6 @@ class _StackOverState extends State<BookStatisticsTabBar>
           ),
         ],
       ),
-    ));
+    );
   }
 }

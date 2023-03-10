@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -9,7 +11,9 @@ import 'package:shelfie/components/widgets/loading.dart';
 import 'package:shelfie/models/user.dart';
 import '../../components/routes/route.gr.dart';
 import '../../models/inherited_id.dart';
-import 'components/body.dart';
+import 'components/menu/menu.dart';
+import 'components/profile_head.dart';
+import 'components/stats/statistic_row.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -19,7 +23,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePage extends State<ProfilePage> {
-
   @override
   void initState() {
     super.initState();
@@ -47,7 +50,8 @@ class _ProfilePage extends State<ProfilePage> {
         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
-                body: SingleChildScrollView(reverse: false, child: Body(user: snapshot.data!)));
+                body: SingleChildScrollView(
+                    reverse: false, child: buildBody(snapshot.data!)));
           } else if (snapshot.hasError) {
             return WebErrorWidget(errorMessage: snapshot.error.toString());
           } else {
@@ -55,5 +59,66 @@ class _ProfilePage extends State<ProfilePage> {
             return const LoadingWidget();
           }
         });
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
+  }
+
+  Widget buildBody(User user) {
+    List mainRoutes = [
+      // user books page
+      () => context.router.push(const UserBooksRoute()),
+      // user reviews page
+      () => context.router
+          .push(const UserReviewRoute())
+          .then((value) => setState(() {})),
+      // user quotes page
+      () => context.router.push(const UserQuotesRoute()).then(onGoBack),
+      // user collections page
+      () => context.router.push(const UserCollectionsRoute()),
+      // user achievements page
+      () => {},
+      // user stat page
+      () => {}
+    ];
+    List extraRoutes = [
+      // settings page
+      () => {},
+      // about page
+      () => {},
+      // log out page
+      () => {}
+    ];
+
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.only(
+          left: 15, right: 15, top: 15, bottom: size.height * 0.1),
+      height: size.height,
+      width: size.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          ProfileHead(user: user),
+          StatisticRow(userStat: user.getStatistics()),
+          Padding(
+            padding: const EdgeInsets.only(top: 15, left: 10),
+            child: Text('Общее'.toUpperCase(),
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+          ),
+          Menu(titles: mainUserMenu, routes: mainRoutes),
+          Padding(
+            padding: const EdgeInsets.only(top: 15, left: 10),
+            child: Text('дополнительно'.toUpperCase(),
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+          ),
+          Menu(titles: extraUserMenu, routes: extraRoutes),
+        ],
+      ),
+    );
   }
 }

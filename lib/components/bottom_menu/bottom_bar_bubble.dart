@@ -204,9 +204,9 @@ class _BottomBarBubbleState extends State<BottomBarBubble>
   }
 
   Future _onChangeIndex(int index) async {
-    if (index == _selectedIndex) {
-      return;
-    }
+    // if (index == _selectedIndex) {
+    //   return;
+    // }
 
     iconsKey[_selectedIndex].currentState?.updateSelect(false);
     await Future.delayed(const Duration(milliseconds: 200));
