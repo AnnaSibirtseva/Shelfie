@@ -63,6 +63,9 @@ class _SearchPage extends State<SearchPage> {
   }
 
   FutureOr onGoBack(dynamic value) {
+    context.router.navigate(const SearchRouter());
+    context.router.pushNamed('/home');
+    context.router.push(const SearchRouter());
     setState(() {});
   }
 

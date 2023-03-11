@@ -16,18 +16,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-  int _selectedTab = 0;
+  late BuildContext curContext;
+
   static const List<PageRouteInfo<dynamic>> _routes = [
     CollectionsRouter(),
     SearchRouter(),
     ProfileRouter()
   ];
 
-  void onSelectTab(int index) {
-    if (_selectedTab == index) return;
-    setState(() {
-      _selectedTab = index;
-    });
+  void _selectTab(int index) {
+    if ((index == curContext.tabsRouter.activeIndex)) {
+      curContext.router.navigate(_routes[index]);
+      curContext.router.pushNamed('/home');
+      curContext.router.push(_routes[index]);
+      setState(() {
+      });
+    } else {
+      //curContext.tabsRouter.setActiveIndex(index);
+    }
   }
 
   @override
@@ -39,10 +45,12 @@ class _HomePage extends State<HomePage> {
             routes: _routes,
             builder: (context, child, animation) {
               final tabsRouter = context.tabsRouter;
+              curContext = context;
               return Scaffold(
                 body: child,
                 bottomNavigationBar: BottomBarBubble(
                   onSelect: tabsRouter.setActiveIndex,
+                  onSelectAgain: _selectTab,
                   selectedIndex: tabsRouter.activeIndex,
                   items: [
                     BottomBarItem(iconData: Icons.home_rounded),

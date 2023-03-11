@@ -13,6 +13,7 @@ class BottomBarBubble extends StatefulWidget {
     this.bubbleSize = 10,
     this.color = primaryColor,
     this.onSelect,
+    this.onSelectAgain,
   }) : super(key: key);
 
   final int selectedIndex;
@@ -21,6 +22,7 @@ class BottomBarBubble extends StatefulWidget {
   final Color color;
   final ValueChanged<int>? onSelect;
   final List<BottomBarItem> items;
+  final ValueChanged<int>? onSelectAgain;
 
   @override
   State<BottomBarBubble> createState() => _BottomBarBubbleState();
@@ -67,7 +69,7 @@ class _BottomBarBubbleState extends State<BottomBarBubble>
     if (widget.selectedIndex >= _iconCount || widget.selectedIndex < 0) {
       throw RangeError('selectedIndex is out of range');
     }
-    _onChangeIndex(widget.selectedIndex);
+    //_onChangeIndex(widget.selectedIndex);
   }
 
   @override
@@ -204,9 +206,10 @@ class _BottomBarBubbleState extends State<BottomBarBubble>
   }
 
   Future _onChangeIndex(int index) async {
-    // if (index == _selectedIndex) {
-    //   return;
-    // }
+    if (index == _selectedIndex) {
+      widget.onSelectAgain?.call(_selectedIndex);
+      return;
+    }
 
     iconsKey[_selectedIndex].currentState?.updateSelect(false);
     await Future.delayed(const Duration(milliseconds: 200));
