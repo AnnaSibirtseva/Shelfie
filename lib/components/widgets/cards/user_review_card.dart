@@ -21,6 +21,7 @@ class UserReviewCard extends StatefulWidget {
 class _UserReviewCardState extends State<UserReviewCard> {
   //final VoidCallback press;
   late UserReview review;
+  bool showFlag = false;
 
   @override
   void initState() {
@@ -49,6 +50,7 @@ class _UserReviewCardState extends State<UserReviewCard> {
 
   @override
   Widget build(BuildContext context) {
+    String revText = review.getReviewText();
     Size size = MediaQuery.of(context).size;
     final inheritedWidget = IdInheritedWidget.of(context);
     return Dismissible(
@@ -143,18 +145,41 @@ class _UserReviewCardState extends State<UserReviewCard> {
             // const Divider(color: Colors.white70,),
             const SizedBox(height: 15),
             Text(
-              review.getTitle(),
+              review.getReviewTitle(),
               textAlign: TextAlign.justify,
               style: TextStyle(
                   fontSize: size.width / 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 5),
             Text(
-              review.getReviewText(),
+              revText,
               textAlign: TextAlign.justify,
+              maxLines: showFlag ? null : 7,
               style: TextStyle(
                   fontSize: size.width / 24, fontWeight: FontWeight.normal),
             ),
+            if (revText != '-' && revText.isNotEmpty)
+              InkWell(
+                  onTap: () {
+                    setState(() {
+                      showFlag = !showFlag;
+                    });
+                  },
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(showFlag ? "Свернуть" : "Развернуть",
+                              style: const TextStyle(
+                                  color: primaryColor,
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold))
+                        ],
+                      ),
+                    ],
+                  )),
           ],
         ),
       ),

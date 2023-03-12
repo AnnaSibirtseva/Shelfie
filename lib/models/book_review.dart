@@ -19,6 +19,10 @@ class BookReview {
     );
   }
 
+  String getReviewTitle() {
+    return _reviewTitle;
+  }
+
   String getReviewText() {
     return _reviewText;
   }

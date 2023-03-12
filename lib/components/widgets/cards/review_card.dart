@@ -3,7 +3,7 @@ import 'package:shelfie/components/constants.dart';
 
 import '../../../models/book_review.dart';
 
-class ReviewCard extends StatelessWidget {
+class ReviewCard extends StatefulWidget {
   //final VoidCallback press;
   final BookReview review;
 
@@ -14,8 +14,15 @@ class ReviewCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<ReviewCard> createState() => _ReviewCardState();
+}
 
+class _ReviewCardState extends State<ReviewCard> {
+  bool showFlag = false;
+
+  @override
+  Widget build(BuildContext context) {
+    String revText = widget.review.getReviewText();
     Size size = MediaQuery.of(context).size;
     return InkWell(
       //onTap: press,
@@ -39,14 +46,16 @@ class ReviewCard extends StatelessWidget {
                           backgroundColor: primaryColor,
                           child: CircleAvatar(
                             backgroundImage: NetworkImage(
-                              review.getReviewAuthor().getProfileImageUrl(),
+                              widget.review
+                                  .getReviewAuthor()
+                                  .getProfileImageUrl(),
                             ),
                             maxRadius: 25,
                           )),
                       const SizedBox(width: 15),
                       Expanded(
                           child: Text(
-                        review.getReviewAuthor().getName(),
+                        widget.review.getReviewAuthor().getName(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -63,7 +72,7 @@ class ReviewCard extends StatelessWidget {
                       size: 25,
                     ),
                     Text(
-                      review.getReviewRating().toString(),
+                      widget.review.getReviewRating().toString(),
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, color: primaryColor),
                     ),
@@ -71,11 +80,44 @@ class ReviewCard extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
+            //const Divider(color: primaryColor, thickness: 1.5),
             Text(
-              review.getReviewText(),
+              widget.review.getReviewTitle(),
               textAlign: TextAlign.justify,
+              style: TextStyle(
+                  fontSize: size.width / 20, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 5),
+            Text(
+              widget.review.getReviewText(),
+              textAlign: TextAlign.justify,
+              maxLines: showFlag ? null : 7,
+              style: TextStyle(
+                  fontSize: size.width / 28, fontWeight: FontWeight.normal),
+            ),
+            if (revText != '-' && revText.isNotEmpty)
+              InkWell(
+                  onTap: () {
+                    setState(() {
+                      showFlag = !showFlag;
+                    });
+                  },
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(showFlag ? "Свернуть" : "Развернуть",
+                              style: const TextStyle(
+                                  color: primaryColor,
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold))
+                        ],
+                      ),
+                    ],
+                  )),
           ],
         ),
       ),

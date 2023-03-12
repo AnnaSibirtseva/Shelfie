@@ -1,18 +1,23 @@
 class UserReview {
   late int _id;
   late int _bookId;
+  late String _reviewTitle;
   late String _bookTitle;
   late String _bookCoverUrl;
   late List<String> _bookAuthors;
   late String _text;
   late double _rating;
 
-  UserReview(this._id, this._bookId, this._bookTitle, this._bookCoverUrl, this._bookAuthors, this._text, this._rating);
+  UserReview(this._id, this._bookId, this._bookTitle, this._bookCoverUrl,
+      this._bookAuthors, this._text, this._reviewTitle, this._rating);
 
   factory UserReview.fromJson(dynamic json) {
-    String reviewText = '-';
-    if ( json['reviewText'] != null) {
+    String reviewText = '-', reviewTitle = '-';
+    if (json['reviewText'] != null) {
       reviewText = json['reviewText'] as String;
+    }
+    if (json['reviewTitle'] != null) {
+      reviewTitle = json['reviewTitle'] as String;
     }
     return UserReview(
       json['id'] as int,
@@ -21,8 +26,13 @@ class UserReview {
       json['bookCoverImageUrl'] as String,
       (json['bookAuthors'] as List).map((e) => e as String).toList(),
       reviewText,
+      reviewTitle,
       json['rating'].toDouble(),
     );
+  }
+
+  String getReviewTitle() {
+    return _reviewTitle;
   }
 
   int getId() {
