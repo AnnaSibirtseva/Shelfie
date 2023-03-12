@@ -98,23 +98,22 @@ class Body extends StatelessWidget {
           children: [
             BookMainInfo(book: book),
             Flexible(
-                child: StatisticRow(
-                  book: book,
-                  quoCount: quoteList.count,
-                  revCount: reviewList.count,
-                )),
-            StatusTabBar(book: book),
-            Flexible(
-                child: Column(
-                  children: [
-                    BookDesc(desc: book.getDesc() == null ? '-' : book.getDesc()!),
-                    BookStatisticsTabBar(
-                      reviewList: reviewList,
-                      quoteList: quoteList,
-                      book: book,
-                    )
-                  ],
-                )),
+              child: Column(
+                children: [
+                  StatisticRow(
+                    book: book,
+                    quoCount: quoteList.count,
+                    revCount: reviewList.count,
+                  ),
+                  StatusTabBar(book: book),
+                  BookDesc(desc: book.getDesc() == null ? '-' : book.getDesc()!),
+                  BookStatisticsTabBar(
+                    reviewList: reviewList,
+                    quoteList: quoteList,
+                    book: book,
+                  )
+                ],
+              )),
           ],
         ));
   }

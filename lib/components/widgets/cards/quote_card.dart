@@ -7,6 +7,8 @@ import 'package:shelfie/models/inherited_id.dart';
 import 'dart:convert';
 
 import '../../../models/book_quote.dart';
+import '../../image_constants.dart';
+import '../dialogs/nothing_found_dialog.dart';
 
 class QuoteCard extends StatefulWidget {
   final BookQuote quote;
@@ -30,8 +32,7 @@ class _QuoteCardState extends State<QuoteCard> {
 
   Future<void> saveQuote(int id) async {
     var client = http.Client();
-    final jsonString =
-    json.encode({});
+    final jsonString = json.encode({});
     try {
       var response = await client.post(
           Uri.https(url, '/interactions/quotes/${quote.getId()}/save'),
@@ -41,7 +42,40 @@ class _QuoteCardState extends State<QuoteCard> {
           },
           body: jsonString);
       if (response.statusCode != 200) {
-        //TODO: show message
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const NothingFoundDialog(
+                  'Что-то пошло не так! Цитата не была добавлена.',
+                  warningGif
+              );
+            });
+      }
+    } finally {
+      client.close();
+    }
+  }
+
+  Future<void> unsaveQuote(int id) async {
+    var client = http.Client();
+    final jsonString = json.encode({});
+    try {
+      var response = await client.delete(
+          Uri.https(url, '/interactions/quotes/${quote.getId()}/unsave'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            'userId': id.toString()
+          },
+          body: jsonString);
+      if (response.statusCode != 200) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const NothingFoundDialog(
+                  'Что-то пошло не так! Цитата не была удалена из сохраненных.',
+                  warningGif
+              );
+            });
       }
     } finally {
       client.close();
@@ -51,6 +85,8 @@ class _QuoteCardState extends State<QuoteCard> {
   Future<void> onQuoteClick() async {
     if (!quote.isQuoteSaved()) {
       await saveQuote(id);
+    } else {
+      await unsaveQuote(id);
     }
     quote.reverseQuoteSaved();
     setState(() {});
@@ -85,20 +121,20 @@ class _QuoteCardState extends State<QuoteCard> {
               textAlign: TextAlign.justify,
             ),
             Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const SizedBox(height: 15),
-                  GestureDetector(
-                    onTap: onQuoteClick,
-                    child: SizedBox(
-                      height: 30,
-                      child: quote.isQuoteSaved()
-                          ? Image.asset('assets/images/unsave_quote.png')
-                          : Image.asset('assets/images/save_quote.png'),
-                    ),
-                  )
-                ],
-              ),
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const SizedBox(height: 15),
+                GestureDetector(
+                  onTap: onQuoteClick,
+                  child: SizedBox(
+                    height: 30,
+                    child: quote.isQuoteSaved()
+                        ? Image.asset('assets/images/unsave_quote.png')
+                        : Image.asset('assets/images/save_quote.png'),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),

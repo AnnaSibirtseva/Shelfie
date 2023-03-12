@@ -3,8 +3,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/components/widgets/cards/quote_card.dart';
-import 'package:shelfie/components/widgets/error.dart';
-import 'package:shelfie/components/widgets/loading.dart';
 import 'package:shelfie/models/book_quote.dart';
 
 import '../../../../../components/widgets/cards/review_card.dart';
@@ -82,17 +80,14 @@ class _StackOverState extends State<BookStatisticsTabBar>
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(child: buildInteractionsTabBar(context, _reviewList, _quoteList));
+    return  buildInteractionsTabBar(context, _reviewList, _quoteList);
   }
 
   Widget buildInteractionsTabBar(BuildContext context,
       BookReviewList reviewList, BookQuotesList quotesList) {
-    Size size = MediaQuery.of(context).size;
-    return SizedBox(
-      height: size.height * 0.6,
-      width: size.width,
-      //padding: const EdgeInsets.symmetric(vertical: 13),
+    return Expanded(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             height: 45,
