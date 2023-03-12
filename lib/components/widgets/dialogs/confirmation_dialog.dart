@@ -6,8 +6,9 @@ import '../../constants.dart';
 
 class ConfirmationDialog extends Dialog {
   final String text;
+  final VoidCallback press;
 
-  const ConfirmationDialog({Key? key, required this.text}) : super(key: key);
+  const ConfirmationDialog({Key? key, required this.text, required this.press}) : super(key: key);
 
   @override
   Dialog build(BuildContext context) {
@@ -61,14 +62,15 @@ class ConfirmationDialog extends Dialog {
                 children: [
                   DialogButton(
                       press: () {
-                        context.router.pop();
+                        context.router.pop(false);
                       },
+                      isAsync: false,
                       reverse: false,
                       text: 'Отменить'),
                   const SizedBox(
                     width: 10,
                   ),
-                  DialogButton(press: () {}, reverse: true, text: 'Удалить'),
+                  DialogButton(press: press, isAsync: true, reverse: true, text: 'Удалить'),
                 ],
               ),
             ],

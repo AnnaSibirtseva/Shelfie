@@ -43,7 +43,7 @@ class _StackOverState extends State<StatusTabBar>
         json.encode({"bookId": widget.book.getId(), "bookStatus": status});
     try {
       var response = await client.post(
-          Uri.http(url, '/interactions/books/update-status'),
+          Uri.https(url, '/interactions/books/update-status'),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
             'userId': id.toString()

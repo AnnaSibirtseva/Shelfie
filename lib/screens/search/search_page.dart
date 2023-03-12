@@ -49,7 +49,7 @@ class _SearchPage extends State<SearchPage> {
     var client = http.Client();
     try {
       var response = await client.get(
-          Uri.http(url, '/books/search/', {'take': '10'}),
+          Uri.https(url, '/books/search/', {'take': '10'}),
           headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
         return BookList.fromJson(jsonDecode(utf8.decode(response.bodyBytes)))

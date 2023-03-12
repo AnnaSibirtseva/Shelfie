@@ -79,7 +79,7 @@ class ListBookCard extends StatelessWidget {
                           children: [
                             ratingWidget(),
                             const Spacer(),
-                            StatusWidget(bookState: book.getStatus()),
+                            StatusWidget(bookState: book.getStatus(), bookId: book.getId(),),
                           ],
                         ),
                       ),

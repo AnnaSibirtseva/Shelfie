@@ -35,7 +35,7 @@ class _BookInfoPage extends State<BookInfoPage> {
   Future<Book> getAllBookInfo(int id) async {
     var client = http.Client();
     try {
-      var response = await client.get(Uri.http(url, '/books/books/$bookId'),
+      var response = await client.get(Uri.https(url, '/books/books/$bookId'),
           headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
         return Book.allInfoFromJson(

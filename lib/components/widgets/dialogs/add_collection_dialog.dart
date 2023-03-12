@@ -79,12 +79,13 @@ class AddCollectionDialog extends Dialog {
                       press: () {
                         context.router.pop();
                       },
+                      isAsync: false,
                       reverse: true,
                       text: 'Отменить'),
                   const SizedBox(
                     width: 10,
                   ),
-                  DialogButton(press: () {}, reverse: false, text: 'Добавить'),
+                  DialogButton(press: () {}, reverse: false, text: 'Добавить', isAsync: false,),
                 ],
               ),
             ],

@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
+import 'package:http/http.dart' as http;
+import 'package:shelfie/models/inherited_id.dart';
+import 'dart:convert';
 
 import '../../../models/book_quote.dart';
 
@@ -15,6 +20,7 @@ class QuoteCard extends StatefulWidget {
 class _QuoteCardState extends State<QuoteCard> {
   //final VoidCallback press;
   late BookQuote quote;
+  late int id;
 
   @override
   void initState() {
@@ -22,9 +28,29 @@ class _QuoteCardState extends State<QuoteCard> {
     super.initState();
   }
 
-  void onQuoteClick() {
+  Future<void> saveQuote(int id) async {
+    var client = http.Client();
+    final jsonString =
+    json.encode({});
+    try {
+      var response = await client.post(
+          Uri.https(url, '/interactions/quotes/${quote.getId()}/save'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            'userId': id.toString()
+          },
+          body: jsonString);
+      if (response.statusCode != 200) {
+        //TODO: show message
+      }
+    } finally {
+      client.close();
+    }
+  }
+
+  Future<void> onQuoteClick() async {
     if (!quote.isQuoteSaved()) {
-      // add to quotes
+      await saveQuote(id);
     }
     quote.reverseQuoteSaved();
     setState(() {});
@@ -33,6 +59,8 @@ class _QuoteCardState extends State<QuoteCard> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final inheritedWidget = IdInheritedWidget.of(context);
+    id = inheritedWidget.id;
     return InkWell(
       //onTap: press,
       child: Container(

@@ -6,12 +6,14 @@ class DialogButton extends StatelessWidget {
   final String text;
   final bool reverse;
   final VoidCallback press;
+  final bool isAsync;
 
   const DialogButton({
     Key? key,
     required this.text,
     required this.press,
-    required this.reverse,
+    required this.reverse, 
+    required this.isAsync,
   }) : super(key: key);
 
   @override
@@ -39,7 +41,7 @@ class DialogButton extends StatelessWidget {
           primary: reverse ? whiteColor : primaryColor,
           side: BorderSide(width: reverse ? 1 : 0, color: primaryColor),
           padding: const EdgeInsets.symmetric(horizontal: 10)),
-      onPressed: press,
+      onPressed: isAsync ? press : () => press,
     );
   }
 }

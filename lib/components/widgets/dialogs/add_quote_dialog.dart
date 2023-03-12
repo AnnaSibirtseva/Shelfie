@@ -96,6 +96,7 @@ class AddQuoteDialog extends Dialog {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   DialogButton(
+                  isAsync: false,
                       press: () {
                         context.router.pop();
                       },
@@ -104,7 +105,7 @@ class AddQuoteDialog extends Dialog {
                   const SizedBox(
                     width: 10,
                   ),
-                  DialogButton(press: () {}, reverse: false, text: 'Добавить'),
+                  DialogButton(press: () {}, isAsync: false, reverse: false, text: 'Добавить'),
                 ],
               ),
             ],

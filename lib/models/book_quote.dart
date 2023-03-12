@@ -21,6 +21,10 @@ class BookQuote {
     return _isSaved;
   }
 
+  int getId() {
+    return _id;
+  }
+
   void reverseQuoteSaved() {
     _isSaved = !_isSaved;
   }

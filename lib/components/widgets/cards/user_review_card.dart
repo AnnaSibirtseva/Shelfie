@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
 
-import '../../../models/book_Review.dart';
 import '../../../models/user_review.dart';
+import 'package:auto_route/auto_route.dart';
 import '../dialogs/confirmation_dialog.dart';
+import 'package:http/http.dart' as http;
+import 'package:shelfie/models/inherited_id.dart';
+import 'dart:convert';
+import 'dart:io';
 
 class UserReviewCard extends StatefulWidget {
   final UserReview review;
@@ -24,17 +28,42 @@ class _UserReviewCardState extends State<UserReviewCard> {
     super.initState();
   }
 
+  Future<void> deleteReview(int id) async {
+    var client = http.Client();
+    final jsonString = json.encode({});
+    try {
+      var response = await client.delete(
+          Uri.https(url, '/interactions/reviews/${review.getId()}/remove'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            'userId': id.toString()
+          },
+          body: jsonString);
+      if (response.statusCode != 200) {
+        //TODO: show message
+      }
+    } finally {
+      client.close();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final inheritedWidget = IdInheritedWidget.of(context);
     return Dismissible(
-      key: Key(review.getReviewText()),
+      key: Key(review.getId().toString()),
       confirmDismiss: (DismissDirection direction) async {
         return await showDialog(
           context: context,
           builder: (BuildContext context) {
-            return const ConfirmationDialog(
-                text: 'Вы действительно хотите удалить эту рецензию?');
+            return ConfirmationDialog(
+              text: 'Вы действительно хотите удалить эту рецензию?',
+              press: () async {
+                await deleteReview(inheritedWidget.id);
+                context.router.pop(true);
+              },
+            );
           },
         );
       },
@@ -59,7 +88,7 @@ class _UserReviewCardState extends State<UserReviewCard> {
                   height: size.height * 0.09,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color:primaryColor),
+                    border: Border.all(color: primaryColor),
                     image: DecorationImage(
                       image: NetworkImage(review.getReviewImg()),
                       fit: BoxFit.cover,
@@ -69,26 +98,29 @@ class _UserReviewCardState extends State<UserReviewCard> {
                 const SizedBox(width: 10),
                 Expanded(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '"' + review.getTitle() + '"',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: size.width / 24,  fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          review.getAuthors(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: size.width / 27,  fontWeight: FontWeight.w300),
-                        ),
-                      ],
-                    )
-                ),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '"' + review.getTitle() + '"',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontSize: size.width / 24,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      review.getAuthors(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontSize: size.width / 27,
+                          fontWeight: FontWeight.w300),
+                    ),
+                  ],
+                )),
                 const Spacer(),
                 Row(
                   children: [
@@ -100,25 +132,28 @@ class _UserReviewCardState extends State<UserReviewCard> {
                     Text(
                       review.getReviewRating().toString(),
                       style: const TextStyle(
-                        fontSize: 18,
-                          fontWeight: FontWeight.bold, color: primaryColor),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
                     ),
                   ],
                 )
               ],
             ),
-           // const Divider(color: Colors.white70,),
+            // const Divider(color: Colors.white70,),
             const SizedBox(height: 15),
             Text(
               review.getTitle(),
               textAlign: TextAlign.justify,
-              style: TextStyle(fontSize: size.width / 22, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: size.width / 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 5),
             Text(
               review.getReviewText(),
               textAlign: TextAlign.justify,
-              style: TextStyle(fontSize: size.width / 24, fontWeight: FontWeight.normal),
+              style: TextStyle(
+                  fontSize: size.width / 24, fontWeight: FontWeight.normal),
             ),
           ],
         ),
@@ -140,5 +175,4 @@ class _UserReviewCardState extends State<UserReviewCard> {
       ),
     );
   }
-
 }

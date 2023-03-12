@@ -40,7 +40,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
     var client = http.Client();
     try {
       var response = await client.get(
-          Uri.http(url, '/interactions/reviews/${widget.book.getId()}',
+          Uri.https(url, '/interactions/reviews/${widget.book.getId()}',
               {'take': take.toString(), 'skip': skip.toString()}),
           headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
@@ -58,7 +58,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
     var client = http.Client();
     try {
       var response = await client.get(
-          Uri.http(url, '/interactions/quotes/${widget.book.getId()}',
+          Uri.https(url, '/interactions/quotes/${widget.book.getId()}',
               {'take': take.toString(), 'skip': skip.toString()}),
           headers: {'userId': id.toString()});
       if (response.statusCode == 200) {

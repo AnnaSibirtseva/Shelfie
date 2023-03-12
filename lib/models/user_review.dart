@@ -25,6 +25,10 @@ class UserReview {
     );
   }
 
+  int getId() {
+    return _id;
+  }
+
   String getReviewText() {
     return _text;
   }

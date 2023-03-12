@@ -30,7 +30,7 @@ class _CollectionsPage extends State<CollectionsPage> {
     var client = http.Client();
     try {
       var response = await client
-          .get(Uri.http(url, '/shelves/collections/common', {'take': '10'}));
+          .get(Uri.https(url, '/shelves/collections/common', {'take': '10'}));
       if (response.statusCode == 200) {
         return RecommendedCollections.fromJson(
                 jsonDecode(utf8.decode(response.bodyBytes)))
