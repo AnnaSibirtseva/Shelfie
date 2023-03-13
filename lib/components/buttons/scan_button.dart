@@ -73,7 +73,8 @@ class ScanButton extends StatelessWidget {
             builder: (BuildContext context) =>
             const NothingFoundDialog(
                 'Похоже, что вы отсканировали не штрих-код.\nПопробуйте еще раз.',
-                barcodeGif));
+                barcodeGif,
+                'Не найдено'));
       } else {
         showDialog(
           //if set to true allow to close popup by tapping out of the popup

@@ -1,6 +1,4 @@
 // https://www.flaticon.com/free-animated-icon/search_8722522?term=book&page=1&position=7&origin=search&related_id=8722522
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -10,9 +8,10 @@ import '../../text_fields/input_text_field.dart';
 
 class NothingFoundDialog extends Dialog {
   final String text;
+  final String title;
   final String imageUrl;
 
-  const NothingFoundDialog(this.text, this.imageUrl, {Key? key}) : super(key: key);
+  const NothingFoundDialog(this.text, this.imageUrl, this.title, {Key? key}) : super(key: key);
 
   @override
   Dialog build(BuildContext context) {
@@ -36,7 +35,7 @@ class NothingFoundDialog extends Dialog {
                     size: size.width / 15,
                   ),
                   const Spacer(),
-                  Text('Не найдено',
+                  Text(title,
                       style: TextStyle(
                           fontFamily: 'VelaSansExtraBold',
                           fontSize: size.width / 20,

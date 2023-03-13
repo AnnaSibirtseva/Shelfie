@@ -47,7 +47,7 @@ class _QuoteCardState extends State<QuoteCard> {
             context: context,
             builder: (BuildContext context) {
               return const NothingFoundDialog(
-                  'Что-то пошло не так! Цитата не была добавлена.', warningGif);
+                  'Что-то пошло не так! Цитата не была добавлена.', warningGif, 'Ошибка');
             });
       }
     } finally {
@@ -72,7 +72,9 @@ class _QuoteCardState extends State<QuoteCard> {
             builder: (BuildContext context) {
               return const NothingFoundDialog(
                   'Что-то пошло не так! Цитата не была удалена из сохраненных.',
-                  warningGif);
+                  warningGif,
+                'Ошибка'
+              );
             });
       }
     } finally {

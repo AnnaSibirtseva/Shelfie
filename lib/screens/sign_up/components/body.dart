@@ -15,11 +15,9 @@ import '../../log_in/components/background.dart';
 
 import 'package:shelfie/components/constants.dart';
 import 'package:http/http.dart' as http;
-import 'package:shelfie/models/inherited_id.dart';
 import 'dart:convert';
 
 class Body extends StatefulWidget {
-
   const Body({Key? key}) : super(key: key);
 
   @override
@@ -27,8 +25,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  late String _email;
-  late String _name;
+  late String _email = '';
+  late String _name = '';
   final PasswordTextField passwordField = PasswordTextField();
 
   Future<void> addUser() async {
@@ -39,18 +37,17 @@ class _BodyState extends State<Body> {
       "name": _name
     });
     try {
-      var response = await client.post(
-          Uri.https(url, '/users/user/add'),
-          headers: {
-            HttpHeaders.contentTypeHeader: 'application/json'
-          },
+      var response = await client.post(Uri.https(url, '/users/user/add'),
+          headers: {HttpHeaders.contentTypeHeader: 'application/json'},
           body: jsonString);
       if (response.statusCode != 200) {
         showDialog(
             context: context,
             builder: (BuildContext context) {
               return const NothingFoundDialog(
-                  'Что-то пошло не так! Не удалось зарегестрировать пользователя.', warningGif);
+                  'Что-то пошло не так! Не удалось зарегестрировать пользователя.',
+                  warningGif,
+                  'Ошибка');
             });
       }
     } finally {
@@ -65,15 +62,12 @@ class _BodyState extends State<Body> {
       "password": passwordField.getPassword(),
     });
     try {
-      var response = await client.post(
-          Uri.https(url, '/users/user/login'),
-          headers: {
-            HttpHeaders.contentTypeHeader: 'application/json'
-          },
+      var response = await client.post(Uri.https(url, '/users/user/login'),
+          headers: {HttpHeaders.contentTypeHeader: 'application/json'},
           body: jsonString);
       if (response.statusCode == 200) {
-        return User.userIdFromJson(
-            jsonDecode(utf8.decode(response.bodyBytes))).getId();
+        return User.userIdFromJson(jsonDecode(utf8.decode(response.bodyBytes)))
+            .getId();
       } else {
         throw Exception('Не удалось зайти в приложение');
       }
@@ -95,23 +89,59 @@ class _BodyState extends State<Body> {
                   children: <Widget>[
                     SizedBox(height: size.height * 0.05),
                     RoundedTextField(
-                        onChanged: (String value) {_name = value;},
+                        onChanged: (String value) {
+                          _name = value;
+                        },
                         hintText: 'Логин',
                         icon: Icons.person_outline_rounded),
                     RoundedTextField(
-                        onChanged: (String value) {_email = value;},
+                        onChanged: (String value) {
+                          _email = value;
+                        },
                         hintText: 'Почта',
                         icon: Icons.email_outlined),
                     passwordField,
-                    RoundedButton(text: 'Зарегистрироваться', press: () async {
-                      await addUser();
-                      int id = await loginUser();
-                      context.router.push(HomeRoute(userId: id));
-                      //context.router.pop(true);
-                    }),
+                    RoundedButton(
+                        text: 'Зарегистрироваться',
+                        press: () async {
+                          if (checkConstraints()) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    backgroundColor: primaryColor,
+                                    content:
+                                    Text("Выполняется регистрация аккаунта...")));
+                            await addUser();
+                            int id = await loginUser();
+                            context.router.push(HomeRoute(userId: id));
+                          }
+                          //context.router.pop(true);
+                        }),
                     SizedBox(height: size.height * 0.05),
                     const AlreadyHaveAnAccountCheck(login: false),
                   ],
                 ))));
+  }
+
+  bool checkConstraints() {
+    if (_name.length < minName || _name.length > maxName) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Color(0xFFE57373),
+          content: Text("Имя должно содержать от 2 до 30 символов")));
+      return false;
+    }
+    if (_email.length < minMail || _email.length > maxMail) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Color(0xFFE57373),
+          content: Text("Почта должна содержать от 7 до 100 символов")));
+      return false;
+    }
+    if (passwordField.getPassword().length < minPassword ||
+        passwordField.getPassword().length > maxPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Color(0xFFE57373),
+          content: Text("Пароль должно состоять из 8-30 символов")));
+      return false;
+    }
+    return true;
   }
 }
