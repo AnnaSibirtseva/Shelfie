@@ -28,4 +28,9 @@ const List mainUserMenu = [
 ];
 const List extraUserMenu = ['Настройки', 'О приложении', 'Выйти'];
 
-
+const int minName = 2;
+const int maxName = 30;
+const int minMail = 7;
+const int maxMail = 100;
+const int minPassword = 8;
+const int maxPassword = 30;

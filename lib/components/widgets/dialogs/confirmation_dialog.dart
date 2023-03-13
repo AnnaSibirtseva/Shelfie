@@ -64,7 +64,7 @@ class ConfirmationDialog extends Dialog {
                       press: () {
                         context.router.pop();
                       },
-                      isAsync: false,
+                      isAsync: true,
                       reverse: false,
                       text: 'Отменить'),
                   const SizedBox(

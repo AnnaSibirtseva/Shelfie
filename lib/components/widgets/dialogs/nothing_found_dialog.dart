@@ -70,7 +70,7 @@ class NothingFoundDialog extends Dialog {
                       press: () {
                         context.router.pop();
                       },
-                 isAsync: false,
+                 isAsync: true,
                       reverse: true,
                       text: 'OK'),
 

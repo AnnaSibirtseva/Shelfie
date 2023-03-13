@@ -44,8 +44,10 @@ class AppRouter extends _i4.RootStackRouter {
           routeData: routeData, child: const _i2.SignUpPage());
     },
     HomeRoute.name: (routeData) {
+      final args = routeData.argsAs<HomeRouteArgs>();
       return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i3.HomePage());
+          routeData: routeData,
+          child: _i3.HomePage(args.userId, key: args.key));
     },
     CollectionsRouter.name: (routeData) {
       return _i4.AdaptivePage<dynamic>(
@@ -197,11 +199,28 @@ class SignUpRoute extends _i4.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.HomePage]
-class HomeRoute extends _i4.PageRouteInfo<void> {
-  const HomeRoute({List<_i4.PageRouteInfo>? children})
-      : super(HomeRoute.name, path: '/home', initialChildren: children);
+class HomeRoute extends _i4.PageRouteInfo<HomeRouteArgs> {
+  HomeRoute(
+      {required int userId, _i14.Key? key, List<_i4.PageRouteInfo>? children})
+      : super(HomeRoute.name,
+            path: '/home',
+            args: HomeRouteArgs(userId: userId, key: key),
+            initialChildren: children);
 
   static const String name = 'HomeRoute';
+}
+
+class HomeRouteArgs {
+  const HomeRouteArgs({required this.userId, this.key});
+
+  final int userId;
+
+  final _i14.Key? key;
+
+  @override
+  String toString() {
+    return 'HomeRouteArgs{userId: $userId, key: $key}';
+  }
 }
 
 /// generated route for

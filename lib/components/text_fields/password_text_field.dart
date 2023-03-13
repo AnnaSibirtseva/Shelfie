@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class PasswordTextField extends StatefulWidget {
-  @override
-  PasswordState createState() => PasswordState();
+  final PasswordState state = PasswordState();
 
-  const PasswordTextField({Key? key}) : super(key: key);
+  @override
+  PasswordState createState() => state;
+
+  PasswordTextField({Key? key}) : super(key: key);
+
+  String getPassword() {
+    return state._password;
+  }
 }
 
 class PasswordState extends State<PasswordTextField> {

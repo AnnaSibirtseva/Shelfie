@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/routes/route.gr.dart';
 
@@ -5,16 +7,56 @@ import '../../../components/buttons/rounded_button.dart';
 import '../../../components/widgets/already_have_account.dart';
 import '../../../components/text_fields/password_text_field.dart';
 import '../../../components/text_fields/rounded_text_field.dart';
+import '../../../models/user.dart';
 import '../../home/home_page.dart';
 import 'package:auto_route/auto_route.dart';
 import 'background.dart';
 
-class Body extends StatelessWidget {
+import '../../log_in/components/background.dart';
+import 'package:shelfie/components/constants.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
 
   @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  late String _email;
+  final PasswordTextField passwordField = PasswordTextField();
+
+  Future<int> loginUser() async {
+    var client = http.Client();
+    final jsonString = json.encode({
+      "email": _email,
+      "password": passwordField.getPassword(),
+    });
+    try {
+      var response = await client.post(
+          Uri.https(url, '/users/user/login'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json'
+          },
+          body: jsonString);
+      if (response.statusCode == 200) {
+        return User.userIdFromJson(
+            jsonDecode(utf8.decode(response.bodyBytes))).getId();
+      } else {
+        throw Exception('Не удалось зайти в приложение');
+      }
+    } finally {
+      client.close();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Background(
         body: Center(
             child: SingleChildScrollView(
@@ -24,13 +66,18 @@ class Body extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(height: size.height * 0.05),
                     RoundedTextField(
-                        onChanged: (String value) {},
+                        onChanged: (String value) {
+                          _email = value;
+                        },
                         hintText: 'Почта',
                         icon: Icons.email_outlined),
-                    const PasswordTextField(),
+                    passwordField,
                     RoundedButton(
                         text: 'Войти',
-                        press: () => context.router.pushNamed('/home/')),
+                        press: () async {
+                          int id = await loginUser();
+                          context.router.push(HomeRoute(userId: id));
+                        }),
                     SizedBox(height: size.height * 0.05),
                     const AlreadyHaveAnAccountCheck(),
                   ],

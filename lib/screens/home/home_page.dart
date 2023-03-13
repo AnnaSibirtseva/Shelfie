@@ -9,7 +9,9 @@ import 'package:auto_route/auto_route.dart';
 import '../../components/routes/route.gr.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final int userId;
+
+  const HomePage(this.userId, {Key? key }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePage();
@@ -39,7 +41,7 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return IdInheritedWidget(
-        id: 1,
+        id: widget.userId,
         child: Scaffold(
           body: AutoTabsRouter(
             routes: _routes,

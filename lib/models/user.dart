@@ -13,7 +13,15 @@ class User {
   User(this._name, this._email, this._profileImageUrl, this._bannerImageUrl,
       this._statistics);
 
+  User.idInfo(this._id);
+
   User.userInfo(this._id, this._name, this._profileImageUrl);
+
+  factory User.userIdFromJson(dynamic json) {
+    return User.idInfo(
+      json['userId'] as int,
+    );
+  }
 
   factory User.userInfoFromJson(dynamic json) {
     String profileImageUrl;
@@ -59,6 +67,10 @@ class User {
 
   void setId(int id) {
     _id = id;
+  }
+
+  int getId() {
+    return _id;
   }
 
   String getBannerImageUrl() {

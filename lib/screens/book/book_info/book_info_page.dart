@@ -41,7 +41,7 @@ class _BookInfoPage extends State<BookInfoPage> {
         return Book.allInfoFromJson(
             jsonDecode(utf8.decode(response.bodyBytes)));
       } else {
-        throw Exception();
+        throw Exception('Не удалось получить информацию о книге.');
       }
     } finally {
       client.close();
