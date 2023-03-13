@@ -62,7 +62,7 @@ class ConfirmationDialog extends Dialog {
                 children: [
                   DialogButton(
                       press: () {
-                        context.router.pop(false);
+                        context.router.pop();
                       },
                       isAsync: false,
                       reverse: false,

@@ -15,6 +15,7 @@ class UserQuoteCard extends StatefulWidget {
 class _UserQuoteCardState extends State<UserQuoteCard> {
   //final VoidCallback press;
   late UserQuote quote;
+  bool showFlag = false;
 
   @override
   void initState() {
@@ -45,9 +46,32 @@ class _UserQuoteCardState extends State<UserQuoteCard> {
             Text(
               quote.getQuoteText(),
               textAlign: TextAlign.justify,
+              maxLines: showFlag ? null : 7,
               style: TextStyle(
                   fontSize: size.width / 22, fontWeight: FontWeight.bold),
             ),
+            if (quote.getQuoteText().isNotEmpty && quote.getQuoteText().length > 200)
+              InkWell(
+                  onTap: () {
+                    setState(() {
+                      showFlag = !showFlag;
+                    });
+                  },
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(showFlag ? "Свернуть" : "Развернуть",
+                              style: const TextStyle(
+                                  color: primaryColor,
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold))
+                        ],
+                      ),
+                    ],
+                  )),
             const Divider(
               color: Colors.white70,
             ),

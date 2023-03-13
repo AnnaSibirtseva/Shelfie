@@ -158,7 +158,7 @@ class _UserReviewCardState extends State<UserReviewCard> {
               style: TextStyle(
                   fontSize: size.width / 24, fontWeight: FontWeight.normal),
             ),
-            if (revText != '-' && revText.isNotEmpty)
+            if (revText.isNotEmpty && revText.length > 250)
               InkWell(
                   onTap: () {
                     setState(() {

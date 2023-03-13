@@ -22,6 +22,7 @@ class QuoteCard extends StatefulWidget {
 class _QuoteCardState extends State<QuoteCard> {
   //final VoidCallback press;
   late BookQuote quote;
+  bool showFlag = false;
   late int id;
 
   @override
@@ -46,9 +47,7 @@ class _QuoteCardState extends State<QuoteCard> {
             context: context,
             builder: (BuildContext context) {
               return const NothingFoundDialog(
-                  'Что-то пошло не так! Цитата не была добавлена.',
-                  warningGif
-              );
+                  'Что-то пошло не так! Цитата не была добавлена.', warningGif);
             });
       }
     } finally {
@@ -73,8 +72,7 @@ class _QuoteCardState extends State<QuoteCard> {
             builder: (BuildContext context) {
               return const NothingFoundDialog(
                   'Что-то пошло не так! Цитата не была удалена из сохраненных.',
-                  warningGif
-              );
+                  warningGif);
             });
       }
     } finally {
@@ -116,10 +114,34 @@ class _QuoteCardState extends State<QuoteCard> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              quote.getQuoteText(),
-              textAlign: TextAlign.justify,
-            ),
+            Text(quote.getQuoteText(),
+                textAlign: TextAlign.justify,
+                maxLines: showFlag ? null : 7,
+                style: TextStyle(
+                    fontSize: size.width / 28, fontWeight: FontWeight.normal)),
+            if (quote.getQuoteText().isNotEmpty &&
+                quote.getQuoteText().length > 300)
+              InkWell(
+                  onTap: () {
+                    setState(() {
+                      showFlag = !showFlag;
+                    });
+                  },
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(showFlag ? "Свернуть" : "Развернуть",
+                              style: const TextStyle(
+                                  color: primaryColor,
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold))
+                        ],
+                      ),
+                    ],
+                  )),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
