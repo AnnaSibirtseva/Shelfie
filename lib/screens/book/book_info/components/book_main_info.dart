@@ -41,57 +41,61 @@ class _BookMainInfo extends State<BookMainInfo> {
                 ),
               ),
             ),
-            Flexible(
-              child: Container(
-                padding: const EdgeInsets.only(left: 15),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(book.getTitle(),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20.0)),
-                        ),
-                        ratingWidget(book.getRating())
-                      ],
-                    ),
-                    for (int i = 0; i < book.getAuthors().length; i++)
-                    Text(
-                        // todo do sth with no authors or more than 1.
-                        book.getAuthors()[i],
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 16.0)),
-                    const SizedBox(height: 5),
-                    Flexible(
-                      child: tenStarWidget(book.getUserRating() == null ? 0 : book.getUserRating()!),
-                    ),
-                    const SizedBox(height: 5),
-                    Wrap(
-                      runSpacing: 5,
-                      children: [
-                        infoText('Язык оригинала: ' + (book.getLanguage() == null ? '-' : book.getLanguage()!)),
-                        infoText('Возрастные ограничения: ' + (book.getAgeRest() == null ? '-' : book.getAgeRest()!)),
-                        Wrap(
-                          spacing: 5,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  width: size.width * 0.5,
+                  //height: size.height * 0.4,
+                  padding: const EdgeInsets.only(left: 15),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(book.getTitle(),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20.0)),
+                          ),
+                          ratingWidget(book.getRating())
+                        ],
+                      ),
+                      for (int i = 0; i < book.getAuthors().length; i++)
+                      Text(
+                          // todo do sth with no authors or more than 1.
+                          book.getAuthors()[i],
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 16.0)),
+                      const SizedBox(height: 5),
+                      Flexible(
+                        child: Wrap(
                           runSpacing: 5,
                           children: [
-                            infoText('Жанры:'),
-                            for (int i = 0; i < book.getGenreList().genres.length; ++i)
-                              genreWidget(book.getGenreList().genres[i].getGenreName()),
+                            tenStarWidget(book.getUserRating() == null ? 0 : book.getUserRating()!),
+                            infoText('Язык оригинала: ' + (book.getLanguage() == null ? '-' : book.getLanguage()!)),
+                            infoText('Возрастные ограничения: ' + (book.getAgeRest() == null ? '-' : book.getAgeRest()!)),
+                            Wrap(
+                              spacing: 5,
+                              runSpacing: 5,
+                              children: [
+                                infoText('Жанры:'),
+                                for (int i = 0; i < book.getGenreList().genres.length; ++i)
+                                  genreWidget(book.getGenreList().genres[i].getGenreName()),
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -104,12 +108,15 @@ class _BookMainInfo extends State<BookMainInfo> {
   }
 
   Widget tenStarWidget(int rating) {
-    return Wrap(
-      spacing: 0.005,
-      children: [
-        for (int i = 0; i < rating; ++i) starIcon(true),
-        for (int i = rating.round(); i < 10; ++i) starIcon(false),
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Wrap(
+        spacing: 0.005,
+        children: [
+          for (int i = 0; i < rating; ++i) starIcon(true),
+          for (int i = rating.round(); i < 10; ++i) starIcon(false),
+        ],
+      ),
     );
   }
 
