@@ -6,7 +6,10 @@ import 'package:shelfie/screens/search/search_page.dart';
 import 'package:shelfie/screens/sign_up/sign_up_page.dart';
 
 import '../../screens/book/book_info/book_info_page.dart';
+import '../../screens/collections/books/books_page.dart';
 import '../../screens/filter/filter_page.dart';
+import '../../screens/profile/extra/settings/settings_page.dart';
+import '../../screens/profile/extra/about/about_page.dart';
 import '../../screens/profile/interactions/books/user_books_page.dart';
 import '../../screens/profile/interactions/collections/user_collections_page.dart';
 import '../../screens/profile/interactions/quotes/user_quotes_page.dart';
@@ -44,6 +47,17 @@ import '../../screens/profile/profile_page.dart';
           page: EmptyRouterPage,
           children: [
             AutoRoute(path: '', page: CollectionsPage),
+            //AutoRoute(path: 'books', page: CollectionBooksPage),
+            AutoRoute(
+              path: 'books',
+              name: 'CollectionBooksRouter',
+              page: EmptyRouterPage,
+              children: [
+                AutoRoute(path: '', page: CollectionBooksPage),
+                AutoRoute(path: 'bookInfo', page: BookInfoPage),
+                RedirectRoute(path: '*', redirectTo: ''),
+              ],
+            ),
             RedirectRoute(path: '*', redirectTo: ''),
           ],
         ),
@@ -68,6 +82,8 @@ import '../../screens/profile/profile_page.dart';
             AutoRoute(path: 'userReviews', page: UserReviewPage),
             AutoRoute(path: 'userBooks', page: UserBooksPage),
             AutoRoute(path: 'userCollections', page: UserCollectionsPage),
+            AutoRoute(path: 'settings', page: SettingsPage),
+            AutoRoute(path: 'about', page: AboutPage),
             RedirectRoute(path: '*', redirectTo: ''),
           ],
         ),
