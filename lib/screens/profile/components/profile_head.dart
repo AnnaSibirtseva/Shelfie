@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
+import 'package:shelfie/components/image_constants.dart';
+import 'package:shelfie/models/inherited_id.dart';
 import 'package:shelfie/models/user.dart';
 
+import '../../../components/widgets/dialogs/change_avatar_dialog.dart';
+import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../profile_page.dart';
 
 class ProfileHead extends StatefulWidget {
@@ -14,26 +18,41 @@ class ProfileHead extends StatefulWidget {
 }
 
 class _ProfileHead extends State<ProfileHead> {
+  late int id;
+
+  void showChangeAvatarDialog() {
+    ChangeAvatarDialog dialog = ChangeAvatarDialog(id);
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => dialog);
+    setState(() {
+      widget.user.setAvatar(dialog.getAvatar());
+    });
+  }
 
   // todo: change to gesture detectors and add photo-changers.
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     User user = widget.user;
+    final inheritedWidget = IdInheritedWidget.of(context);
+    id = inheritedWidget.id;
 
     return Flexible(
         child: SizedBox(
       height: size.height * 0.3,
       child: Stack(
         children: <Widget>[
-          Container(
-            height: size.height * 0.2,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(const Radius.circular(15)),
-              image: DecorationImage(
-                image: NetworkImage(
-                  user.getProfileImageUrl()),
-                fit: BoxFit.cover,
+          GestureDetector(
+            onTap: showChangeAvatarDialog,
+            child: Container(
+              height: size.height * 0.2,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(const Radius.circular(15)),
+                image: DecorationImage(
+                  image: NetworkImage(user.getBannerImageUrl()),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -47,8 +66,7 @@ class _ProfileHead extends State<ProfileHead> {
                   border: Border.all(color: secondaryColor),
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: NetworkImage(
-                        user.getProfileImageUrl()),
+                    image: NetworkImage(user.getProfileImageUrl()),
                     fit: BoxFit.cover,
                   ),
                 ),

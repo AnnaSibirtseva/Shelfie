@@ -50,7 +50,7 @@ class User {
     if (json['bannerImageUrl'] != null) {
       bannerImageUrl = json['bannerImageUrl'] as String;
     } else {
-      bannerImageUrl = defaultCollectionDesc;
+      bannerImageUrl = defaultCollectionImg;
     }
     return User(
       json['name'] as String,
@@ -59,6 +59,15 @@ class User {
       bannerImageUrl,
       Statistic.fromJson(json['statistics']),
     );
+  }
+
+
+  void setAvatar(String newAvatar) {
+    _profileImageUrl = newAvatar;
+  }
+
+  void setBanner(String newBanner) {
+    _bannerImageUrl = newBanner;
   }
 
   String getProfileImageUrl() {

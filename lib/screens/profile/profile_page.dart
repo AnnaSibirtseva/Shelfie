@@ -68,15 +68,13 @@ class _ProfilePage extends State<ProfilePage> {
   Widget buildBody(User user) {
     List mainRoutes = [
       // user books page
-      () => context.router.push(const UserBooksRoute()),
+      () => context.router.push(const UserBooksRoute()).then(onGoBack),
       // user reviews page
-      () => context.router
-          .push(const UserReviewRoute())
-          .then((value) => setState(() {})),
+      () => context.router.push(const UserReviewRoute())..then(onGoBack),
       // user quotes page
       () => context.router.push(const UserQuotesRoute()).then(onGoBack),
       // user collections page
-      () => context.router.push(const UserCollectionsRoute()),
+      () => context.router.push(const UserCollectionsRoute()).then(onGoBack),
       // user achievements page
       () => {},
       // user stat page
@@ -84,11 +82,11 @@ class _ProfilePage extends State<ProfilePage> {
     ];
     List extraRoutes = [
       // settings page
-      () => {},
+      () => context.router.push(const SettingsRoute()).then(onGoBack),
       // about page
-      () => {},
+      () => context.router.push(const AboutRoute()),
       // log out page
-      () => {}
+      () => context.router.navigate(const LogInRoute())
     ];
 
     Size size = MediaQuery.of(context).size;

@@ -80,40 +80,52 @@ class _StackOverState extends State<BookStatisticsTabBar>
 
   @override
   Widget build(BuildContext context) {
-    return  buildInteractionsTabBar(context, _reviewList, _quoteList);
+    return buildInteractionsTabBar(context, _reviewList, _quoteList);
   }
 
   Widget buildInteractionsTabBar(BuildContext context,
       BookReviewList reviewList, BookQuotesList quotesList) {
+    Size size = MediaQuery.of(context).size;
     return Expanded(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             height: 45,
-            margin: const EdgeInsets.only(bottom: 15),
+            margin: const EdgeInsets.only(bottom: 5),
             decoration: BoxDecoration(
               color: secondaryColor,
               borderRadius: BorderRadius.circular(
                 25.0,
               ),
             ),
-            child: TabBar(
-              //isScrollable: true,
-              controller: _tabController,
-              indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  25.0,
+            child: Row(
+              children: [
+                Container(
+                  height: 45,
+                  width: size.width * 0.80,
+                  child: TabBar(
+                    //isScrollable: true,
+                    controller: _tabController,
+                    indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        25.0,
+                      ),
+                      color: primaryColor,
+                    ),
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.black,
+                    unselectedLabelStyle: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.w500),
+                    tabs: [
+                      Tab(text: 'Рецензии  ' + reviewList.count.toString()),
+                      Tab(text: 'Цитаты  ' + quotesList.count.toString())
+                    ],
+                  ),
                 ),
-                color: primaryColor,
-              ),
-              labelColor: Colors.white,
-              unselectedLabelColor: Colors.black,
-              unselectedLabelStyle:
-                  const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-              tabs: [
-                Tab(text: 'Рецензии  ' + reviewList.count.toString()),
-                Tab(text: 'Цитаты  ' + quotesList.count.toString())
+                IconButton(
+                    icon: const Icon(Icons.library_add_rounded , color: primaryColor),
+                    onPressed: () {}),
               ],
             ),
           ),
@@ -126,6 +138,19 @@ class _StackOverState extends State<BookStatisticsTabBar>
                   reverse: false,
                   child: Column(
                     children: [
+                      SizedBox(
+                        width: size.width,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: const Text('Добавить рецензию', style: TextStyle(color: grayColor)),
+                          style: ElevatedButton.styleFrom(
+                            primary: secondaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                          ),
+                        ),
+                      ),
                       for (BookReview review in reviewList.reviews)
                         ReviewCard(review: review)
                     ],
@@ -136,8 +161,20 @@ class _StackOverState extends State<BookStatisticsTabBar>
                 SingleChildScrollView(
                   reverse: false,
                   child: Column(
-
                     children: [
+                      SizedBox(
+                        width: size.width,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: const Text('Добавить цитату', style: TextStyle(color: grayColor)),
+                          style: ElevatedButton.styleFrom(
+                            primary: secondaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                          ),
+                        ),
+                      ),
                       for (BookQuote quote in quotesList.quotes)
                         QuoteCard(quote: quote)
                     ],
