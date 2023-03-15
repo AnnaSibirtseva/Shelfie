@@ -80,7 +80,7 @@ class _BookMainInfo extends State<BookMainInfo> {
                           children: [
                             tenStarWidget(book.getUserRating() == null ? 0 : book.getUserRating()!),
                             infoText('Язык оригинала: ' + (book.getLanguage() == null ? '-' : book.getLanguage()!)),
-                            infoText('Возрастные ограничения: ' + (book.getAgeRest() == null ? '-' : book.getAgeRest()!)),
+                            infoText('Возрастные ограничения: ' + (book.getAgeRest() == null ? 'нет' : book.getAgeRest()!)),
                             Wrap(
                               spacing: 5,
                               runSpacing: 5,

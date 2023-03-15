@@ -22,15 +22,10 @@ class Body extends StatelessWidget {
           reverse: false,
           child: Column(
             children: [
-              GestureDetector(
-                onTap: () => showDialog(
-                    context: context,
-                    builder: (BuildContext context) => const AddQuoteDialog()),
-                child: const HeaderWidget(
+              const HeaderWidget(
                   text: 'Цитаты',
                   icon: 'quote',
                 ),
-              ),
               for (UserQuote quote in quotes)
                 UserQuoteCard(
                   quote: quote,

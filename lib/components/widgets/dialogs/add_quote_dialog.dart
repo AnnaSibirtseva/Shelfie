@@ -1,17 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:http/http.dart' as http;
+import 'package:shelfie/models/book.dart';
+import 'package:shelfie/models/inherited_id.dart';
+import 'dart:convert';
+import 'dart:io';
 
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
 import '../../text_fields/input_text_field.dart';
 
 class AddQuoteDialog extends Dialog {
-  const AddQuoteDialog({Key? key}) : super(key: key);
+  final Book book;
+  final int id;
+  late String _text = '';
+
+  AddQuoteDialog({Key? key, required this.book, required this.id}) : super(key: key);
+
+  Future<void> addQuote() async {
+    var client = http.Client();
+    final jsonString = json.encode({
+      "bookId": book.getId(),
+      "text": _text
+    });
+    try {
+      var response = await client.post(
+          Uri.https(url, '/interactions/quotes/add'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            'userId': id.toString()
+          },
+          body: jsonString);
+      if (response.statusCode != 200) {
+        //TODO: show message
+      }
+    } finally {
+      client.close();
+    }
+  }
 
   @override
   Dialog build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       child: SingleChildScrollView(
@@ -58,7 +88,7 @@ class AddQuoteDialog extends Dialog {
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  '"' 'Странная история доктора Джекилла и мистера Хайда' '"',
+                  '"' + book.getTitle() + '"',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -69,7 +99,11 @@ class AddQuoteDialog extends Dialog {
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  '- ' 'Роберт Стивенсон' ' -',
+                  '- ' +
+                      (book.getAuthors().isNotEmpty
+                          ? book.getAuthors()[0]
+                          : "- - -") +
+                      ' -',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -90,13 +124,13 @@ class AddQuoteDialog extends Dialog {
               InputTextField(
                 maxLen: 1500,
                 height: 0.2,
-                onChanged: (String value) {},
+                onChanged: (String value) { _text = value; },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   DialogButton(
-                  isAsync: false,
+                      isAsync: true,
                       press: () {
                         context.router.pop();
                       },
@@ -105,7 +139,14 @@ class AddQuoteDialog extends Dialog {
                   const SizedBox(
                     width: 10,
                   ),
-                  DialogButton(press: () {}, isAsync: false, reverse: false, text: 'Добавить'),
+                  DialogButton(
+                      press: () async {
+                        await addQuote();
+                        context.router.pop(true);
+                      },
+                      isAsync: true,
+                      reverse: false,
+                      text: 'Добавить'),
                 ],
               ),
             ],

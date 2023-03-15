@@ -1,3 +1,5 @@
+import 'package:shelfie/components/constants.dart';
+
 class UserReview {
   late int _id;
   late int _bookId;
@@ -19,11 +21,15 @@ class UserReview {
     if (json['reviewTitle'] != null) {
       reviewTitle = json['reviewTitle'] as String;
     }
+    String bookCoverImageUrl = defaultBookCoverImg;
+    if (json['bookCoverImageUrl'] != null) {
+      bookCoverImageUrl = json['bookCoverImageUrl'] as String;
+    }
     return UserReview(
       json['id'] as int,
       json['bookId'] as int,
       json['bookTitle'] as String,
-      json['bookCoverImageUrl'] as String,
+      bookCoverImageUrl,
       (json['bookAuthors'] as List).map((e) => e as String).toList(),
       reviewText,
       reviewTitle,

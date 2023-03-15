@@ -1,3 +1,5 @@
+import 'package:shelfie/components/constants.dart';
+
 class UserQuote {
   late int _id;
   late int _bookId;
@@ -9,11 +11,15 @@ class UserQuote {
   UserQuote(this._id, this._bookId, this._bookTitle, this._bookCoverUrl, this._bookAuthors, this._text);
 
   factory UserQuote.fromJson(dynamic json) {
+    String bookCoverImageUrl = defaultBookCoverImg;
+    if (json['bookCoverImageUrl'] != null) {
+      bookCoverImageUrl = json['bookCoverImageUrl'] as String;
+    }
     return UserQuote(
       json['id'] as int,
       json['bookId'] as int,
       json['bookTitle'] as String,
-      json['bookCoverImageUrl'] as String,
+      bookCoverImageUrl,
       (json['bookAuthors'] as List).map((e) => e as String).toList(),
       json['text'] as String,
     );

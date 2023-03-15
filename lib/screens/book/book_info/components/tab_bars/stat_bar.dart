@@ -3,10 +3,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/components/widgets/cards/quote_card.dart';
+import 'package:shelfie/components/widgets/dialogs/add_quote_dialog.dart';
+import 'package:shelfie/models/book.dart';
 import 'package:shelfie/models/book_quote.dart';
+import 'package:shelfie/models/inherited_id.dart';
 
 import '../../../../../components/widgets/cards/review_card.dart';
-import '../../../../../models/book.dart';
 import '../../../../../models/book_review.dart';
 
 /*
@@ -85,6 +87,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
 
   Widget buildInteractionsTabBar(BuildContext context,
       BookReviewList reviewList, BookQuotesList quotesList) {
+    final inheritedWidget = IdInheritedWidget.of(context);
     Size size = MediaQuery.of(context).size;
     return Expanded(
       child: Column(
@@ -124,7 +127,8 @@ class _StackOverState extends State<BookStatisticsTabBar>
                   ),
                 ),
                 IconButton(
-                    icon: const Icon(Icons.library_add_rounded , color: primaryColor),
+                    icon: const Icon(Icons.library_add_rounded,
+                        color: primaryColor),
                     onPressed: () {}),
               ],
             ),
@@ -142,7 +146,8 @@ class _StackOverState extends State<BookStatisticsTabBar>
                         width: size.width,
                         child: ElevatedButton(
                           onPressed: () {},
-                          child: const Text('Добавить рецензию', style: TextStyle(color: grayColor)),
+                          child: const Text('Добавить рецензию',
+                              style: TextStyle(color: grayColor)),
                           style: ElevatedButton.styleFrom(
                             primary: secondaryColor,
                             shape: RoundedRectangleBorder(
@@ -165,8 +170,12 @@ class _StackOverState extends State<BookStatisticsTabBar>
                       SizedBox(
                         width: size.width,
                         child: ElevatedButton(
-                          onPressed: () {},
-                          child: const Text('Добавить цитату', style: TextStyle(color: grayColor)),
+                          onPressed: () => showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  AddQuoteDialog(book: widget.book, id: inheritedWidget.id)),
+                          child: const Text('Добавить цитату',
+                              style: TextStyle(color: grayColor)),
                           style: ElevatedButton.styleFrom(
                             primary: secondaryColor,
                             shape: RoundedRectangleBorder(
