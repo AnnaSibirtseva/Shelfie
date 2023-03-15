@@ -25,6 +25,8 @@ class _BookMainInfo extends State<BookMainInfo> {
         height: size.height * 0.3,
         width: size.width,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: size.width * 0.35,
@@ -40,6 +42,7 @@ class _BookMainInfo extends State<BookMainInfo> {
             ),
             Expanded(
               child: SingleChildScrollView(
+                reverse: false,
                 child: Container(
                   width: size.width * 0.5,
                   //height: size.height * 0.4,
