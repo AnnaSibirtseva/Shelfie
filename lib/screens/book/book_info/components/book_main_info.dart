@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/components/widgets/status.dart';
-import 'package:shelfie/models/book_status.dart';
-import 'package:shelfie/models/user.dart';
 
 import '../../../../models/book.dart';
 
@@ -69,7 +66,6 @@ class _BookMainInfo extends State<BookMainInfo> {
                       ),
                       for (int i = 0; i < book.getAuthors().length; i++)
                       Text(
-                          // todo do sth with no authors or more than 1.
                           book.getAuthors()[i],
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
