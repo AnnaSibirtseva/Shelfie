@@ -17,7 +17,7 @@ class _StackOverState extends State<BooksTabBar>
 
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this, initialIndex: getStateIcon(BookStatus.Planning));
+    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
     super.initState();
   }
 
@@ -63,14 +63,6 @@ class _StackOverState extends State<BooksTabBar>
             child: TabBarView(
               controller: _tabController,
               children: [
-
-                SingleChildScrollView(
-                  reverse: false,
-                  child: Column(
-                    children: [
-                    ],
-                  ),
-                ),
 
                 SingleChildScrollView(
                   reverse: false,

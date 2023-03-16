@@ -5,8 +5,9 @@ import 'stat_card.dart';
 
 class StatisticRow extends StatelessWidget {
   final Statistic userStat;
+  final List routes;
 
-  const StatisticRow({Key? key, required this.userStat}) : super(key: key);
+  const StatisticRow({Key? key, required this.userStat, required this.routes}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class StatisticRow extends StatelessWidget {
           itemBuilder: (context, index) => StatCard(
             text: titles[index],
             iconName: icons[index],
-            press: () {},
+            press: routes[index],
             countNum: stats[index],
           ),
       ),

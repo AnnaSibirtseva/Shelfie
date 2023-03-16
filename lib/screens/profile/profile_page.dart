@@ -100,7 +100,10 @@ class _ProfilePage extends State<ProfilePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ProfileHead(user: user),
-          StatisticRow(userStat: user.getStatistics()),
+          StatisticRow(
+            userStat: user.getStatistics(),
+            routes: [mainRoutes[0], mainRoutes[1], mainRoutes[2]],
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 15, left: 10),
             child: Text('Общее'.toUpperCase(),

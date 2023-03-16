@@ -4,10 +4,10 @@ import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:shelfie/components/widgets/error.dart';
+import 'package:shelfie/models/book.dart';
 import '../../../components/constants.dart';
 import '../../../components/routes/route.gr.dart';
 import '../../../components/widgets/loading.dart';
-import '../../../models/book.dart';
 import '../../../models/inherited_id.dart';
 import 'components/body.dart';
 

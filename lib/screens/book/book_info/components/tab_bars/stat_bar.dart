@@ -11,6 +11,7 @@ import 'package:shelfie/models/book_quote.dart';
 import 'package:shelfie/models/inherited_id.dart';
 
 import '../../../../../components/widgets/cards/review_card.dart';
+import '../../../../../components/widgets/dialogs/add_review_dialog.dart';
 import '../../../../../models/book_review.dart';
 
 /*
@@ -75,11 +76,14 @@ class _StackOverState extends State<BookStatisticsTabBar>
     }
   }
 
-  Future<FutureOr> onGoBack(dynamic value) async {
+  Future<FutureOr> onQuotesGoBack(dynamic value) async {
     _quoteList = await getQuoteList(id, 50, 0);
-    setState(() {
+    setState(() {});
+  }
 
-    });
+  Future<FutureOr> onReviewsGoBack(dynamic value) async {
+    _reviewList = await getReviewList(id, 50, 0);
+    setState(() {});
   }
 
   @override
@@ -156,7 +160,13 @@ class _StackOverState extends State<BookStatisticsTabBar>
                       SizedBox(
                         width: size.width,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () => showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AddReviewDialog(
+                                          book: widget.book,
+                                          id: inheritedWidget.id))
+                              .then(onReviewsGoBack),
                           child: const Text('Добавить рецензию',
                               style: TextStyle(color: grayColor)),
                           style: ElevatedButton.styleFrom(
@@ -183,8 +193,9 @@ class _StackOverState extends State<BookStatisticsTabBar>
                         child: ElevatedButton(
                           onPressed: () => showDialog(
                               context: context,
-                              builder: (BuildContext context) =>
-                                  AddQuoteDialog(book: widget.book, id: inheritedWidget.id)).then(onGoBack),
+                              builder: (BuildContext context) => AddQuoteDialog(
+                                  book: widget.book,
+                                  id: inheritedWidget.id)).then(onQuotesGoBack),
                           child: const Text('Добавить цитату',
                               style: TextStyle(color: grayColor)),
                           style: ElevatedButton.styleFrom(

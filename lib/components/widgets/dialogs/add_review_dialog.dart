@@ -8,21 +8,29 @@ import 'dart:io';
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
 import '../../text_fields/input_text_field.dart';
+import '../rating_widget.dart';
 
-class AddQuoteDialog extends Dialog {
+class AddReviewDialog extends Dialog {
   final Book book;
   final int id;
   late String _text = '';
+  late int _rating = 0;
+  late String _title = '';
 
-  AddQuoteDialog({Key? key, required this.book, required this.id})
+  AddReviewDialog({Key? key, required this.book, required this.id})
       : super(key: key);
 
-  Future<void> addQuote() async {
+  Future<void> addReview() async {
     var client = http.Client();
-    final jsonString = json.encode({"bookId": book.getId(), "text": _text});
+    final jsonString = json.encode({
+      "bookId": book.getId(),
+      "title": _title,
+      "text": _text,
+      "rating": _rating
+    });
     try {
       var response = await client.post(
-          Uri.https(url, '/interactions/quotes/add'),
+          Uri.https(url, '/interactions/reviews/add'),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
             'userId': id.toString()
@@ -46,7 +54,7 @@ class AddQuoteDialog extends Dialog {
         child: Container(
           padding: const EdgeInsets.all(15),
           width: size.width * 0.8,
-          height: size.height * 0.6,
+          height: size.height * 0.84,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -57,7 +65,7 @@ class AddQuoteDialog extends Dialog {
                     size: size.width / 15,
                   ),
                   const Spacer(),
-                  Text('Новая цитата',
+                  Text('Новая рецензия',
                       style: TextStyle(
                           fontFamily: 'VelaSansExtraBold',
                           fontSize: size.width / 20,
@@ -70,17 +78,8 @@ class AddQuoteDialog extends Dialog {
                 ],
               ),
               const Divider(color: primaryColor),
-              const SizedBox(height: 10),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  '📔 Произведение:',
-                  style: TextStyle(
-                      color: grayColor,
-                      fontSize: size.width / 22,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
+              //const SizedBox(height: 10),
+              textWidget('Произведение:', size),
               const SizedBox(height: 10),
               Align(
                 alignment: Alignment.topLeft,
@@ -108,18 +107,30 @@ class AddQuoteDialog extends Dialog {
                 ),
               ),
               const SizedBox(height: 15),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  '🖋️ Цитата:',
-                  style: TextStyle(
-                      color: grayColor,
-                      fontSize: size.width / 22,
-                      fontWeight: FontWeight.bold),
-                ),
+              textWidget('Оценка:', size),
+              StatefulBuilder(
+                builder: (context, setState) {
+                  return StarRating(
+                    onChanged: (index) {
+                      setState(() {
+                        _rating = index;
+                      });
+                    },
+                    value: _rating,
+                  );
+                },
               ),
+              const SizedBox(height: 5),
+              textWidget('Название:', size),
               InputTextField(
-                maxLen: 1500,
+                onChanged: (String value) {_title = value;},
+                maxLen: 150,
+                height: 0.1,
+              ),
+              const SizedBox(height: 5),
+              textWidget('Рецензия:', size),
+              InputTextField(
+                maxLen: 5000,
                 height: 0.2,
                 onChanged: (String value) {
                   _text = value;
@@ -141,12 +152,14 @@ class AddQuoteDialog extends Dialog {
                   DialogButton(
                       press: () async {
                         if (_text.isNotEmpty) {
-                          await addQuote();
+                          await addReview();
                           context.router.pop(true);
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                              backgroundColor: Color(0xFFE57373),
-                              content: Text("Цитата не может быть пустой!")));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  backgroundColor: Color(0xFFE57373),
+                                  content:
+                                      Text("Рецензия не может быть пустой!")));
                         }
                       },
                       isAsync: true,
@@ -157,6 +170,19 @@ class AddQuoteDialog extends Dialog {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget textWidget(String text, Size size) {
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Text(
+        text,
+        style: TextStyle(
+            color: grayColor,
+            fontSize: size.width / 23,
+            fontWeight: FontWeight.bold),
       ),
     );
   }

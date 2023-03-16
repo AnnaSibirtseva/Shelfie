@@ -98,6 +98,9 @@ class Book {
   }
 
   double? getRating() {
+    if (_rating != null){
+      return double.parse((_rating!).toStringAsFixed(2));
+    }
     return _rating;
   }
 
