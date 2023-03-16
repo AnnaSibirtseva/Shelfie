@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
+import 'package:shelfie/models/book.dart';
 
-import '../../../../models/book.dart';
 
 class BookMainInfo extends StatefulWidget {
   final Book book;

@@ -5,7 +5,6 @@ import 'package:shelfie/models/book.dart';
 import 'package:shelfie/models/inherited_id.dart';
 import 'dart:convert';
 import 'dart:io';
-
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
 import '../../text_fields/input_text_field.dart';

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -35,6 +37,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
   late TabController _tabController;
   late BookReviewList _reviewList;
   late BookQuotesList _quoteList;
+  late int id;
 
   Future<BookReviewList> getReviewList(int id, take, skip) async {
     var client = http.Client();
@@ -72,6 +75,13 @@ class _StackOverState extends State<BookStatisticsTabBar>
     }
   }
 
+  Future<FutureOr> onGoBack(dynamic value) async {
+    _quoteList = await getQuoteList(id, 50, 0);
+    setState(() {
+
+    });
+  }
+
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
@@ -88,6 +98,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
   Widget buildInteractionsTabBar(BuildContext context,
       BookReviewList reviewList, BookQuotesList quotesList) {
     final inheritedWidget = IdInheritedWidget.of(context);
+    id = inheritedWidget.id;
     Size size = MediaQuery.of(context).size;
     return Expanded(
       child: Column(
@@ -173,7 +184,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
                           onPressed: () => showDialog(
                               context: context,
                               builder: (BuildContext context) =>
-                                  AddQuoteDialog(book: widget.book, id: inheritedWidget.id)),
+                                  AddQuoteDialog(book: widget.book, id: inheritedWidget.id)).then(onGoBack),
                           child: const Text('Добавить цитату',
                               style: TextStyle(color: grayColor)),
                           style: ElevatedButton.styleFrom(

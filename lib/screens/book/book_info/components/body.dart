@@ -3,9 +3,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/components/widgets/error.dart';
+import 'package:shelfie/models/book.dart';
 import 'package:shelfie/models/book_quote.dart';
 import '../../../../components/widgets/loading.dart';
-import '../../../../models/book.dart';
 
 import '../../../../models/book_review.dart';
 import '../../../../models/inherited_id.dart';
