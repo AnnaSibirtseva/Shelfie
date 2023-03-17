@@ -51,6 +51,8 @@ class _CollectionBooksPage extends State<CollectionBooksPage> {
 
   FutureOr onGoBack(dynamic value) {
     context.router.navigate(const CollectionsRouter());
+    context.router.pushNamed('/home');
+    context.router.push(const CollectionsRouter());
     context.router.push(CollectionBooksRoute(
         collectionId: widget.collectionId,
         collectionName: widget.collectionName));
@@ -102,8 +104,7 @@ class _CollectionBooksPage extends State<CollectionBooksPage> {
                         ListBookCard(
                           press: () => (context.router
                               .push(BookInfoRoute(
-                                  bookId: snapshot.data![i].getId())).then(onGoBack)
-                              .then(onGoBack)),
+                                  bookId: snapshot.data![i].getId())).then(onGoBack)),
                           book: snapshot.data![i],
                         )
                   ],
