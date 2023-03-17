@@ -69,13 +69,12 @@ class AppRouter extends _i4.RootStackRouter {
       return _i4.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i5.CollectionsPage());
     },
-    CollectionBooksRouter.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i4.EmptyRouterPage());
-    },
     CollectionBooksRoute.name: (routeData) {
+      final args = routeData.argsAs<CollectionBooksRouteArgs>();
       return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i6.CollectionBooksPage());
+          routeData: routeData,
+          child: _i6.CollectionBooksPage(args.collectionId, args.collectionName,
+              key: args.key));
     },
     BookInfoRoute.name: (routeData) {
       final args = routeData.argsAs<BookInfoRouteArgs>();
@@ -146,20 +145,10 @@ class AppRouter extends _i4.RootStackRouter {
               children: [
                 _i4.RouteConfig(CollectionsRoute.name,
                     path: '', parent: CollectionsRouter.name),
-                _i4.RouteConfig(CollectionBooksRouter.name,
-                    path: 'books',
-                    parent: CollectionsRouter.name,
-                    children: [
-                      _i4.RouteConfig(CollectionBooksRoute.name,
-                          path: '', parent: CollectionBooksRouter.name),
-                      _i4.RouteConfig(BookInfoRoute.name,
-                          path: 'bookInfo', parent: CollectionBooksRouter.name),
-                      _i4.RouteConfig('*#redirect',
-                          path: '*',
-                          parent: CollectionBooksRouter.name,
-                          redirectTo: '',
-                          fullMatch: true)
-                    ]),
+                _i4.RouteConfig(CollectionBooksRoute.name,
+                    path: 'allBooks', parent: CollectionsRouter.name),
+                _i4.RouteConfig(BookInfoRoute.name,
+                    path: 'bookInfo', parent: CollectionsRouter.name),
                 _i4.RouteConfig('*#redirect',
                     path: '*',
                     parent: CollectionsRouter.name,
@@ -298,21 +287,36 @@ class CollectionsRoute extends _i4.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.EmptyRouterPage]
-class CollectionBooksRouter extends _i4.PageRouteInfo<void> {
-  const CollectionBooksRouter({List<_i4.PageRouteInfo>? children})
-      : super(CollectionBooksRouter.name,
-            path: 'books', initialChildren: children);
-
-  static const String name = 'CollectionBooksRouter';
-}
-
-/// generated route for
 /// [_i6.CollectionBooksPage]
-class CollectionBooksRoute extends _i4.PageRouteInfo<void> {
-  const CollectionBooksRoute() : super(CollectionBooksRoute.name, path: '');
+class CollectionBooksRoute extends _i4.PageRouteInfo<CollectionBooksRouteArgs> {
+  CollectionBooksRoute(
+      {required int collectionId,
+      required String collectionName,
+      _i17.Key? key})
+      : super(CollectionBooksRoute.name,
+            path: 'allBooks',
+            args: CollectionBooksRouteArgs(
+                collectionId: collectionId,
+                collectionName: collectionName,
+                key: key));
 
   static const String name = 'CollectionBooksRoute';
+}
+
+class CollectionBooksRouteArgs {
+  const CollectionBooksRouteArgs(
+      {required this.collectionId, required this.collectionName, this.key});
+
+  final int collectionId;
+
+  final String collectionName;
+
+  final _i17.Key? key;
+
+  @override
+  String toString() {
+    return 'CollectionBooksRouteArgs{collectionId: $collectionId, collectionName: $collectionName, key: $key}';
+  }
 }
 
 /// generated route for

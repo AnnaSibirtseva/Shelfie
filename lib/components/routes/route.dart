@@ -48,16 +48,8 @@ import '../../screens/profile/profile_page.dart';
           children: [
             AutoRoute(path: '', page: CollectionsPage),
             //AutoRoute(path: 'books', page: CollectionBooksPage),
-            AutoRoute(
-              path: 'books',
-              name: 'CollectionBooksRouter',
-              page: EmptyRouterPage,
-              children: [
-                AutoRoute(path: '', page: CollectionBooksPage),
-                AutoRoute(path: 'bookInfo', page: BookInfoPage),
-                RedirectRoute(path: '*', redirectTo: ''),
-              ],
-            ),
+            AutoRoute(path: 'allBooks', page: CollectionBooksPage),
+            AutoRoute(path: 'bookInfo', page: BookInfoPage),
             RedirectRoute(path: '*', redirectTo: ''),
           ],
         ),

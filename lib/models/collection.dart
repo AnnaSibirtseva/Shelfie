@@ -6,7 +6,6 @@ class Collection {
   late String _name;
   late String _description;
 
-
   Collection(this._id, this._imageUrl, this._name, this._description);
 
   factory Collection.fromJson(dynamic json) {
@@ -36,6 +35,10 @@ class Collection {
     );
   }
 
+  int getId() {
+    return _id;
+  }
+
   String getImageUrl() {
     return _imageUrl;
   }
@@ -55,7 +58,8 @@ class RecommendedCollections {
   RecommendedCollections(this.collections);
 
   factory RecommendedCollections.fromJson(dynamic json) {
-    return RecommendedCollections(
-        (json['collections'] as List).map((e) => Collection.fromJson(e)).toList());
+    return RecommendedCollections((json['collections'] as List)
+        .map((e) => Collection.fromJson(e))
+        .toList());
   }
 }

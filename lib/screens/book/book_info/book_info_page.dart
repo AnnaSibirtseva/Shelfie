@@ -14,10 +14,7 @@ import 'components/body.dart';
 class BookInfoPage extends StatefulWidget {
   final int bookId;
 
-  const BookInfoPage(
-    this.bookId, {
-    Key? key,
-  }) : super(key: key);
+  const BookInfoPage(this.bookId, {Key? key}) : super(key: key);
 
   @override
   State<BookInfoPage> createState() => _BookInfoPage();
