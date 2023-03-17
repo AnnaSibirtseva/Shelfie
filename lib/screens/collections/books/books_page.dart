@@ -50,6 +50,10 @@ class _CollectionBooksPage extends State<CollectionBooksPage> {
   }
 
   FutureOr onGoBack(dynamic value) {
+    context.router.navigate(const CollectionsRouter());
+    context.router.push(CollectionBooksRoute(
+        collectionId: widget.collectionId,
+        collectionName: widget.collectionName));
     setState(() {});
   }
 
@@ -66,14 +70,14 @@ class _CollectionBooksPage extends State<CollectionBooksPage> {
                 reverse: false,
                 child: Column(
                   children: [
+                    SizedBox(height: 25,),
                     Row(
                       children: <Widget>[
                         const SizedBox(
                           width: 15,
-                          height: 15,
                         ),
                         SizedBox(
-                          height: size.height * 0.09,
+                          height: size.height * 0.05,
                           width: size.width * 0.09,
                           child: Image.asset('assets/images/book_shelf.png'),
                         ),
@@ -98,7 +102,7 @@ class _CollectionBooksPage extends State<CollectionBooksPage> {
                         ListBookCard(
                           press: () => (context.router
                               .push(BookInfoRoute(
-                                  bookId: snapshot.data![i].getId()))
+                                  bookId: snapshot.data![i].getId())).then(onGoBack)
                               .then(onGoBack)),
                           book: snapshot.data![i],
                         )
