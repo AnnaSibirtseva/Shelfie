@@ -10,6 +10,7 @@ import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
 import 'package:shelfie/models/user.dart';
 import '../../components/routes/route.gr.dart';
+import '../../components/widgets/dialogs/about_dialog.dart';
 import '../../models/inherited_id.dart';
 import 'components/menu/menu.dart';
 import 'components/profile_head.dart';
@@ -84,7 +85,9 @@ class _ProfilePage extends State<ProfilePage> {
       // settings page
       () => context.router.push(const SettingsRoute()).then(onGoBack),
       // about page
-      () => context.router.push(const AboutRoute()),
+      () => showDialog(
+          context: context,
+          builder: (BuildContext context) => const AboutAppDialog()),
       // log out page
       () => context.router.navigate(const LogInRoute())
     ];

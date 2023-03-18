@@ -11,14 +11,13 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i4;
-import 'package:flutter/material.dart' as _i17;
+import 'package:flutter/material.dart' as _i16;
 import 'package:shelfie/screens/book/book_info/book_info_page.dart' as _i7;
 import 'package:shelfie/screens/collections/books/books_page.dart' as _i6;
 import 'package:shelfie/screens/collections/collection_page.dart' as _i5;
 import 'package:shelfie/screens/filter/filter_page.dart' as _i9;
 import 'package:shelfie/screens/home/home_page.dart' as _i3;
 import 'package:shelfie/screens/log_in/log_in_page.dart' as _i1;
-import 'package:shelfie/screens/profile/extra/about/about_page.dart' as _i16;
 import 'package:shelfie/screens/profile/extra/settings/settings_page.dart'
     as _i15;
 import 'package:shelfie/screens/profile/interactions/books/user_books_page.dart'
@@ -34,7 +33,7 @@ import 'package:shelfie/screens/search/search_page.dart' as _i8;
 import 'package:shelfie/screens/sign_up/sign_up_page.dart' as _i2;
 
 class AppRouter extends _i4.RootStackRouter {
-  AppRouter([_i17.GlobalKey<_i17.NavigatorState>? navigatorKey])
+  AppRouter([_i16.GlobalKey<_i16.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
@@ -113,10 +112,6 @@ class AppRouter extends _i4.RootStackRouter {
     SettingsRoute.name: (routeData) {
       return _i4.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i15.SettingsPage());
-    },
-    AboutRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i16.AboutPage());
     }
   };
 
@@ -187,8 +182,6 @@ class AppRouter extends _i4.RootStackRouter {
                     path: 'userCollections', parent: ProfileRouter.name),
                 _i4.RouteConfig(SettingsRoute.name,
                     path: 'settings', parent: ProfileRouter.name),
-                _i4.RouteConfig(AboutRoute.name,
-                    path: 'about', parent: ProfileRouter.name),
                 _i4.RouteConfig('*#redirect',
                     path: '*',
                     parent: ProfileRouter.name,
@@ -228,7 +221,7 @@ class SignUpRoute extends _i4.PageRouteInfo<void> {
 /// [_i3.HomePage]
 class HomeRoute extends _i4.PageRouteInfo<HomeRouteArgs> {
   HomeRoute(
-      {required int userId, _i17.Key? key, List<_i4.PageRouteInfo>? children})
+      {required int userId, _i16.Key? key, List<_i4.PageRouteInfo>? children})
       : super(HomeRoute.name,
             path: '/home',
             args: HomeRouteArgs(userId: userId, key: key),
@@ -242,7 +235,7 @@ class HomeRouteArgs {
 
   final int userId;
 
-  final _i17.Key? key;
+  final _i16.Key? key;
 
   @override
   String toString() {
@@ -292,7 +285,7 @@ class CollectionBooksRoute extends _i4.PageRouteInfo<CollectionBooksRouteArgs> {
   CollectionBooksRoute(
       {required int collectionId,
       required String collectionName,
-      _i17.Key? key})
+      _i16.Key? key})
       : super(CollectionBooksRoute.name,
             path: 'allBooks',
             args: CollectionBooksRouteArgs(
@@ -311,7 +304,7 @@ class CollectionBooksRouteArgs {
 
   final String collectionName;
 
-  final _i17.Key? key;
+  final _i16.Key? key;
 
   @override
   String toString() {
@@ -322,7 +315,7 @@ class CollectionBooksRouteArgs {
 /// generated route for
 /// [_i7.BookInfoPage]
 class BookInfoRoute extends _i4.PageRouteInfo<BookInfoRouteArgs> {
-  BookInfoRoute({required int bookId, _i17.Key? key})
+  BookInfoRoute({required int bookId, _i16.Key? key})
       : super(BookInfoRoute.name,
             path: 'bookInfo',
             args: BookInfoRouteArgs(bookId: bookId, key: key));
@@ -335,7 +328,7 @@ class BookInfoRouteArgs {
 
   final int bookId;
 
-  final _i17.Key? key;
+  final _i16.Key? key;
 
   @override
   String toString() {
@@ -406,12 +399,4 @@ class SettingsRoute extends _i4.PageRouteInfo<void> {
   const SettingsRoute() : super(SettingsRoute.name, path: 'settings');
 
   static const String name = 'SettingsRoute';
-}
-
-/// generated route for
-/// [_i16.AboutPage]
-class AboutRoute extends _i4.PageRouteInfo<void> {
-  const AboutRoute() : super(AboutRoute.name, path: 'about');
-
-  static const String name = 'AboutRoute';
 }
