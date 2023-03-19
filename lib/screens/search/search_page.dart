@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shelfie/components/image_constants.dart';
+import 'package:shelfie/components/widgets/dialogs/nothing_found_dialog.dart';
 import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
 import 'dart:convert';
@@ -24,32 +27,35 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPage extends State<SearchPage> {
-  final _searchController = TextEditingController();
+  //final _searchController = TextEditingController();
 
   late Future<List<Book>> _futureBooks;
-
-  String query = "c";
+  late int id;
+  late String query;
 
   @override
   void initState() {
     super.initState();
-    _searchController.addListener(_searchBooks);
+    query = '';
+    //_futureBooks = searchBooks('');
+    //_searchController.addListener(_searchBooks);
   }
 
-  void _searchBooks() {
-    final queryText = _searchController.text;
-    if (queryText.isNotEmpty) {
-      query = queryText;
-      //_futureBooks = searchBooks();
-    }
-    setState(() {});
-  }
+  //
+  // void _searchBooks() {
+  //   final queryText = _searchController.text;
+  //   if (queryText.isNotEmpty) {
+  //     query = queryText;
+  //     //_futureBooks = searchBooks();
+  //   }
+  //   setState(() {});
+  // }
 
-  Future<List<Book>> searchBooks(int id) async {
+  Future<List<Book>> searchBooks() async {
     var client = http.Client();
     try {
       var response = await client.get(
-          Uri.https(url, '/books/search/', {'take': '10'}),
+          Uri.https(url, '/books/search/', {'query': query, 'take': '50'}),
           headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
         return BookList.fromJson(jsonDecode(utf8.decode(response.bodyBytes)))
@@ -72,10 +78,11 @@ class _SearchPage extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final inheritedWidget = IdInheritedWidget.of(context);
+    id = inheritedWidget.id;
     Size size = MediaQuery.of(context).size;
     // keyboard ScrollViewDismissBehavior on drag
     return FutureBuilder<List<Book>>(
-        future: searchBooks(inheritedWidget.id),
+        future: searchBooks(),
         builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
@@ -94,12 +101,21 @@ class _SearchPage extends State<SearchPage> {
                     Column(
                       children: [
                         const SizedBox(height: 100),
-                        const ScanButton(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            ScanButton(),
+                          ],
+                        ),
+                        if (snapshot.data!.isEmpty) nothingFound(),
                         for (int i = 0; i < snapshot.data!.length; ++i)
                           if (snapshot.data!.length > i)
                             ListBookCard(
-                              press: () => (context.router.push(
-                                  BookInfoRoute(bookId: snapshot.data![i].getId())).then(onGoBack)),
+                              press: () => (context.router
+                                  .push(BookInfoRoute(
+                                      bookId: snapshot.data![i].getId()))
+                                  .then(onGoBack)),
                               book: snapshot.data![i],
                             )
                       ],
@@ -130,7 +146,11 @@ class _SearchPage extends State<SearchPage> {
           border: Border.all(color: primaryColor, width: 1.5)),
       child: TextField(
         keyboardType: TextInputType.emailAddress,
-        controller: _searchController,
+        onSubmitted: (value) {
+          query = value;
+          setState(() {});
+        },
+        //controller: _searchController,
         style: const TextStyle(fontSize: 20),
         cursorColor: primaryColor,
         decoration: const InputDecoration(
@@ -144,6 +164,25 @@ class _SearchPage extends State<SearchPage> {
           border: InputBorder.none,
         ),
       ),
+    );
+  }
+
+  Widget nothingFound() {
+    return Container(
+      margin: const EdgeInsets.all(15),
+      child: Column(
+        children: [
+          const SizedBox(height: 50),
+          Image.network(nothingFoundImg, height: 300, width: 300,),
+          const Text(
+            'Ой!\nНе удалось найти ничего по вашему запросу.\nПопробуйте отсканировать ISBN.\n',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.w600),
+          ),
+        ],
+      )
     );
   }
 }
