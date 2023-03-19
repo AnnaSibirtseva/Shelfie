@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:shelfie/models/inherited_id.dart';
-import 'package:shelfie/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -13,19 +11,19 @@ import '../../image_constants.dart';
 import '../../text_fields/input_text_field.dart';
 import 'nothing_found_dialog.dart';
 
-class ChangeBannerDialog extends Dialog {
+class ChangeAvatarDialog extends Dialog {
   final int userId;
 
-  ChangeBannerDialog(this.userId, {Key? key}) : super(key: key);
+  ChangeAvatarDialog(this.userId, {Key? key}) : super(key: key);
 
-  late String newBanner;
+  late String newAvatar;
 
-  Future<void> setAvatar(String newBanner) async {
+  Future<void> setAvatar(String newAvatar) async {
     var client = http.Client();
-    final jsonString = json.encode({'bannerUrl': newBanner});
+    final jsonString = json.encode({'avatarUrl': newAvatar});
     try {
       var response = await client.put(
-          Uri.https(url, '/users/user/${userId.toString()}/set-banner'),
+          Uri.https(url, '/users/user/${userId.toString()}/set-avatar'),
           headers: {HttpHeaders.contentTypeHeader: 'application/json'},
           body: jsonString);
       if (response.statusCode != 200) {
@@ -37,7 +35,7 @@ class ChangeBannerDialog extends Dialog {
   }
 
   String getAvatar() {
-    return newBanner;
+    return newAvatar;
   }
 
   @override
@@ -62,7 +60,7 @@ class ChangeBannerDialog extends Dialog {
                     size: size.width / 15,
                   ),
                   const Spacer(),
-                  Text('Новый банер:',
+                  Text('Новый аватар:',
                       style: TextStyle(
                           fontFamily: 'VelaSansExtraBold',
                           fontSize: size.width / 20,
@@ -89,7 +87,7 @@ class ChangeBannerDialog extends Dialog {
               ),
               InputTextField(
                 onChanged: (String value) {
-                  newBanner = value;
+                  newAvatar = value;
                 },
                 maxLen: 0,
                 height: 0.1,
@@ -111,14 +109,14 @@ class ChangeBannerDialog extends Dialog {
                   DialogButton(
                     press: () async {
                       try {
-                        await setAvatar(newBanner);
+                        await setAvatar(newAvatar);
                         context.router.pop();
                       } on Exception catch (_) {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) => const Center(
                                 child: NothingFoundDialog(
-                                    'Что-то пошло не так!\nБанер не был изменен.',
+                                    'Что-то пошло не так!\nАватар не был изменен.',
                                     warningGif,
                                     'Ошибка')));
                       }

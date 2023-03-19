@@ -5,6 +5,7 @@ import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/models/inherited_id.dart';
 import 'package:shelfie/models/user.dart';
 
+import '../../../components/widgets/dialogs/change_avatar_dialog.dart';
 import '../../../components/widgets/dialogs/change_banner_dialog.dart';
 
 class ProfileHead extends StatefulWidget {
@@ -18,19 +19,29 @@ class ProfileHead extends StatefulWidget {
 
 class _ProfileHead extends State<ProfileHead> {
   late int id;
-  late ChangeBannerDialog dialog;
+  late ChangeBannerDialog banDialog;
+  late ChangeAvatarDialog avDialog;
 
-  FutureOr changePic(dynamic value) {
-    widget.user.setBanner(dialog.getAvatar());
-    setState(() {
-    });
+  FutureOr changeBanner(dynamic value) {
+    widget.user.setBanner(banDialog.getAvatar());
+    setState(() {});
+  }
+
+  FutureOr changeAvatar(dynamic value) {
+    widget.user.setAvatar(avDialog.getAvatar());
+    setState(() {});
+  }
+
+  void showChangeBannerDialog() {
+    banDialog = ChangeBannerDialog(id);
+    showDialog(context: context, builder: (BuildContext context) => banDialog)
+        .then(changeBanner);
   }
 
   void showChangeAvatarDialog() {
-    dialog = ChangeBannerDialog(id);
-    showDialog(
-        context: context,
-        builder: (BuildContext context) => dialog).then(changePic);
+    avDialog = ChangeAvatarDialog(id);
+    showDialog(context: context, builder: (BuildContext context) => avDialog)
+        .then(changeAvatar);
   }
 
   @override
@@ -46,7 +57,7 @@ class _ProfileHead extends State<ProfileHead> {
       child: Stack(
         children: <Widget>[
           GestureDetector(
-            onTap: showChangeAvatarDialog,
+            onTap: showChangeBannerDialog,
             child: Container(
               height: size.height * 0.2,
               decoration: BoxDecoration(
@@ -62,14 +73,17 @@ class _ProfileHead extends State<ProfileHead> {
               right: size.height * 0.3,
               left: 0.0,
               bottom: 0.0,
-              child: Container(
-                height: size.height * 0.2,
-                decoration: BoxDecoration(
-                  border: Border.all(color: secondaryColor),
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage(user.getProfileImageUrl()),
-                    fit: BoxFit.cover,
+              child: GestureDetector(
+                onTap: showChangeAvatarDialog,
+                child: Container(
+                  height: size.height * 0.2,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: secondaryColor),
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: NetworkImage(user.getProfileImageUrl()),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               )),
