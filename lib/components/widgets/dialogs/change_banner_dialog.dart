@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:shelfie/models/inherited_id.dart';
@@ -11,20 +13,21 @@ import '../../image_constants.dart';
 import '../../text_fields/input_text_field.dart';
 import 'nothing_found_dialog.dart';
 
-class ChangeAvatarDialog extends Dialog {
+class ChangeBannerDialog extends Dialog {
   final int userId;
 
-  ChangeAvatarDialog(this.userId, {Key? key}) : super(key: key);
+  ChangeBannerDialog(this.userId, {Key? key}) : super(key: key);
 
-  late String newAvatar;
+  late String newBanner;
 
-  Future<void> setAvatar(String newAvatar) async {
+  Future<void> setAvatar(String newBanner) async {
     var client = http.Client();
+    final jsonString = json.encode({'bannerUrl': newBanner});
     try {
-      var response = await client.put(Uri.https(
-          url,
-          '/users/user/${userId.toString()}/set-avatar',
-          {'avatarUrl': newAvatar}));
+      var response = await client.put(
+          Uri.https(url, '/users/user/${userId.toString()}/set-banner'),
+          headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+          body: jsonString);
       if (response.statusCode != 200) {
         throw Exception();
       }
@@ -34,7 +37,7 @@ class ChangeAvatarDialog extends Dialog {
   }
 
   String getAvatar() {
-    return newAvatar;
+    return newBanner;
   }
 
   @override
@@ -59,7 +62,7 @@ class ChangeAvatarDialog extends Dialog {
                     size: size.width / 15,
                   ),
                   const Spacer(),
-                  Text('Новый аватар',
+                  Text('Новый банер:',
                       style: TextStyle(
                           fontFamily: 'VelaSansExtraBold',
                           fontSize: size.width / 20,
@@ -78,14 +81,16 @@ class ChangeAvatarDialog extends Dialog {
                 child: Tooltip(
                     message: 'Прямая ссылка на изображение',
                     child: Text(
-                      '🖼️ Изображение профиля:',
+                      '🖼️ Изображение:',
                       style: TextStyle(
-                          fontSize: size.width / 22,
+                          fontSize: size.width / 23,
                           fontWeight: FontWeight.bold),
                     )),
               ),
               InputTextField(
-                onChanged: (String value) {newAvatar = value;},
+                onChanged: (String value) {
+                  newBanner = value;
+                },
                 maxLen: 0,
                 height: 0.1,
               ),
@@ -106,15 +111,16 @@ class ChangeAvatarDialog extends Dialog {
                   DialogButton(
                     press: () async {
                       try {
-                        await setAvatar(newAvatar);
+                        await setAvatar(newBanner);
                         context.router.pop();
                       } on Exception catch (_) {
                         showDialog(
                             context: context,
-                            builder: (BuildContext context) => const Center(child: NothingFoundDialog(
-                                'Что-то пошло не так!\nАватар не был изменен.',
-                                warningGif,
-                                'Ошибка')));
+                            builder: (BuildContext context) => const Center(
+                                child: NothingFoundDialog(
+                                    'Что-то пошло не так!\nАватар не был изменен.',
+                                    warningGif,
+                                    'Ошибка')));
                       }
                     },
                     reverse: false,

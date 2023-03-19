@@ -1,12 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/components/image_constants.dart';
 import 'package:shelfie/models/inherited_id.dart';
 import 'package:shelfie/models/user.dart';
 
-import '../../../components/widgets/dialogs/change_avatar_dialog.dart';
-import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
-import '../profile_page.dart';
+import '../../../components/widgets/dialogs/change_banner_dialog.dart';
 
 class ProfileHead extends StatefulWidget {
   final User user;
@@ -19,18 +18,21 @@ class ProfileHead extends StatefulWidget {
 
 class _ProfileHead extends State<ProfileHead> {
   late int id;
+  late ChangeBannerDialog dialog;
 
-  void showChangeAvatarDialog() {
-    ChangeAvatarDialog dialog = ChangeAvatarDialog(id);
-    showDialog(
-        context: context,
-        builder: (BuildContext context) => dialog);
+  FutureOr changePic(dynamic value) {
+    widget.user.setBanner(dialog.getAvatar());
     setState(() {
-      widget.user.setAvatar(dialog.getAvatar());
     });
   }
 
-  // todo: change to gesture detectors and add photo-changers.
+  void showChangeAvatarDialog() {
+    dialog = ChangeBannerDialog(id);
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => dialog).then(changePic);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -48,7 +50,7 @@ class _ProfileHead extends State<ProfileHead> {
             child: Container(
               height: size.height * 0.2,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(const Radius.circular(15)),
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
                 image: DecorationImage(
                   image: NetworkImage(user.getBannerImageUrl()),
                   fit: BoxFit.cover,
