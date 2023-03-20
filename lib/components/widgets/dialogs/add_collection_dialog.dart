@@ -1,12 +1,42 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
+import '../../image_constants.dart';
 import '../../text_fields/input_text_field.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'nothing_found_dialog.dart';
 
 class AddCollectionDialog extends Dialog {
-  const AddCollectionDialog({Key? key}) : super(key: key);
+  final int userId;
+  late String title = '', coverUrl = '', desc = '';
+
+  AddCollectionDialog(this.userId, {Key? key}) : super(key: key);
+
+  Future<void> createCollection() async {
+    var client = http.Client();
+    final jsonString =
+        json.encode({"name": title, "description": desc, "imageUrl": coverUrl});
+    try {
+      var response = await client.post(
+          Uri.https(url, '/shelves/collections/create'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            'userId': userId.toString()
+          },
+          body: jsonString);
+      if (response.statusCode != 200) {
+        throw Exception();
+      }
+    } finally {
+      client.close();
+    }
+  }
 
   @override
   Dialog build(BuildContext context) {
@@ -19,7 +49,7 @@ class AddCollectionDialog extends Dialog {
         child: Container(
           padding: const EdgeInsets.all(15),
           width: size.width * 0.8,
-          height: size.height * 0.52,
+          height: size.height * 0.75,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -47,30 +77,52 @@ class AddCollectionDialog extends Dialog {
               Align(
                 alignment: Alignment.topLeft,
                 child: Tooltip(
-                  message: 'Прямая ссылка на изображение',
-                  child: Text(
-                  '🖼️ Обложка:',
-                  style: TextStyle(
-                      fontSize: size.width / 22,
-                      fontWeight: FontWeight.bold),
-                )),
+                    message: 'Прямая ссылка на изображение',
+                    child: Text(
+                      '🔹 Обложка:',
+                      style: TextStyle(
+                          fontSize: size.width / 22,
+                          fontWeight: FontWeight.bold),
+                    )),
               ),
               InputTextField(
-                onChanged: (String value) {}, maxLen: 0, height: 0.1,
+                onChanged: (String value) {
+                  coverUrl = value;
+                },
+                maxLen: 0,
+                height: 0.1,
               ),
               const SizedBox(height: 15),
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  '🖋️ Название:',
+                  '🔹 Название:',
                   style: TextStyle(
-                      fontSize: size.width / 22,
-                      fontWeight: FontWeight.bold),
+                      fontSize: size.width / 22, fontWeight: FontWeight.bold),
                 ),
               ),
               InputTextField(
-                  maxLen: 50, height: 0.1,
-                onChanged: (String value) {},
+                maxLen: 50,
+                height: 0.1,
+                onChanged: (String value) {
+                  title = value;
+                },
+              ),
+              const SizedBox(height: 15),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  '🔹 Описание:',
+                  style: TextStyle(
+                      fontSize: size.width / 22, fontWeight: FontWeight.bold),
+                ),
+              ),
+              InputTextField(
+                maxLen: 250,
+                height: 0.15,
+                onChanged: (String value) {
+                  desc = value;
+                },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -79,13 +131,32 @@ class AddCollectionDialog extends Dialog {
                       press: () {
                         context.router.pop();
                       },
-                      isAsync: false,
+                      isAsync: true,
                       reverse: true,
                       text: 'Отменить'),
                   const SizedBox(
                     width: 10,
                   ),
-                  DialogButton(press: () {}, reverse: false, text: 'Добавить', isAsync: false,),
+                  DialogButton(
+                    press: () async {
+                      try {
+                        // todo check emptiness
+                        await createCollection();
+                        context.router.pop();
+                      } on Exception catch (_) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => const Center(
+                                child: NothingFoundDialog(
+                                    'Что-то пошло не так!\nНе получилось добавить новый сборник.',
+                                    warningGif,
+                                    'Ошибка')));
+                      }
+                    },
+                    reverse: false,
+                    text: 'Добавить',
+                    isAsync: true,
+                  ),
                 ],
               ),
             ],

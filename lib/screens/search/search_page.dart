@@ -53,10 +53,14 @@ class _SearchPage extends State<SearchPage> {
 
   Future<List<Book>> searchBooks() async {
     var client = http.Client();
+    final jsonString = json.encode({"query": query, "take": 50, "skip": 0});
     try {
-      var response = await client.get(
-          Uri.https(url, '/books/search/', {'query': query, 'take': '50'}),
-          headers: {'userId': id.toString()});
+      var response = await client.post(Uri.https(url, '/books/search/'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            'userId': id.toString()
+          },
+          body: jsonString);
       if (response.statusCode == 200) {
         return BookList.fromJson(jsonDecode(utf8.decode(response.bodyBytes)))
             .foundBooks;
@@ -169,20 +173,21 @@ class _SearchPage extends State<SearchPage> {
 
   Widget nothingFound() {
     return Container(
-      margin: const EdgeInsets.all(15),
-      child: Column(
-        children: [
-          const SizedBox(height: 50),
-          Image.network(nothingFoundImg, height: 300, width: 300,),
-          const Text(
-            'Ой!\nНе удалось найти ничего по вашему запросу.\nПопробуйте отсканировать ISBN.\n',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.w600),
-          ),
-        ],
-      )
-    );
+        margin: const EdgeInsets.all(15),
+        child: Column(
+          children: [
+            const SizedBox(height: 50),
+            Image.network(
+              nothingFoundImg,
+              height: 300,
+              width: 300,
+            ),
+            const Text(
+              'Ой!\nНе удалось найти ничего по вашему запросу.\nПопробуйте отсканировать ISBN.\n',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w600),
+            ),
+          ],
+        ));
   }
 }

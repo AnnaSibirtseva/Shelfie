@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String url = 'shelfie-api.onrender.com';
+const String url = 'api-shelfie.onrender.com';
 
 const int iconSplitPart = 5;
 
@@ -23,10 +23,13 @@ const List mainUserMenu = [
   'Рецензии',
   'Цитаты',
   'Сборники',
-  'Достижения',
-  'Статистика'
+//  'Достижения',
+//  'Статистика'
 ];
-const List extraUserMenu = ['Настройки', 'О приложении', 'Выйти'];
+const List extraUserMenu = [
+//  'Настройки',
+  'О приложении',
+  'Выйти'];
 
 const int minName = 2;
 const int maxName = 30;

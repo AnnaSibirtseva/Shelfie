@@ -77,13 +77,13 @@ class _ProfilePage extends State<ProfilePage> {
       // user collections page
       () => context.router.push(const UserCollectionsRoute()).then(onGoBack),
       // user achievements page
-      () => {},
+      //() => {},
       // user stat page
-      () => {}
+      //() => {}
     ];
     List extraRoutes = [
       // settings page
-      () => context.router.push(const SettingsRoute()).then(onGoBack),
+      // () => context.router.push(const SettingsRoute()).then(onGoBack),
       // about page
       () => showDialog(
           context: context,
