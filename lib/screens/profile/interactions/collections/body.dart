@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:shelfie/components/widgets/dialogs/confirmation_dialog.dart';
 import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
 import 'package:shelfie/models/collection.dart';
@@ -56,26 +57,21 @@ class _BodyState extends State<Body> {
           if (snapshot.hasData) {
             List<Collection> collection = snapshot.data!;
             return SizedBox(
-              height: size.height,
-              width: size.width,
-              child: Column(
-                children: [
-                  drawHead(context, size, inheritedWidget.id),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: collection.length,
-                      itemBuilder: (context, index) => CollectionCard(
-                        press: () => (context.router.push(CollectionBooksRoute(
-                            collectionId: collection[index].getId(),
-                            collectionName: collection[index].getName()))),
-                        collection: collection[index],
+                height: size.height,
+                width: size.width,
+                child: SingleChildScrollView(
+                  reverse: false,
+                  child: Column(
+                    children: [
+                      drawHead(context, size, inheritedWidget.id),
+                      for (int i = 0; i < collection.length; ++i)
+                        buildCard(collection[i], inheritedWidget.id),
+                      SizedBox(
+                        height: size.height * 0.1,
                       ),
-                    ),
+                    ],
                   ),
-                  SizedBox(height: size.height * 0.1,),
-                ],
-              ),
-            );
+                ));
           } else if (snapshot.hasError) {
             return WebErrorWidget(errorMessage: snapshot.error.toString());
           } else {
@@ -87,6 +83,67 @@ class _BodyState extends State<Body> {
 
   FutureOr onGoBack(dynamic value) {
     setState(() {});
+  }
+
+  Future<void> deleteCollection(int colId, int userId) async {
+    var client = http.Client();
+    final jsonString = json.encode({});
+    try {
+      var response = await client.delete(
+          Uri.https(url, '/shelves/collections/${colId.toString()}/remove'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            'userId': userId.toString()
+          },
+          body: jsonString);
+      if (response.statusCode != 200) {
+        //TODO: show message
+      }
+    } finally {
+      client.close();
+    }
+  }
+
+  Widget buildCard(Collection collection, int id) {
+    return Dismissible(
+      key: Key(collection.getId().toString()),
+      confirmDismiss: (DismissDirection direction) async {
+        return await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return ConfirmationDialog(
+              text: 'Вы действительно хотите удалить этот сборник?',
+              press: () async {
+                await deleteCollection(collection.getId(), id);
+                context.router.pop(true);
+              },
+            );
+          },
+        );
+      },
+      background: deleteBackGroundItem(),
+      child: CollectionCard(
+        press: () => (context.router.push(CollectionBooksRoute(
+            collectionId: collection.getId(),
+            collectionName: collection.getName()))),
+        collection: collection,
+      ),
+    );
+  }
+
+  Widget deleteBackGroundItem() {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: const BoxDecoration(
+          color: Color(0xFFE57373),
+          borderRadius: BorderRadius.all(Radius.circular(15))),
+      alignment: Alignment.centerRight,
+      padding: const EdgeInsets.only(right: 20),
+      child: const Icon(
+        Icons.delete,
+        color: Colors.white,
+      ),
+    );
   }
 
   Widget drawHead(BuildContext context, Size size, int id) {
