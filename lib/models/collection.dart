@@ -12,7 +12,7 @@ class Collection {
     String imageUrl;
     String name;
     String description;
-    if (json['imageUrl'] != null) {
+    if (json['imageUrl'] != null && (json['imageUrl'] as String).isNotEmpty) {
       imageUrl = json['imageUrl'] as String;
     } else {
       imageUrl = defaultCollectionImg;

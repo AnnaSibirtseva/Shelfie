@@ -73,6 +73,8 @@ import '../../screens/profile/profile_page.dart';
             AutoRoute(path: 'userReviews', page: UserReviewPage),
             AutoRoute(path: 'userBooks', page: UserBooksPage),
             AutoRoute(path: 'userCollections', page: UserCollectionsPage),
+            AutoRoute(path: 'allBooks', page: CollectionBooksPage),
+            AutoRoute(path: 'bookInfo', page: BookInfoPage),
             AutoRoute(path: 'settings', page: SettingsPage),
             RedirectRoute(path: '*', redirectTo: ''),
           ],
