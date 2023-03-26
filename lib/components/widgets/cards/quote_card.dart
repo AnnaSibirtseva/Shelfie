@@ -47,7 +47,9 @@ class _QuoteCardState extends State<QuoteCard> {
             context: context,
             builder: (BuildContext context) {
               return const NothingFoundDialog(
-                  'Что-то пошло не так! Цитата не была добавлена.', warningGif, 'Ошибка');
+                  'Что-то пошло не так! Цитата не была добавлена.',
+                  warningGif,
+                  'Ошибка');
             });
       }
     } finally {
@@ -60,21 +62,22 @@ class _QuoteCardState extends State<QuoteCard> {
     final jsonString = json.encode({});
     try {
       var response = await client.delete(
-          Uri.https(url, '/interactions/quotes/${quote.getId()}/unsave'),
+          Uri.https(url, '/interactions/quotes/${quote.getId()}/remove'),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
             'userId': id.toString()
           },
           body: jsonString);
-      if (response.statusCode != 200) {
+      if (response.statusCode == 200) {
+        quote.reverseQuoteSaved();
+      } else {
         showDialog(
             context: context,
             builder: (BuildContext context) {
               return const NothingFoundDialog(
                   'Что-то пошло не так! Цитата не была удалена из сохраненных.',
                   warningGif,
-                'Ошибка'
-              );
+                  'Ошибка');
             });
       }
     } finally {
@@ -88,7 +91,6 @@ class _QuoteCardState extends State<QuoteCard> {
     } else {
       await unsaveQuote(id);
     }
-    quote.reverseQuoteSaved();
     setState(() {});
   }
 

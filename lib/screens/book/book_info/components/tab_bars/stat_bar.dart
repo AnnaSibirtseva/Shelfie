@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/components/widgets/cards/quote_card.dart';
+import 'package:shelfie/components/widgets/dialogs/add_book_dialog.dart';
 import 'package:shelfie/components/widgets/dialogs/add_quote_dialog.dart';
 import 'package:shelfie/models/book.dart';
 import 'package:shelfie/models/book_quote.dart';
@@ -144,7 +145,14 @@ class _StackOverState extends State<BookStatisticsTabBar>
                 IconButton(
                     icon: const Icon(Icons.library_add_rounded,
                         color: primaryColor),
-                    onPressed: () {}),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AddBookToCollectionDialog(
+                                id, widget.book.getId());
+                          });
+                    }),
               ],
             ),
           ),

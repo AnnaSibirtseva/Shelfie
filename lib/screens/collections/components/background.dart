@@ -64,7 +64,7 @@ class Background extends StatelessWidget {
                 ],
               ),
               body,
-              SizedBox(height: size.height * 0.1),
+              SizedBox(height: 71),
             ],
           ),
         ],
