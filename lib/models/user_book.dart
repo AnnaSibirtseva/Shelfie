@@ -22,8 +22,8 @@ class UserBook {
         (json['authors'] as List).map((e) => e as String).toList(),
         coverImageUrl,
         json['userRating'] as int?,
-        json['status'] as String,
-        json['status'] as String);
+        json['startTime'] as String?,
+        json['endTime'] as String?);
   }
 
   int getId() {

@@ -2,38 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
 
 class FilterList extends StatefulWidget {
-  const FilterList({Key? key}) : super(key: key);
+  final List<String> data;
+  late List<String> selectedItemsList = [];
+
+  FilterList({Key? key, required this.data}) : super(key: key);
 
   @override
   _FilterList createState() => _FilterList();
+
+  List<String> getList() {
+    return selectedItemsList;
+  }
 }
 
 class _FilterList extends State<FilterList> {
-  List data = [
-    'жАнРррР',
-    'Зуянр',
-    'Боба',
-    'Буба',
-    'суперпупердлинныйжанрогокактаконтакойдлинныйэтовообщежанр',
-    'а тут нужно много просто',
-    'и еще',
-    'бебебебе',
-    'фыр'
-  ];
-  List selectedItemsList = [];
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
       width: size.width,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Wrap(children: [
-              for (var item = 0; item < selectedItemsList.length; item++)
+              for (var item = 0; item < widget.selectedItemsList.length; item++)
                 Container(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -48,7 +43,7 @@ class _FilterList extends State<FilterList> {
                     children: [
                       const SizedBox(width: 5),
                       Flexible(
-                        child: Text(selectedItemsList[item].toString(),
+                        child: Text(widget.selectedItemsList[item].toString(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
@@ -64,7 +59,8 @@ class _FilterList extends State<FilterList> {
                           ),
                           onTap: () {
                             setState(() {
-                              selectedItemsList.remove(selectedItemsList[item]);
+                              widget.selectedItemsList
+                                  .remove(widget.selectedItemsList[item]);
                             });
                           })
                     ],
@@ -74,35 +70,38 @@ class _FilterList extends State<FilterList> {
           ),
           const Divider(
               color: secondaryColor, endIndent: 16, thickness: 1, indent: 16),
-          SizedBox(
-            height: size.height * 0.3,
-            child: Row(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          onTap: () => selectTappedItem(index),
-                          title: Text(
-                            data[index],
-                            maxLines: 2,
-                          ),
-                          leading: Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            padding: const EdgeInsets.all(3),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: selectedItemsList.contains(data[index])
-                                    ? primaryColor
-                                    : secondaryColor),
-                            child:
-                                const Icon(Icons.check, color: secondaryColor),
-                          ),
-                        );
-                      }),
-                ),
-              ],
+          Flexible(
+            child: SizedBox(
+              height: size.height * 0.2,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: widget.data.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            onTap: () => selectTappedItem(index),
+                            title: Text(
+                              widget.data[index],
+                              maxLines: 2,
+                            ),
+                            leading: Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: widget.selectedItemsList
+                                          .contains(widget.data[index])
+                                      ? primaryColor
+                                      : secondaryColor),
+                              child:
+                                  const Icon(Icons.check, color: secondaryColor),
+                            ),
+                          );
+                        }),
+                  ),
+                ],
+              ),
             ),
           )
         ],
@@ -111,13 +110,13 @@ class _FilterList extends State<FilterList> {
   }
 
   void selectTappedItem(int index) {
-    if (selectedItemsList.contains(data[index])) {
+    if (widget.selectedItemsList.contains(widget.data[index])) {
       setState(() {
-        selectedItemsList.remove(data[index]);
+        widget.selectedItemsList.remove(widget.data[index]);
       });
     } else {
       setState(() {
-        selectedItemsList.add(data[index]);
+        widget.selectedItemsList.add(widget.data[index]);
       });
     }
   }

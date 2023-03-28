@@ -62,7 +62,7 @@ class _QuoteCardState extends State<QuoteCard> {
     final jsonString = json.encode({});
     try {
       var response = await client.delete(
-          Uri.https(url, '/interactions/quotes/${quote.getId()}/remove'),
+          Uri.https(url, '/interactions/quotes/${quote.getId()}/unsave'),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
             'userId': id.toString()

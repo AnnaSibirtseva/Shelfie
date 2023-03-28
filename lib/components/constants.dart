@@ -13,8 +13,7 @@ const whiteColor = Colors.white;
 
 const defaultCollectionImg =
     'https://im.wampi.ru/2023/01/02/image43d81c00455799a6.png';
-const defaultBookCoverImg =
-    'https://covertopia.com/wp-content/uploads/2015/05/000227_Alt.jpg';
+const defaultBookCoverImg = 'https://im.wampi.ru/2023/03/26/emptybook.png';
 const defaultCollectionName = '-';
 const defaultCollectionDesc = '-';
 
@@ -29,7 +28,8 @@ const List mainUserMenu = [
 const List extraUserMenu = [
 //  'Настройки',
   'О приложении',
-  'Выйти'];
+  'Выйти'
+];
 
 const int minName = 2;
 const int maxName = 30;

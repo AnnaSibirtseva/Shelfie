@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shelfie/components/image_constants.dart';
+import 'package:shelfie/components/widgets/dialogs/filters_dialog.dart';
 import 'package:shelfie/components/widgets/dialogs/nothing_found_dialog.dart';
 import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
@@ -27,33 +28,37 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPage extends State<SearchPage> {
-  //final _searchController = TextEditingController();
 
-  late Future<List<Book>> _futureBooks;
   late int id;
   late String query;
+  late List<String> languages;
+  late List<String> genres;
+  late List<String> ageRestrictions;
+  late int minRating;
+  late FiltersDialog dialog;
 
   @override
   void initState() {
     super.initState();
     query = '';
-    //_futureBooks = searchBooks('');
-    //_searchController.addListener(_searchBooks);
+    languages = [];
+    genres = [];
+    ageRestrictions = [];
+    minRating = 0;
+    dialog = FiltersDialog();
   }
 
-  //
-  // void _searchBooks() {
-  //   final queryText = _searchController.text;
-  //   if (queryText.isNotEmpty) {
-  //     query = queryText;
-  //     //_futureBooks = searchBooks();
-  //   }
-  //   setState(() {});
-  // }
 
   Future<List<Book>> searchBooks() async {
     var client = http.Client();
-    final jsonString = json.encode({"query": query, "take": 50, "skip": 0});
+    final jsonString = json.encode({
+      "query": query,
+      if (languages.isNotEmpty) "languages": languages,
+      if (genres.isNotEmpty) "genres": genres,
+      if (ageRestrictions.isNotEmpty) "ageRestrictions": ageRestrictions,
+      "minRating": minRating,
+      "take": 50,
+      "skip": 0});
     try {
       var response = await client.post(Uri.https(url, '/books/search/'),
           headers: {
@@ -62,7 +67,8 @@ class _SearchPage extends State<SearchPage> {
           },
           body: jsonString);
       if (response.statusCode == 200) {
-        return BookList.fromJson(jsonDecode(utf8.decode(response.bodyBytes)))
+        return BookList
+            .fromJson(jsonDecode(utf8.decode(response.bodyBytes)))
             .foundBooks;
       } else {
         throw Exception();
@@ -79,11 +85,26 @@ class _SearchPage extends State<SearchPage> {
     setState(() {});
   }
 
+  FutureOr setFilters(dynamic value) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            backgroundColor: primaryColor,
+            content:
+            Text("Загрузка...")));
+    languages = dialog.getSelectedCountries();
+    genres = dialog.getSelectedGenres();
+    ageRestrictions = dialog.getSelectedRestrictions();
+    minRating = dialog.getMinRating();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final inheritedWidget = IdInheritedWidget.of(context);
     id = inheritedWidget.id;
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     // keyboard ScrollViewDismissBehavior on drag
     return FutureBuilder<List<Book>>(
         future: searchBooks(),
@@ -96,9 +117,35 @@ class _SearchPage extends State<SearchPage> {
                   children: [
                     Row(
                       children: [
-                        const FilterButton(
-                          pressed: false,
+                        GestureDetector(
+                            onTap: () =>
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return dialog;
+                                    }
+                                ).then(setFilters),
+
+                            child: Container(
+                              margin: const EdgeInsets.only(left: 20, bottom: 20, top: 30),
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              //padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                              width: size.width * 0.15,
+                              height: size.width * 0.15,
+                              decoration: BoxDecoration(
+                                  color: whiteColor,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(color: primaryColor, width: 1.5)),
+                              child: SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: Image.asset('assets/icons/blue_filter.png'),
+                              ),
+                            ),
                         ),
+                        // const FilterButton(
+                        //   pressed: false,
+                        // ),
                         searchField(size),
                       ],
                     ),
@@ -116,9 +163,10 @@ class _SearchPage extends State<SearchPage> {
                         for (int i = 0; i < snapshot.data!.length; ++i)
                           if (snapshot.data!.length > i)
                             ListBookCard(
-                              press: () => (context.router
+                              press: () =>
+                              (context.router
                                   .push(BookInfoRoute(
-                                      bookId: snapshot.data![i].getId()))
+                                  bookId: snapshot.data![i].getId()))
                                   .then(onGoBack)),
                               book: snapshot.data![i],
                             )

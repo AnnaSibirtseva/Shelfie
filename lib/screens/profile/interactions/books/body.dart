@@ -14,7 +14,7 @@ class Body extends StatelessWidget {
         .size;
     return Container(
       margin: EdgeInsets.only(
-          left: 15, right: 15, top: 15, bottom: size.height * 0.1),
+          left: 15, right: 15, top: 15, bottom: 71),
       height: size.height,
       width: size.width,
       child: Column(

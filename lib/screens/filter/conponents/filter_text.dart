@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class FilterText extends StatelessWidget {
   final String text;
-  final String icon;
+  final String? icon;
 
   const FilterText({Key? key, required this.text, required this.icon})
       : super(key: key);
@@ -17,13 +17,13 @@ class FilterText extends StatelessWidget {
       height: size.height * 0.08,
       child: Stack(
         children: <Widget>[
-          Positioned(
+          if (icon != null) Positioned(
               bottom: 0,
               top: 0,
               left: size.width * 0.2,
               child: SizedBox(
-                height: size.height * 0.11,
-                width: size.width * 0.11,
+                height: size.height * 0.1,
+                width: size.width * 0.1,
                 child: Image.asset('assets/images/$icon.png'),
               )),
           Align(
@@ -34,7 +34,7 @@ class FilterText extends StatelessWidget {
               style: TextStyle(
                   fontFamily: 'VelaSansExtraBold',
                   //color: Colors.black,
-                  fontSize: size.width / 14,
+                  fontSize: size.width / 17,
                   fontWeight: FontWeight.w800),
             ),
           )
