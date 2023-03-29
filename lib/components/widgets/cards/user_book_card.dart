@@ -62,7 +62,7 @@ class UserBookCard extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.bottomLeft,
                         child: Row(
-                          children: [timeWidget()],
+                          children: [timeWidget(size)],
                         ),
                       ),
                     ),
@@ -93,7 +93,7 @@ class UserBookCard extends StatelessWidget {
     );
   }
 
-  Widget timeWidget() {
+  Widget timeWidget(Size size) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,13 +101,11 @@ class UserBookCard extends StatelessWidget {
         Text('Начало: ' + book.getStartTime(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style:
-                const TextStyle(fontWeight: FontWeight.w500, fontSize: 15.0)),
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: size.width * 0.035)),
         Text('Конец: ' + book.getEndTime(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style:
-                const TextStyle(fontWeight: FontWeight.w500, fontSize: 15.0)),
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: size.width * 0.035)),
       ],
     );
   }

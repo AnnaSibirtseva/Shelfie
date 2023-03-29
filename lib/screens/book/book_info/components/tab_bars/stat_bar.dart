@@ -122,9 +122,9 @@ class _StackOverState extends State<BookStatisticsTabBar>
               children: [
                 SizedBox(
                   height: 45,
-                  width: size.width * 0.80,
+                  width: size.width * 0.78,
                   child: TabBar(
-                    //isScrollable: true,
+                    // isScrollable: true,
                     controller: _tabController,
                     indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(
@@ -143,7 +143,9 @@ class _StackOverState extends State<BookStatisticsTabBar>
                   ),
                 ),
                 IconButton(
-                    icon: const Icon(Icons.library_add_rounded,
+                    icon: Icon(
+                        Icons.library_add_rounded,
+                        size: size.width * 0.05,
                         color: primaryColor),
                     onPressed: () {
                       showDialog(
