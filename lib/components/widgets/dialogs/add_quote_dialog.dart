@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:http/http.dart' as http;
 import 'package:shelfie/models/book.dart';
-import 'package:shelfie/models/inherited_id.dart';
 import 'dart:convert';
 import 'dart:io';
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
+import '../../image_constants.dart';
 import '../../text_fields/input_text_field.dart';
+import 'nothing_found_dialog.dart';
 
 class AddQuoteDialog extends Dialog {
   final Book book;
@@ -17,7 +18,7 @@ class AddQuoteDialog extends Dialog {
   AddQuoteDialog({Key? key, required this.book, required this.id})
       : super(key: key);
 
-  Future<void> addQuote() async {
+  Future<void> addQuote(BuildContext context) async {
     var client = http.Client();
     final jsonString = json.encode({"bookId": book.getId(), "text": _text});
     try {
@@ -29,7 +30,13 @@ class AddQuoteDialog extends Dialog {
           },
           body: jsonString);
       if (response.statusCode != 200) {
-        //TODO: show message
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => const Center(
+                child: NothingFoundDialog(
+                    'Что-то пошло не так!\nЦитата не была добавлена.',
+                    warningGif,
+                    'Ошибка')));
       }
     } finally {
       client.close();
@@ -140,13 +147,15 @@ class AddQuoteDialog extends Dialog {
                   ),
                   DialogButton(
                       press: () async {
-                        if (_text.isNotEmpty) {
-                          await addQuote();
+                        if (_text.isNotEmpty && checkRestrictions(context)) {
+                          await addQuote(context);
                           context.router.pop(true);
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                              backgroundColor: Color(0xFFE57373),
-                              content: Text("Цитата не может быть пустой!")));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  backgroundColor: redColor,
+                                  content:
+                                      Text("Цитата не может быть пустой!")));
                         }
                       },
                       isAsync: true,
@@ -159,5 +168,15 @@ class AddQuoteDialog extends Dialog {
         ),
       ),
     );
+  }
+
+  bool checkRestrictions(BuildContext context) {
+    if (_text.length < minQuoteText) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: redColor,
+          content: Text("Текст цитаты должен быть от 2 символов")));
+      return false;
+    }
+    return true;
   }
 }

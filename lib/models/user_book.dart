@@ -9,7 +9,8 @@ class UserBook {
   late String? _startTime;
   late String? _endTime;
 
-  UserBook(this._id, this._title, this._authors, this._coverImageUrl, this._userRating, this._startTime, this._endTime);
+  UserBook(this._id, this._title, this._authors, this._coverImageUrl,
+      this._userRating, this._startTime, this._endTime);
 
   factory UserBook.fromJson(dynamic json) {
     String coverImageUrl = defaultBookCoverImg;

@@ -37,6 +37,10 @@ class UserReview {
     );
   }
 
+  int getBookId() {
+    return _bookId;
+  }
+
   String getReviewTitle() {
     return _reviewTitle;
   }

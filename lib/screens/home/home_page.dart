@@ -3,15 +3,13 @@ import '../../components/bottom_menu/bottom_bar_item.dart';
 
 import '../../components/bottom_menu/bottom_bar_bubble.dart';
 import '../../models/inherited_id.dart';
-import '../collections/collection_page.dart';
-import '../search/search_page.dart';
 import 'package:auto_route/auto_route.dart';
 import '../../components/routes/route.gr.dart';
 
 class HomePage extends StatefulWidget {
   final int userId;
 
-  const HomePage(this.userId, {Key? key }) : super(key: key);
+  const HomePage(this.userId, {Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePage();
@@ -31,8 +29,7 @@ class _HomePage extends State<HomePage> {
       curContext.router.navigate(_routes[index]);
       curContext.router.pushNamed('/home');
       curContext.router.push(_routes[index]);
-      setState(() {
-      });
+      setState(() {});
     } else {
       //curContext.tabsRouter.setActiveIndex(index);
     }

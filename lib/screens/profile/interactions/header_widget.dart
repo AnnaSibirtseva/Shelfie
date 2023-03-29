@@ -23,8 +23,8 @@ class HeaderWidget extends StatelessWidget {
               height: size.height * 0.09,
               width: size.width * 0.09,
               child:
-              //Image.network('https://disk.yandex.ru/i/i8FVLoIZxIl8xQ')
-              Image.asset('assets/images/$icon.png'),
+                  //Image.network('https://disk.yandex.ru/i/i8FVLoIZxIl8xQ')
+                  Image.asset('assets/images/$icon.png'),
             ),
             const SizedBox(width: 10),
             Text(

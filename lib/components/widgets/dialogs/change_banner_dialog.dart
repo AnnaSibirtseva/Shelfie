@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:shelfie/models/inherited_id.dart';
-import 'package:shelfie/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

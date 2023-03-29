@@ -73,13 +73,10 @@ class _AddCollectionCardState extends State<AddCollectionCard> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return InkWell(
       child: Container(
         margin: const EdgeInsets.all(5),
         child: Row(
-          //mainAxisSize: MainAxisSize.min,
-          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: Text(

@@ -99,6 +99,10 @@ class FiltersDialog extends Dialog {
                             children: [
                               DialogButton(
                                   press: () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            backgroundColor: primaryColor,
+                                            content: Text("Загрузка...")));
                                     context.router.pop();
                                   },
                                   isAsync: true,

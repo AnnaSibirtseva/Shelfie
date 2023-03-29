@@ -13,21 +13,21 @@ class WebErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              "assets/images/error.png",
-            ),
-            Text(
-              errorMessage,
-              style: const TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w900,
-                  color: primaryColor),
-            ),
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Image.asset(
+            "assets/images/error.png",
+          ),
+          Text(
+            errorMessage,
+            style: const TextStyle(
+                fontSize: 14.0,
+                fontWeight: FontWeight.w900,
+                color: primaryColor),
+          ),
+        ],
+      ),
     );
   }
 }

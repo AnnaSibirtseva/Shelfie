@@ -78,33 +78,33 @@ class AddBookToCollectionDialog extends Dialog {
               const Divider(color: primaryColor),
               const SizedBox(height: 10),
               SizedBox(
-                  height: size.height * 0.2,
-                  child: FutureBuilder<List<UserCollection>>(
-                      future: getUserCollections(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<UserCollection>> snapshot) {
-                        if (snapshot.hasData) {
-                          return SingleChildScrollView(
-                              reverse: false,
-                              child: Column(
-                                children: [
-                                  for (int i = 0;
-                                      i < snapshot.data!.length;
-                                      ++i)
-                                    AddCollectionCard(
-                                      collection: snapshot.data![i],
-                                      bookId: bookId,
-                                      userId: userId,
-                                    )
-                                ],
-                              ));
-                        } else if (snapshot.hasError) {
-                          return WebErrorWidget(
-                              errorMessage: snapshot.error.toString());
-                        } else {
-                          return const Center(child: CircularProgressIndicator(color: primaryColor));
-                        }
-                      }),
+                height: size.height * 0.2,
+                child: FutureBuilder<List<UserCollection>>(
+                    future: getUserCollections(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<UserCollection>> snapshot) {
+                      if (snapshot.hasData) {
+                        return SingleChildScrollView(
+                            reverse: false,
+                            child: Column(
+                              children: [
+                                for (int i = 0; i < snapshot.data!.length; ++i)
+                                  AddCollectionCard(
+                                    collection: snapshot.data![i],
+                                    bookId: bookId,
+                                    userId: userId,
+                                  )
+                              ],
+                            ));
+                      } else if (snapshot.hasError) {
+                        return WebErrorWidget(
+                            errorMessage: snapshot.error.toString());
+                      } else {
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: primaryColor));
+                      }
+                    }),
               ),
               const SizedBox(height: 15),
               Row(

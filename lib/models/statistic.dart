@@ -1,11 +1,7 @@
-import '../components/constants.dart';
-import 'package:flutter/material.dart';
-
 class Statistic {
   late int _bookCount;
   late int _reviewCount;
   late int _quoteCountCount;
-
 
   Statistic(this._bookCount, this._reviewCount, this._quoteCountCount);
 
@@ -28,5 +24,4 @@ class Statistic {
   int getQuoteCount() {
     return _quoteCountCount;
   }
-
 }

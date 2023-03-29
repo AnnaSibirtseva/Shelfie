@@ -19,43 +19,43 @@ class StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return InkWell(
-        onTap: press,
-        child: Container(
-            margin: const EdgeInsets.only(right: 10),
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15), color: secondaryColor),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      onTap: press,
+      child: Container(
+        margin: const EdgeInsets.only(right: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15), color: secondaryColor),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: size.width * 0.04,
+              ),
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: size.width * 0.04,
-                  ),
+                Flexible(
+                  child: Text(countNum.toString(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: size.width * 0.075,
+                          fontFamily: 'VelaSansExtraBold',
+                          fontWeight: FontWeight.bold)),
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Text(countNum.toString(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: size.width * 0.075,
-                              fontFamily: 'VelaSansExtraBold',
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    const SizedBox(width: 5),
-                    SizedBox(
-                      height: size.height * 0.04,
-                      child: Image.asset('assets/images/$iconName.png'),
-                    ),
-                  ],
+                const SizedBox(width: 5),
+                SizedBox(
+                  height: size.height * 0.04,
+                  child: Image.asset('assets/images/$iconName.png'),
                 ),
               ],
             ),
-          ),
-        );
+          ],
+        ),
+      ),
+    );
   }
 }

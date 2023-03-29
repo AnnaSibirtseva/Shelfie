@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
+import 'package:shelfie/components/widgets/dialogs/nothing_found_dialog.dart';
 
 import '../../../models/user_review.dart';
 import 'package:auto_route/auto_route.dart';
+import '../../constants.dart';
+import '../../image_constants.dart';
 import '../dialogs/confirmation_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:shelfie/models/inherited_id.dart';
@@ -19,7 +21,6 @@ class UserReviewCard extends StatefulWidget {
 }
 
 class _UserReviewCardState extends State<UserReviewCard> {
-  //final VoidCallback press;
   late UserReview review;
   bool showFlag = false;
 
@@ -41,7 +42,13 @@ class _UserReviewCardState extends State<UserReviewCard> {
           },
           body: jsonString);
       if (response.statusCode != 200) {
-        //TODO: show message
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => const Center(
+                child: NothingFoundDialog(
+                    'Что-то пошло не так!\nРецензия не была удалена.',
+                    warningGif,
+                    'Ошибка')));
       }
     } finally {
       client.close();
@@ -190,13 +197,13 @@ class _UserReviewCardState extends State<UserReviewCard> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: const BoxDecoration(
-          color: Color(0xFFE57373),
+          color: redColor,
           borderRadius: BorderRadius.all(Radius.circular(15))),
       alignment: Alignment.centerRight,
       padding: const EdgeInsets.only(right: 20),
       child: const Icon(
         Icons.delete,
-        color: Colors.white,
+        color: whiteColor,
       ),
     );
   }

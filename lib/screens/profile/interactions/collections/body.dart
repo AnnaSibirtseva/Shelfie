@@ -13,8 +13,10 @@ import 'package:shelfie/screens/collections/components/collection_card.dart';
 import 'package:auto_route/auto_route.dart';
 
 import '../../../../components/constants.dart';
+import '../../../../components/image_constants.dart';
 import '../../../../components/widgets/dialogs/add_collection_dialog.dart';
 import '../../../../components/routes/route.gr.dart';
+import '../../../../components/widgets/dialogs/nothing_found_dialog.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -97,7 +99,13 @@ class _BodyState extends State<Body> {
           },
           body: jsonString);
       if (response.statusCode != 200) {
-        //TODO: show message
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => const Center(
+                child: NothingFoundDialog(
+                    'Что-то пошло не так!\nКоллекция не была удалена.',
+                    warningGif,
+                    'Ошибка')));
       }
     } finally {
       client.close();
@@ -135,8 +143,7 @@ class _BodyState extends State<Body> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: const BoxDecoration(
-          color: Color(0xFFE57373),
-          borderRadius: BorderRadius.all(Radius.circular(15))),
+          color: redColor, borderRadius: BorderRadius.all(Radius.circular(15))),
       alignment: Alignment.centerRight,
       padding: const EdgeInsets.only(right: 20),
       child: const Icon(

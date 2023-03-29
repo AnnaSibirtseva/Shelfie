@@ -8,7 +8,8 @@ class ConfirmationDialog extends Dialog {
   final String text;
   final VoidCallback press;
 
-  const ConfirmationDialog({Key? key, required this.text, required this.press}) : super(key: key);
+  const ConfirmationDialog({Key? key, required this.text, required this.press})
+      : super(key: key);
 
   @override
   Dialog build(BuildContext context) {
@@ -52,8 +53,7 @@ class ConfirmationDialog extends Dialog {
                   text,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: size.width / 22,
-                      fontWeight: FontWeight.normal),
+                      fontSize: size.width / 22, fontWeight: FontWeight.normal),
                 ),
               ),
               const SizedBox(height: 25),
@@ -70,7 +70,11 @@ class ConfirmationDialog extends Dialog {
                   const SizedBox(
                     width: 10,
                   ),
-                  DialogButton(press: press, isAsync: true, reverse: true, text: 'Удалить'),
+                  DialogButton(
+                      press: press,
+                      isAsync: true,
+                      reverse: true,
+                      text: 'Удалить'),
                 ],
               ),
             ],

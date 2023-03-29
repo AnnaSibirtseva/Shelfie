@@ -20,9 +20,7 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
         Text(
           login ? "Нет аккаунта? " : "Уже есть аккаунт? ",
           style: const TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w600,
-              color: grayColor),
+              fontSize: 14.0, fontWeight: FontWeight.w600, color: grayColor),
         ),
         GestureDetector(
           onTap: !login

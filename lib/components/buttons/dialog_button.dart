@@ -12,18 +12,17 @@ class DialogButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.press,
-    required this.reverse, 
+    required this.reverse,
     required this.isAsync,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Flexible( child: Container(
-      // Indents top and bottom.
-        margin: const EdgeInsets.symmetric(vertical: 0),
-        width: size.width * 0.3,
-        child: newElevatedButton(context)));
+    return Flexible(
+        child: Container(
+            width: size.width * 0.3,
+            child: newElevatedButton(context)));
   }
 
   Widget newElevatedButton(BuildContext context) {

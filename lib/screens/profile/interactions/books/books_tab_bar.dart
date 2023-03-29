@@ -130,12 +130,16 @@ class _StackOverState extends State<BooksTabBar>
                               reverse: false,
                               child: Column(
                                 children: [
-                                  for (int i = 0; i < snapshot.data!.length; ++i)
+                                  for (int i = 0;
+                                      i < snapshot.data!.length;
+                                      ++i)
                                     UserBookCard(
                                         press: () => (context.router
                                             .push(BookInfoRoute(
-                                            bookId: snapshot.data![i].getId()))
-                                            .then(onGoBack)), book: snapshot.data![i])
+                                                bookId:
+                                                    snapshot.data![i].getId()))
+                                            .then(onGoBack)),
+                                        book: snapshot.data![i])
                                 ],
                               ),
                             );

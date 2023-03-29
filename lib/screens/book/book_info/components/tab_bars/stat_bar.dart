@@ -120,7 +120,7 @@ class _StackOverState extends State<BookStatisticsTabBar>
             ),
             child: Row(
               children: [
-                Container(
+                SizedBox(
                   height: 45,
                   width: size.width * 0.80,
                   child: TabBar(

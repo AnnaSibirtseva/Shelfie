@@ -21,7 +21,7 @@ class RoundedTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       width: size.width * 0.75,
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: whiteColor,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: primaryColor)),
       child: TextField(

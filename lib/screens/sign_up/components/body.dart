@@ -5,6 +5,7 @@ import 'package:shelfie/components/image_constants.dart';
 import 'package:shelfie/components/routes/route.gr.dart';
 
 import '../../../components/buttons/rounded_button.dart';
+import '../../../components/constants.dart';
 import '../../../components/widgets/already_have_account.dart';
 import '../../../components/text_fields/password_text_field.dart';
 import '../../../components/text_fields/rounded_text_field.dart';
@@ -13,7 +14,6 @@ import '../../../models/user.dart';
 import 'package:auto_route/auto_route.dart';
 import '../../log_in/components/background.dart';
 
-import 'package:shelfie/components/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -79,7 +79,6 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    // todo check constraints
     return Background(
         body: Center(
             child: SingleChildScrollView(
@@ -125,20 +124,20 @@ class _BodyState extends State<Body> {
   bool checkConstraints() {
     if (_name.length < minName || _name.length > maxName) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Color(0xFFE57373),
+          backgroundColor: redColor,
           content: Text("Имя должно содержать от 2 до 30 символов")));
       return false;
     }
     if (_email.length < minMail || _email.length > maxMail) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Color(0xFFE57373),
+          backgroundColor: redColor,
           content: Text("Почта должна содержать от 7 до 100 символов")));
       return false;
     }
     if (passwordField.getPassword().length < minPassword ||
         passwordField.getPassword().length > maxPassword) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Color(0xFFE57373),
+          backgroundColor: redColor,
           content: Text("Пароль должно состоять из 8-30 символов")));
       return false;
     }

@@ -4,10 +4,8 @@ import 'package:auto_route/auto_route.dart';
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
 import '../../image_constants.dart';
-import '../../text_fields/input_text_field.dart';
 
 class AboutAppDialog extends Dialog {
-
   const AboutAppDialog({Key? key}) : super(key: key);
 
   @override
@@ -56,8 +54,7 @@ class AboutAppDialog extends Dialog {
                 'Shelfie',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: size.width / 22,
-                    fontWeight: FontWeight.bold),
+                    fontSize: size.width / 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Align(
@@ -66,8 +63,7 @@ class AboutAppDialog extends Dialog {
                   'Версия: 1.0.0.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: size.width / 22,
-                      fontWeight: FontWeight.normal),
+                      fontSize: size.width / 22, fontWeight: FontWeight.normal),
                 ),
               ),
               Align(
@@ -76,8 +72,7 @@ class AboutAppDialog extends Dialog {
                   'Год создания: 2023',
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      fontSize: size.width / 22,
-                      fontWeight: FontWeight.normal),
+                      fontSize: size.width / 22, fontWeight: FontWeight.normal),
                 ),
               ),
               const SizedBox(height: 15),
@@ -88,7 +83,6 @@ class AboutAppDialog extends Dialog {
                   isAsync: true,
                   reverse: true,
                   text: 'OK'),
-
             ],
           ),
         ),

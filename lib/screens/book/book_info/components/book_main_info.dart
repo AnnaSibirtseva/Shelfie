@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/models/book.dart';
 
-
 class BookMainInfo extends StatefulWidget {
   final Book book;
 
@@ -13,7 +12,6 @@ class BookMainInfo extends StatefulWidget {
 }
 
 class _BookMainInfo extends State<BookMainInfo> {
-  // todo: change to gesture detectors and add photo-changers.
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,8 +32,7 @@ class _BookMainInfo extends State<BookMainInfo> {
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
                 image: DecorationImage(
-                  image: NetworkImage(
-                      book.getImageUrl()),
+                  image: NetworkImage(book.getImageUrl()),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -62,32 +59,45 @@ class _BookMainInfo extends State<BookMainInfo> {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20.0)),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.0)),
                           ),
                           ratingWidget(book.getRating())
                         ],
                       ),
                       for (int i = 0; i < book.getAuthors().length; i++)
-                      Text(
-                          book.getAuthors()[i],
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 16.0)),
+                        Text(book.getAuthors()[i],
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 16.0)),
                       const SizedBox(height: 5),
                       Flexible(
                         child: Wrap(
                           runSpacing: 5,
                           children: [
-                            tenStarWidget(book.getUserRating() == null ? 0 : book.getUserRating()!),
-                            infoText('Язык оригинала: ' + (book.getLanguage() == null ? '-' : book.getLanguage()!)),
-                            infoText('Возрастные ограничения: ' + (book.getAgeRest() == null ? 'нет' : book.getAgeRest()!)),
+                            tenStarWidget(book.getUserRating() == null
+                                ? 0
+                                : book.getUserRating()!),
+                            infoText('Язык оригинала: ' +
+                                (book.getLanguage() == null
+                                    ? '-'
+                                    : book.getLanguage()!)),
+                            infoText('Возрастные ограничения: ' +
+                                (book.getAgeRest() == null
+                                    ? 'нет'
+                                    : book.getAgeRest()!)),
                             Wrap(
                               spacing: 5,
                               runSpacing: 5,
                               children: [
                                 infoText('Жанры:'),
-                                for (int i = 0; i < book.getGenreList().genres.length; ++i)
-                                  genreWidget(book.getGenreList().genres[i].getGenreName()),
+                                for (int i = 0;
+                                    i < book.getGenreList().genres.length;
+                                    ++i)
+                                  genreWidget(book
+                                      .getGenreList()
+                                      .genres[i]
+                                      .getGenreName()),
                               ],
                             ),
                           ],

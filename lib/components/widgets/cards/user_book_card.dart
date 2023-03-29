@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/models/user_book.dart';
 
-import '../../../components/widgets/status.dart';
-
 class UserBookCard extends StatelessWidget {
   final VoidCallback press;
   final UserBook book;

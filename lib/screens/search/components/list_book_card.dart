@@ -55,11 +55,11 @@ class ListBookCard extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 20.0)),
                     for (String author in book.getAuthors())
                       Text(
-                        // todo do sth with no authors or more than 1.
-                        author,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 16.0)),
+                          // todo do sth with no authors or more than 1.
+                          author,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 16.0)),
                     const SizedBox(height: 10),
                     Wrap(
                       spacing: 5,
@@ -79,7 +79,10 @@ class ListBookCard extends StatelessWidget {
                           children: [
                             ratingWidget(),
                             const Spacer(),
-                            StatusWidget(bookState: book.getStatus(), bookId: book.getId(),),
+                            StatusWidget(
+                              bookState: book.getStatus(),
+                              bookId: book.getId(),
+                            ),
                           ],
                         ),
                       ),
@@ -95,7 +98,8 @@ class ListBookCard extends StatelessWidget {
   }
 
   Widget ratingWidget() {
-    String rating = book.getRating() == null ? '-' : book.getRating().toString();
+    String rating =
+        book.getRating() == null ? '-' : book.getRating().toString();
     return Row(
       children: [
         const Icon(

@@ -8,7 +8,8 @@ class UserQuote {
   late List<String> _bookAuthors;
   late String _text;
 
-  UserQuote(this._id, this._bookId, this._bookTitle, this._bookCoverUrl, this._bookAuthors, this._text);
+  UserQuote(this._id, this._bookId, this._bookTitle, this._bookCoverUrl,
+      this._bookAuthors, this._text);
 
   factory UserQuote.fromJson(dynamic json) {
     String bookCoverImageUrl = defaultBookCoverImg;
@@ -27,6 +28,10 @@ class UserQuote {
 
   int getId() {
     return _id;
+  }
+
+  int getBookId() {
+    return _bookId;
   }
 
   String getQuoteText() {

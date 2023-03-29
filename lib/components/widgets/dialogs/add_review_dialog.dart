@@ -6,8 +6,10 @@ import 'dart:convert';
 import 'dart:io';
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
+import '../../image_constants.dart';
 import '../../text_fields/input_text_field.dart';
 import '../rating_widget.dart';
+import 'nothing_found_dialog.dart';
 
 class AddReviewDialog extends Dialog {
   final Book book;
@@ -19,7 +21,7 @@ class AddReviewDialog extends Dialog {
   AddReviewDialog({Key? key, required this.book, required this.id})
       : super(key: key);
 
-  Future<void> addReview() async {
+  Future<void> addReview(BuildContext context) async {
     var client = http.Client();
     final jsonString = json.encode({
       "bookId": book.getId(),
@@ -36,7 +38,13 @@ class AddReviewDialog extends Dialog {
           },
           body: jsonString);
       if (response.statusCode != 200) {
-        //TODO: show message
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => const Center(
+                child: NothingFoundDialog(
+                    'Что-то пошло не так!\nРецензия не была удалена.',
+                    warningGif,
+                    'Ошибка')));
       }
     } finally {
       client.close();
@@ -122,7 +130,9 @@ class AddReviewDialog extends Dialog {
               const SizedBox(height: 5),
               textWidget('Название:', size),
               InputTextField(
-                onChanged: (String value) {_title = value;},
+                onChanged: (String value) {
+                  _title = value;
+                },
                 maxLen: 150,
                 height: 0.1,
               ),
@@ -151,12 +161,14 @@ class AddReviewDialog extends Dialog {
                   DialogButton(
                       press: () async {
                         if (_text.isNotEmpty) {
-                          await addReview();
-                          context.router.pop(true);
+                          if (checkRestrictions(context)) {
+                            await addReview(context);
+                            context.router.pop(true);
+                          }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  backgroundColor: Color(0xFFE57373),
+                                  backgroundColor: redColor,
                                   content:
                                       Text("Рецензия не может быть пустой!")));
                         }
@@ -171,6 +183,16 @@ class AddReviewDialog extends Dialog {
         ),
       ),
     );
+  }
+
+  bool checkRestrictions(BuildContext context) {
+    if (_text.length < minRevText) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: redColor,
+          content: Text("Текст рецензии должен быть от 10 символов")));
+      return false;
+    }
+    return true;
   }
 
   Widget textWidget(String text, Size size) {

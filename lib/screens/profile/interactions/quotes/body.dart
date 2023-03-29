@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../components/widgets/cards/user_quote_card.dart';
-import '../../../../components/widgets/dialogs/add_quote_dialog.dart';
 import '../../../../models/user_quote.dart';
 import '../header_widget.dart';
 
@@ -23,9 +22,9 @@ class Body extends StatelessWidget {
           child: Column(
             children: [
               const HeaderWidget(
-                  text: 'Цитаты',
-                  icon: 'quote',
-                ),
+                text: 'Цитаты',
+                icon: 'quote',
+              ),
               for (UserQuote quote in quotes)
                 UserQuoteCard(
                   quote: quote,

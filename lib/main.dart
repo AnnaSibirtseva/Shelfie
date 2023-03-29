@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/screens/log_in/log_in_page.dart';
 
 import 'components/constants.dart';
-import 'package:auto_route/auto_route.dart';
 import 'components/routes/route.gr.dart';
 
 final _appRouter = AppRouter();

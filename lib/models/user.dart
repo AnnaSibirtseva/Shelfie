@@ -41,7 +41,6 @@ class User {
     String profileImageUrl;
     String bannerImageUrl;
 
-    // todo: find default pick for profile and banner.
     if (json['profileImageUrl'] != null) {
       profileImageUrl = json['profileImageUrl'] as String;
     } else {
@@ -60,7 +59,6 @@ class User {
       Statistic.fromJson(json['statistics']),
     );
   }
-
 
   void setAvatar(String newAvatar) {
     _profileImageUrl = newAvatar;

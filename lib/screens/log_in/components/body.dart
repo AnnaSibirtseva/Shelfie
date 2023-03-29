@@ -10,7 +10,6 @@ import '../../../components/text_fields/password_text_field.dart';
 import '../../../components/text_fields/rounded_text_field.dart';
 import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../../../models/user.dart';
-import '../../home/home_page.dart';
 import 'package:auto_route/auto_route.dart';
 import 'background.dart';
 
@@ -85,7 +84,9 @@ class _BodyState extends State<Body> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return const NothingFoundDialog(
-                                      'Ошибка входа!\nПроверьте корректность почты и пароля', warningGif, 'Ошибка');
+                                      'Ошибка входа!\nПроверьте корректность почты и пароля',
+                                      warningGif,
+                                      'Ошибка');
                                 });
                           }
                         }),

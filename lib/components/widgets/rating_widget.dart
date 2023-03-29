@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
-
 class StarRating extends StatelessWidget {
   final void Function(int index) onChanged;
   final int value;

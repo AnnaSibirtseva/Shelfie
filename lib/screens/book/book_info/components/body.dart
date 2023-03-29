@@ -88,7 +88,8 @@ class Body extends StatelessWidget {
         });
   }
 
-  Widget buildPageUI(Size size, BookReviewList reviewList, BookQuotesList quoteList) {
+  Widget buildPageUI(
+      Size size, BookReviewList reviewList, BookQuotesList quoteList) {
     return Container(
         margin: EdgeInsets.only(
             left: 15, right: 15, top: 15, bottom: size.height * 0.01),
@@ -98,22 +99,22 @@ class Body extends StatelessWidget {
           children: [
             BookMainInfo(book: book),
             Flexible(
-              child: Column(
-                children: [
-                  StatisticRow(
-                    book: book,
-                    quoCount: quoteList.count,
-                    revCount: reviewList.count,
-                  ),
-                  StatusTabBar(book: book),
-                  BookDesc(desc: book.getDesc() == null ? '-' : book.getDesc()!),
-                  BookStatisticsTabBar(
-                    reviewList: reviewList,
-                    quoteList: quoteList,
-                    book: book,
-                  )
-                ],
-              )),
+                child: Column(
+              children: [
+                StatisticRow(
+                  book: book,
+                  quoCount: quoteList.count,
+                  revCount: reviewList.count,
+                ),
+                StatusTabBar(book: book),
+                BookDesc(desc: book.getDesc() == null ? '-' : book.getDesc()!),
+                BookStatisticsTabBar(
+                  reviewList: reviewList,
+                  quoteList: quoteList,
+                  book: book,
+                )
+              ],
+            )),
           ],
         ));
   }

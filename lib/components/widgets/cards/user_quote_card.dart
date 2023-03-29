@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/constants.dart';
 import '../../../models/user_quote.dart';
-import 'package:shelfie/models/inherited_id.dart';
 
 class UserQuoteCard extends StatefulWidget {
   final UserQuote quote;
@@ -13,7 +12,6 @@ class UserQuoteCard extends StatefulWidget {
 }
 
 class _UserQuoteCardState extends State<UserQuoteCard> {
-  //final VoidCallback press;
   late UserQuote quote;
   bool showFlag = false;
 
@@ -26,101 +24,99 @@ class _UserQuoteCardState extends State<UserQuoteCard> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final inheritedWidget = IdInheritedWidget.of(context);
     return Container(
-        width: size.width,
-        decoration: const BoxDecoration(
-            color: secondaryColor,
-            image: DecorationImage(
-              image: NetworkImage(
-                  'https://ie.wampi.ru/2023/03/04/imageef4a214a62549bba.png'),
-              alignment: Alignment.topRight,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(15))),
-        padding: const EdgeInsets.all(15),
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              quote.getQuoteText(),
-              textAlign: TextAlign.justify,
-              maxLines: showFlag ? null : 7,
-              style: TextStyle(
-                  fontSize: size.width / 22, fontWeight: FontWeight.bold),
-            ),
-            if (quote.getQuoteText().isNotEmpty && quote.getQuoteText().length > 200)
-              InkWell(
-                  onTap: () {
-                    setState(() {
-                      showFlag = !showFlag;
-                    });
-                  },
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(showFlag ? "Свернуть" : "Развернуть",
-                              style: const TextStyle(
-                                  color: primaryColor,
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold))
-                        ],
-                      ),
-                    ],
-                  )),
-            const Divider(
-              color: Colors.white70,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Flexible(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+      width: size.width,
+      decoration: const BoxDecoration(
+          color: secondaryColor,
+          image: DecorationImage(
+            image: NetworkImage(
+                'https://ie.wampi.ru/2023/03/04/imageef4a214a62549bba.png'),
+            alignment: Alignment.topRight,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(15))),
+      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            quote.getQuoteText(),
+            textAlign: TextAlign.justify,
+            maxLines: showFlag ? null : 7,
+            style: TextStyle(
+                fontSize: size.width / 22, fontWeight: FontWeight.bold),
+          ),
+          if (quote.getQuoteText().isNotEmpty &&
+              quote.getQuoteText().length > 200)
+            InkWell(
+                onTap: () {
+                  setState(() {
+                    showFlag = !showFlag;
+                  });
+                },
+                child: Column(
                   children: [
-                    Text(
-                      '"' + quote.getTitle() + '"',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                          fontSize: size.width / 24,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      quote.getAuthors(),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                          fontSize: size.width / 27,
-                          fontWeight: FontWeight.w300),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Text(showFlag ? "Свернуть" : "Развернуть",
+                            style: const TextStyle(
+                                color: primaryColor,
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.bold))
+                      ],
                     ),
                   ],
                 )),
-                const SizedBox(width: 10),
-                Container(
-                  width: size.width * 0.1,
-                  height: size.height * 0.075,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: primaryColor),
-                    image: DecorationImage(
-                      image: NetworkImage(quote.getQuoteImg()),
-                      fit: BoxFit.cover,
-                    ),
+          const Divider(
+            color: Colors.white70,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Flexible(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '"' + quote.getTitle() + '"',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                        fontSize: size.width / 24, fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    quote.getAuthors(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                        fontSize: size.width / 27, fontWeight: FontWeight.w300),
+                  ),
+                ],
+              )),
+              const SizedBox(width: 10),
+              Container(
+                width: size.width * 0.1,
+                height: size.height * 0.075,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  border: Border.all(color: primaryColor),
+                  image: DecorationImage(
+                    image: NetworkImage(quote.getQuoteImg()),
+                    fit: BoxFit.cover,
                   ),
                 ),
-              ],
-            )
-          ],
-        ),
-      );
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }

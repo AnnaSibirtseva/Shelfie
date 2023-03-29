@@ -6,6 +6,8 @@ import 'dart:io';
 
 import '../../models/book_status.dart';
 import '../constants.dart';
+import '../image_constants.dart';
+import 'dialogs/nothing_found_dialog.dart';
 
 class StatusWidget extends StatefulWidget {
   final int bookId;
@@ -14,7 +16,8 @@ class StatusWidget extends StatefulWidget {
   @override
   StatusWidgetState createState() => StatusWidgetState();
 
-  const StatusWidget({Key? key, required this.bookState, required this.bookId}) : super(key: key);
+  const StatusWidget({Key? key, required this.bookState, required this.bookId})
+      : super(key: key);
 }
 
 class StatusWidgetState extends State<StatusWidget> {
@@ -32,7 +35,7 @@ class StatusWidgetState extends State<StatusWidget> {
   Future<void> changeStatus(String status) async {
     var client = http.Client();
     final jsonString =
-    json.encode({"bookId": widget.bookId, "bookStatus": status});
+        json.encode({"bookId": widget.bookId, "bookStatus": status});
     try {
       var response = await client.post(
           Uri.https(url, '/interactions/books/update-status'),
@@ -42,7 +45,13 @@ class StatusWidgetState extends State<StatusWidget> {
           },
           body: jsonString);
       if (response.statusCode != 200) {
-        //TODO: show message
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => const Center(
+                child: NothingFoundDialog(
+                    'Что-то пошло не так!\nСтатус не был изменен.',
+                    warningGif,
+                    'Ошибка')));
       }
     } finally {
       client.close();

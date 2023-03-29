@@ -11,6 +11,10 @@ class Genre {
     );
   }
 
+  int getId() {
+    return _id;
+  }
+
   String getGenreName() {
     return _genreName;
   }
@@ -26,4 +30,3 @@ class GenresList {
         (json['genres'] as List).map((e) => Genre.fromJson(e)).toList());
   }
 }
-

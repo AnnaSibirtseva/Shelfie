@@ -20,7 +20,6 @@ class QuoteCard extends StatefulWidget {
 }
 
 class _QuoteCardState extends State<QuoteCard> {
-  //final VoidCallback press;
   late BookQuote quote;
   bool showFlag = false;
   late int id;
@@ -100,16 +99,13 @@ class _QuoteCardState extends State<QuoteCard> {
     final inheritedWidget = IdInheritedWidget.of(context);
     id = inheritedWidget.id;
     return InkWell(
-      //onTap: press,
       child: Container(
         width: size.width,
         decoration: const BoxDecoration(
             color: secondaryColor,
             image: DecorationImage(
-              image: NetworkImage(
-                  'https://ie.wampi.ru/2023/03/04/imageef4a214a62549bba.png'),
+              image: NetworkImage(quoteImg),
               alignment: Alignment.topRight,
-              //fit: BoxFit.contain,
             ),
             borderRadius: BorderRadius.all(Radius.circular(15))),
         padding: const EdgeInsets.all(15),

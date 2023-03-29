@@ -3,6 +3,7 @@ import 'package:shelfie/components/constants.dart';
 
 class SliderWidget extends StatefulWidget {
   late double _value = 0.0;
+
   SliderWidget({Key? key}) : super(key: key);
 
   @override
@@ -14,7 +15,6 @@ class SliderWidget extends StatefulWidget {
 }
 
 class _Slider extends State<SliderWidget> {
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -38,8 +38,7 @@ class _Slider extends State<SliderWidget> {
               },
             )),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
-          //width: size.width * 0.2,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -51,7 +50,9 @@ class _Slider extends State<SliderWidget> {
               ),
               Text('${widget._value.round()}/10',
                   textAlign: TextAlign.start,
-                  style: TextStyle(fontSize: size.width * 0.042, fontWeight: FontWeight.bold))
+                  style: TextStyle(
+                      fontSize: size.width * 0.042,
+                      fontWeight: FontWeight.bold))
             ],
           ),
         )

@@ -14,7 +14,6 @@ class MenuListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: press,
       child: Container(
@@ -23,22 +22,21 @@ class MenuListItem extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: secondaryColor),
         child: Row(
-            //mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(text,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontWeight: FontWeight.w400)),
-              const Spacer(),
-              Transform.rotate(
-                angle: 180 * math.pi / 180,
-                child: const Icon(
-                  Icons.arrow_back_ios_rounded,
-                  size: 18,
-                  color: primaryColor,
-                ),
-              )
-            ],
+          children: [
+            Text(text,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.w400)),
+            const Spacer(),
+            Transform.rotate(
+              angle: 180 * math.pi / 180,
+              child: const Icon(
+                Icons.arrow_back_ios_rounded,
+                size: 18,
+                color: primaryColor,
+              ),
+            )
+          ],
         ),
       ),
     );

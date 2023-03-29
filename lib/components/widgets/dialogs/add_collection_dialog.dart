@@ -140,9 +140,10 @@ class AddCollectionDialog extends Dialog {
                   DialogButton(
                     press: () async {
                       try {
-                        // todo check emptiness
-                        await createCollection();
-                        context.router.pop();
+                        if (checkRestrictions(context)) {
+                          await createCollection();
+                          context.router.pop();
+                        }
                       } on Exception catch (_) {
                         showDialog(
                             context: context,
@@ -164,5 +165,15 @@ class AddCollectionDialog extends Dialog {
         ),
       ),
     );
+  }
+
+  bool checkRestrictions(BuildContext context) {
+    if (title.length < minCollectionTitle) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: redColor,
+          content: Text("Текст цитаты должен быть от 2 символов")));
+      return false;
+    }
+    return true;
   }
 }

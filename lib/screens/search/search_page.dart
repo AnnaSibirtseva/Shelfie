@@ -1,17 +1,14 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shelfie/components/image_constants.dart';
 import 'package:shelfie/components/widgets/dialogs/filters_dialog.dart';
-import 'package:shelfie/components/widgets/dialogs/nothing_found_dialog.dart';
 import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
 import 'dart:convert';
 
-import '../../components/buttons/filter_button.dart';
 import '../../components/buttons/scan_button.dart';
 import '../../components/constants.dart';
 import '../../models/book.dart';
@@ -86,11 +83,6 @@ class _SearchPage extends State<SearchPage> {
   }
 
   FutureOr setFilters(dynamic value) {
-    ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            backgroundColor: primaryColor,
-            content:
-            Text("Загрузка...")));
     languages = dialog.getSelectedCountries();
     genres = dialog.getSelectedGenres();
     ageRestrictions = dialog.getSelectedRestrictions();

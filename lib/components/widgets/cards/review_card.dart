@@ -4,13 +4,11 @@ import 'package:shelfie/components/constants.dart';
 import '../../../models/book_review.dart';
 
 class ReviewCard extends StatefulWidget {
-  //final VoidCallback press;
   final BookReview review;
 
   const ReviewCard({
     Key? key,
     required this.review,
-    //required this.press,
   }) : super(key: key);
 
   @override
@@ -25,7 +23,6 @@ class _ReviewCardState extends State<ReviewCard> {
     String revText = widget.review.getReviewText();
     Size size = MediaQuery.of(context).size;
     return InkWell(
-      //onTap: press,
       child: Container(
         decoration: const BoxDecoration(
             color: secondaryColor,
@@ -58,7 +55,7 @@ class _ReviewCardState extends State<ReviewCard> {
                         widget.review.getReviewAuthor().getName(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       )),
                     ],
@@ -81,7 +78,6 @@ class _ReviewCardState extends State<ReviewCard> {
               ],
             ),
             const SizedBox(height: 5),
-            //const Divider(color: primaryColor, thickness: 1.5),
             Text(
               widget.review.getReviewTitle(),
               textAlign: TextAlign.justify,

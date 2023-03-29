@@ -7,8 +7,6 @@ import '../../components/widgets/error.dart';
 import '../../components/widgets/loading.dart';
 import '../../models/collection.dart';
 import 'components/body.dart';
-import 'package:auto_route/auto_route.dart';
-import '../../components/routes/route.gr.dart';
 
 class CollectionsPage extends StatefulWidget {
   const CollectionsPage({Key? key}) : super(key: key);

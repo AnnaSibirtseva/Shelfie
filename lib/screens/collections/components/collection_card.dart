@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../components/constants.dart';
 import '../../../models/collection.dart';
-
 
 class CollectionCard extends StatelessWidget {
   final VoidCallback press;
@@ -64,14 +64,14 @@ class CollectionCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                              color: Colors.white,
+                              color: whiteColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0)),
                       Text(collection.getDescription(),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 14.0)),
+                              color: whiteColor, fontSize: 14.0)),
                     ],
                   ),
                 ),

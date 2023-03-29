@@ -25,10 +25,9 @@ class PasswordState extends State<PasswordTextField> {
     Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      //padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.75,
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: whiteColor,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: primaryColor)),
       child: TextField(
@@ -44,27 +43,27 @@ class PasswordState extends State<PasswordTextField> {
           ),
           suffixIcon: _showEye
               ? GestureDetector(
-            child: Container(
-              width: 25,
-              height: 25,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              alignment: Alignment.center,
-              child: _passwordEncrypted
-                  ? const Icon(
-                Icons.visibility_rounded,
-                color: grayColor,
-              )
-                  : const Icon(
-                Icons.visibility_off_rounded,
-                color: grayColor,
-              ),
-            ),
-            onTap: () {
-              setState(() {
-                _passwordEncrypted = !_passwordEncrypted;
-              });
-            },
-          )
+                  child: Container(
+                    width: 25,
+                    height: 25,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    alignment: Alignment.center,
+                    child: _passwordEncrypted
+                        ? const Icon(
+                            Icons.visibility_rounded,
+                            color: grayColor,
+                          )
+                        : const Icon(
+                            Icons.visibility_off_rounded,
+                            color: grayColor,
+                          ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      _passwordEncrypted = !_passwordEncrypted;
+                    });
+                  },
+                )
               : null,
         ),
         obscureText: _showEye ? _passwordEncrypted : true,
@@ -87,4 +86,3 @@ class PasswordState extends State<PasswordTextField> {
     );
   }
 }
-

@@ -94,8 +94,8 @@ class _FilterList extends State<FilterList> {
                                           .contains(widget.data[index])
                                       ? primaryColor
                                       : secondaryColor),
-                              child:
-                                  const Icon(Icons.check, color: secondaryColor),
+                              child: const Icon(Icons.check,
+                                  color: secondaryColor),
                             ),
                           );
                         }),

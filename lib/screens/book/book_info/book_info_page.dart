@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/models/book.dart';
 import '../../../components/constants.dart';
-import '../../../components/routes/route.gr.dart';
 import '../../../components/widgets/loading.dart';
 import '../../../models/inherited_id.dart';
 import 'components/body.dart';
@@ -53,10 +51,9 @@ class _BookInfoPage extends State<BookInfoPage> {
         builder: (BuildContext context, AsyncSnapshot<Book> snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
-               body: SingleChildScrollView(
-                  reverse: false,
-                  child: Body(book: snapshot.data!),
-
+              body: SingleChildScrollView(
+                reverse: false,
+                child: Body(book: snapshot.data!),
               ),
             );
           } else if (snapshot.hasError) {

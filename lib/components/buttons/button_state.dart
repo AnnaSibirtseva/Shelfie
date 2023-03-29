@@ -15,7 +15,6 @@ class ButtonState extends State<StatefulWidget> {
     return GestureDetector(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        //padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         width: size.width * 0.2,
         height: size.width * 0.2,
         decoration: BoxDecoration(
@@ -25,9 +24,6 @@ class ButtonState extends State<StatefulWidget> {
         child: SizedBox(
           height: size.height * 0.09,
           width: size.width * 0.09,
-          // child: reverse
-          //     ? Image.asset('assets/icons/blue_${}.png')
-          //     : Image.asset('assets/icons/white_${}.png'),
         ),
       ),
       onTap: () {

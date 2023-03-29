@@ -72,7 +72,9 @@ class _CollectionBooksPage extends State<CollectionBooksPage> {
                 reverse: false,
                 child: Column(
                   children: [
-                    SizedBox(height: 25,),
+                    const SizedBox(
+                      height: 25,
+                    ),
                     Row(
                       children: <Widget>[
                         const SizedBox(
@@ -104,7 +106,8 @@ class _CollectionBooksPage extends State<CollectionBooksPage> {
                         ListBookCard(
                           press: () => (context.router
                               .push(BookInfoRoute(
-                                  bookId: snapshot.data![i].getId())).then(onGoBack)),
+                                  bookId: snapshot.data![i].getId()))
+                              .then(onGoBack)),
                           book: snapshot.data![i],
                         )
                   ],

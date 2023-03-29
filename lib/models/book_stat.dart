@@ -1,6 +1,3 @@
-import '../components/constants.dart';
-import 'package:flutter/material.dart';
-
 class BookStatistic {
   late String _readingTime;
   late int? _readCount;

@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:shelfie/components/constants.dart';
 import 'package:shelfie/components/widgets/error.dart';
 import 'package:shelfie/components/widgets/loading.dart';
-import '../../../../components/routes/route.gr.dart';
 import '../../../../models/inherited_id.dart';
 import '../../../../models/user_review.dart';
 import 'body.dart';
@@ -19,7 +17,6 @@ class UserReviewPage extends StatefulWidget {
 }
 
 class _UserReviewPage extends State<UserReviewPage> {
-
   @override
   void initState() {
     super.initState();
@@ -28,8 +25,8 @@ class _UserReviewPage extends State<UserReviewPage> {
   Future<UserReviewsList> getUserReviewsList(int id) async {
     var client = http.Client();
     try {
-      var response =
-          await client.get(Uri.http(url, '/interactions/reviews/'), headers: {'userId': id.toString()});
+      var response = await client.get(Uri.http(url, '/interactions/reviews/'),
+          headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
         return UserReviewsList.fromJson(
             jsonDecode(utf8.decode(response.bodyBytes)));

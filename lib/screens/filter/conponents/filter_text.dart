@@ -13,19 +13,19 @@ class FilterText extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(
           vertical: size.height * 0.001, horizontal: size.width * 0.05),
-      //width: size.width * 0.32,
       height: size.height * 0.08,
       child: Stack(
         children: <Widget>[
-          if (icon != null) Positioned(
-              bottom: 0,
-              top: 0,
-              left: size.width * 0.2,
-              child: SizedBox(
-                height: size.height * 0.1,
-                width: size.width * 0.1,
-                child: Image.asset('assets/images/$icon.png'),
-              )),
+          if (icon != null)
+            Positioned(
+                bottom: 0,
+                top: 0,
+                left: size.width * 0.2,
+                child: SizedBox(
+                  height: size.height * 0.1,
+                  width: size.width * 0.1,
+                  child: Image.asset('assets/images/$icon.png'),
+                )),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(

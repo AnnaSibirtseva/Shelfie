@@ -7,7 +7,8 @@ class BookReview {
   late String _reviewTitle;
   late double _rating;
 
-  BookReview(this._id, this._reviewAuthor, this._reviewText, this._reviewTitle, this._rating);
+  BookReview(this._id, this._reviewAuthor, this._reviewText, this._reviewTitle,
+      this._rating);
 
   factory BookReview.fromJson(dynamic json) {
     return BookReview(
@@ -17,6 +18,10 @@ class BookReview {
       json['reviewTitle'] as String,
       json['rating'].toDouble(),
     );
+  }
+
+  int getId() {
+    return _id;
   }
 
   String getReviewTitle() {

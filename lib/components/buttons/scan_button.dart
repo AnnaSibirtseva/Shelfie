@@ -14,8 +14,6 @@ import '../image_constants.dart';
 import '../widgets/dialogs/nothing_found_dialog.dart';
 
 class ScanButton extends StatelessWidget {
-  final String _bar_code = '';
-
   const ScanButton({Key? key}) : super(key: key);
 
   @override
@@ -24,8 +22,6 @@ class ScanButton extends StatelessWidget {
     return SizedBox(
       width: size.width * 0.50,
       height: size.height * 0.04,
-      // Indents top and bottom.
-      //margin: const EdgeInsets.symmetric(vertical: 30),
       child: ElevatedButton(
         child: Row(
           children: [
@@ -103,10 +99,10 @@ class ScanButton extends StatelessWidget {
           context.router.push(BookInfoRoute(bookId: book.getId()));
         }
       }
-    } on PlatformException catch (e) {
+    } on PlatformException catch (_) {
       barcodeScanRes = 'Failed to get platform version.';
       showDialog(
-          //if set to true allow to close popup by tapping out of the popup
+          // If set to true allow to close popup by tapping out of the popup.
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {

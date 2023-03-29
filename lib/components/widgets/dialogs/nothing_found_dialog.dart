@@ -1,17 +1,16 @@
-// https://www.flaticon.com/free-animated-icon/search_8722522?term=book&page=1&position=7&origin=search&related_id=8722522
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
-import '../../text_fields/input_text_field.dart';
 
 class NothingFoundDialog extends Dialog {
   final String text;
   final String title;
   final String imageUrl;
 
-  const NothingFoundDialog(this.text, this.imageUrl, this.title, {Key? key}) : super(key: key);
+  const NothingFoundDialog(this.text, this.imageUrl, this.title, {Key? key})
+      : super(key: key);
 
   @override
   Dialog build(BuildContext context) {
@@ -60,19 +59,17 @@ class NothingFoundDialog extends Dialog {
                   text,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: size.width / 22,
-                      fontWeight: FontWeight.normal),
+                      fontSize: size.width / 22, fontWeight: FontWeight.normal),
                 ),
               ),
               const SizedBox(height: 15),
-             DialogButton(
-                      press: () {
-                        context.router.pop();
-                      },
-                 isAsync: true,
-                      reverse: true,
-                      text: 'OK'),
-
+              DialogButton(
+                  press: () {
+                    context.router.pop();
+                  },
+                  isAsync: true,
+                  reverse: true,
+                  text: 'OK'),
             ],
           ),
         ),

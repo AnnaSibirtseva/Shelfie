@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:shelfie/models/book_status.dart';
 import 'dart:convert';
 
+import '../../../../../components/image_constants.dart';
+import '../../../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../../../../../models/inherited_id.dart';
 
 class StatusTabBar extends StatefulWidget {
@@ -50,7 +52,13 @@ class _StackOverState extends State<StatusTabBar>
           },
           body: jsonString);
       if (response.statusCode != 200) {
-        //TODO: show message
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => const Center(
+                child: NothingFoundDialog(
+                    'Что-то пошло не так!\nСтатус не был изменен.',
+                    warningGif,
+                    'Ошибка')));
       }
     } finally {
       client.close();

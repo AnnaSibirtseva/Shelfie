@@ -7,7 +7,6 @@ import 'package:shelfie/screens/sign_up/sign_up_page.dart';
 
 import '../../screens/book/book_info/book_info_page.dart';
 import '../../screens/collections/books/books_page.dart';
-import '../../screens/filter/filter_page.dart';
 import '../../screens/profile/extra/settings/settings_page.dart';
 import '../../screens/profile/interactions/books/user_books_page.dart';
 import '../../screens/profile/interactions/collections/user_collections_page.dart';
@@ -58,7 +57,6 @@ import '../../screens/profile/profile_page.dart';
           page: EmptyRouterPage,
           children: [
             AutoRoute(path: '', page: SearchPage),
-            AutoRoute(path: 'filters', page: FilterPage),
             AutoRoute(path: 'bookInfo', page: BookInfoPage),
             RedirectRoute(path: '*', redirectTo: ''),
           ],

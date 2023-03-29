@@ -7,6 +7,7 @@ const int iconSplitPart = 5;
 const primaryColor = Color(0xFF3949AB);
 const secondaryColor = Color(0xFFE8EAF6);
 const menuIconsGrayColor = Color(0xFFADADAD);
+const redColor = Color(0xFFE57373);
 const grayColor = Colors.black38;
 const blackColor = Colors.black;
 const whiteColor = Colors.white;
@@ -37,3 +38,7 @@ const int minMail = 7;
 const int maxMail = 100;
 const int minPassword = 8;
 const int maxPassword = 30;
+
+const int minRevText = 10;
+const int minCollectionTitle = 2;
+const int minQuoteText = 2;
