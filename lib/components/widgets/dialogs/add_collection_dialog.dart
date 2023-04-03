@@ -171,7 +171,7 @@ class AddCollectionDialog extends Dialog {
     if (title.length < minCollectionTitle) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: redColor,
-          content: Text("Текст цитаты должен быть от 2 символов")));
+          content: Text("Название сборника должно быть от 2 символов")));
       return false;
     }
     return true;

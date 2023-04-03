@@ -49,24 +49,27 @@ class ListBookCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(book.getTitle(),
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20.0)),
-                    for (String author in book.getAuthors())
-                      Text(
-                          // todo do sth with no authors or more than 1.
-                          author,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: size.width / 21)),
+                    for (String author in book.getAuthors().take(2))
+                      Text(author,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 16.0)),
+                          style: TextStyle(fontSize: size.width / 23)),
+                    if (book.getAuthors().length > 2)
+                      const Text('и другие',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 13.0)),
                     const SizedBox(height: 10),
                     Wrap(
                       spacing: 5,
                       runSpacing: 5,
                       children: [
                         for (int i = 0;
-                            i < book.getGenreList().genres.length;
+                            i < book.getGenreList().genres.take(3).length;
                             ++i)
                           genreWidget(
                               book.getGenreList().genres[i].getGenreName())

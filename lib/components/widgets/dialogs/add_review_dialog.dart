@@ -42,7 +42,7 @@ class AddReviewDialog extends Dialog {
             context: context,
             builder: (BuildContext context) => const Center(
                 child: NothingFoundDialog(
-                    'Что-то пошло не так!\nРецензия не была удалена.',
+                    'Что-то пошло не так!\nРецензия не была добавлена.',
                     warningGif,
                     'Ошибка')));
       }
@@ -186,6 +186,12 @@ class AddReviewDialog extends Dialog {
   }
 
   bool checkRestrictions(BuildContext context) {
+    if (_title.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: redColor,
+          content: Text("Название рецензии не может быть пустым")));
+      return false;
+    }
     if (_text.length < minRevText) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: redColor,
