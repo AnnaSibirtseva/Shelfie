@@ -56,7 +56,7 @@ class _BookMainInfo extends State<BookMainInfo> {
                         children: [
                           Expanded(
                             child: Text(book.getTitle(),
-                                maxLines: 2,
+                                maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -65,9 +65,9 @@ class _BookMainInfo extends State<BookMainInfo> {
                           ratingWidget(book.getRating())
                         ],
                       ),
-                      for (int i = 0; i < book.getAuthors().length; i++)
-                        Text(book.getAuthors()[i],
-                            maxLines: 1,
+                      //for (int i = 0; i < book.getAuthors().length; i++)
+                        Text(book.getAuthors().join(', '),
+                            maxLines: 10,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(fontSize: 16.0)),
                       const SizedBox(height: 5),
@@ -90,7 +90,7 @@ class _BookMainInfo extends State<BookMainInfo> {
                               spacing: 5,
                               runSpacing: 5,
                               children: [
-                                infoText('Жанры:'),
+                                infoText('Жанры:' + (book.getGenreList().genres.isEmpty ? 'нет' : '')),
                                 for (int i = 0;
                                     i < book.getGenreList().genres.length;
                                     ++i)

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shelfie/components/constants.dart';
 
-import '../../../components/constants.dart';
 import '../../../components/widgets/status.dart';
 import '../../../models/book.dart';
 
@@ -62,7 +62,7 @@ class ListBookCard extends StatelessWidget {
                       const Text('и другие',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 13.0)),
+                          style: TextStyle(color: grayColor, fontSize: 13.0)),
                     const SizedBox(height: 10),
                     Wrap(
                       spacing: 5,

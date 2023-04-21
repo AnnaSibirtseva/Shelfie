@@ -54,7 +54,7 @@ class _SearchPage extends State<SearchPage> {
       if (genres.isNotEmpty) "genres": genres,
       if (ageRestrictions.isNotEmpty) "ageRestrictions": ageRestrictions,
       "minRating": minRating,
-      "take": 50,
+      "take": 500,
       "skip": 0});
     try {
       var response = await client.post(Uri.https(url, '/books/search/'),

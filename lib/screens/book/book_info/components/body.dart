@@ -24,7 +24,7 @@ class Body extends StatelessWidget {
     var client = http.Client();
     try {
       var response = await client.get(
-          Uri.http(
+          Uri.https(
               url, '/interactions/reviews/${book.getId()}', {'take': '10'}),
           headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
@@ -42,7 +42,7 @@ class Body extends StatelessWidget {
     var client = http.Client();
     try {
       var response = await client.get(
-          Uri.http(url, '/interactions/quotes/${book.getId()}', {'take': '10'}),
+          Uri.https(url, '/interactions/quotes/${book.getId()}', {'take': '10'}),
           headers: {'userId': id.toString()});
       if (response.statusCode == 200) {
         return BookQuotesList.fromJson(
