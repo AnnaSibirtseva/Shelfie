@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/models/statistic.dart';
+import '../../../../models/statistic.dart';
 
 import 'stat_card.dart';
 

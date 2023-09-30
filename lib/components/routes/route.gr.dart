@@ -12,24 +12,24 @@
 
 import 'package:auto_route/auto_route.dart' as _i4;
 import 'package:flutter/material.dart' as _i15;
-import 'package:shelfie/screens/book/book_info/book_info_page.dart' as _i7;
-import 'package:shelfie/screens/collections/books/books_page.dart' as _i6;
-import 'package:shelfie/screens/collections/collection_page.dart' as _i5;
-import 'package:shelfie/screens/home/home_page.dart' as _i3;
-import 'package:shelfie/screens/log_in/log_in_page.dart' as _i1;
-import 'package:shelfie/screens/profile/extra/settings/settings_page.dart'
+import '../../screens/book/book_info/book_info_page.dart' as _i7;
+import '../../screens/collections/books/books_page.dart' as _i6;
+import '../../screens/collections/collection_page.dart' as _i5;
+import '../../screens/home/home_page.dart' as _i3;
+import '../../screens/log_in/log_in_page.dart' as _i1;
+import '../../screens/profile/extra/settings/settings_page.dart'
     as _i14;
-import 'package:shelfie/screens/profile/interactions/books/user_books_page.dart'
+import '../../screens/profile/interactions/books/user_books_page.dart'
     as _i12;
-import 'package:shelfie/screens/profile/interactions/collections/user_collections_page.dart'
+import '../../screens/profile/interactions/collections/user_collections_page.dart'
     as _i13;
-import 'package:shelfie/screens/profile/interactions/quotes/user_quotes_page.dart'
+import '../../screens/profile/interactions/quotes/user_quotes_page.dart'
     as _i10;
-import 'package:shelfie/screens/profile/interactions/reviews/user_review_page.dart'
+import '../../screens/profile/interactions/reviews/user_review_page.dart'
     as _i11;
-import 'package:shelfie/screens/profile/profile_page.dart' as _i9;
-import 'package:shelfie/screens/search/search_page.dart' as _i8;
-import 'package:shelfie/screens/sign_up/sign_up_page.dart' as _i2;
+import '../../screens/profile/profile_page.dart' as _i9;
+import '../../screens/search/search_page.dart' as _i8;
+import '../../screens/sign_up/sign_up_page.dart' as _i2;
 
 class AppRouter extends _i4.RootStackRouter {
   AppRouter([_i15.GlobalKey<_i15.NavigatorState>? navigatorKey])

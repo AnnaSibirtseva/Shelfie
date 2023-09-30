@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/models/book.dart';
+
+import '../../../../components/constants.dart';
+import '../../../../models/book.dart';
 
 class StatisticRow extends StatelessWidget {
   final Book book;

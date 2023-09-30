@@ -1,17 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/components/widgets/cards/user_book_card.dart';
-import 'package:shelfie/components/widgets/error.dart';
 import 'package:auto_route/auto_route.dart';
+import '../../../../components/constants.dart';
 import '../../../../components/routes/route.gr.dart';
-import 'package:shelfie/models/book_status.dart';
 import 'package:http/http.dart' as http;
-import 'package:shelfie/models/inherited_id.dart';
 import 'dart:convert';
 
-import 'package:shelfie/models/user_book.dart';
+import '../../../../components/widgets/cards/user_book_card.dart';
+import '../../../../components/widgets/error.dart';
+import '../../../../models/book_status.dart';
+import '../../../../models/inherited_id.dart';
+import '../../../../models/user_book.dart';
+
 
 class BooksTabBar extends StatefulWidget {
   const BooksTabBar({Key? key}) : super(key: key);

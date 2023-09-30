@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:shelfie/components/widgets/error.dart';
-import 'package:shelfie/models/book.dart';
 import '../../../components/constants.dart';
+import '../../../components/widgets/error.dart';
 import '../../../components/widgets/loading.dart';
+import '../../../models/book.dart';
 import '../../../models/inherited_id.dart';
 import 'components/body.dart';
 

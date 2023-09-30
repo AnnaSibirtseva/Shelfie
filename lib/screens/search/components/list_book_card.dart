@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
 
+import '../../../components/constants.dart';
 import '../../../components/widgets/status.dart';
 import '../../../models/book.dart';
 

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:http/http.dart' as http;
-import 'package:shelfie/components/widgets/error.dart';
-import 'package:shelfie/models/filters.dart';
-import 'package:shelfie/screens/filter/conponents/slider.dart';
 import 'dart:convert';
 import 'dart:io';
+import '../../../models/filters.dart';
 import '../../../screens/filter/conponents/filter_list.dart';
 import '../../../screens/filter/conponents/filter_text.dart';
+import '../../../screens/filter/conponents/slider.dart';
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
+import '../error.dart';
 
 class FiltersDialog extends Dialog {
   late FilterList genres;

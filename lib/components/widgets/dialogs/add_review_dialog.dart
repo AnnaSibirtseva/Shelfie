@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:http/http.dart' as http;
-import 'package:shelfie/models/book.dart';
 import 'dart:convert';
 import 'dart:io';
+import '../../../models/book.dart';
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
 import '../../image_constants.dart';

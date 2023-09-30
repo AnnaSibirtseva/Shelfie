@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:shelfie/models/user_collection.dart';
+import '../../../models/user_collection.dart';
 
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';

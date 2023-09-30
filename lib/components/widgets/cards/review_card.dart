@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
 
 import '../../../models/book_review.dart';
+import '../../constants.dart';
 
 class ReviewCard extends StatefulWidget {
   final BookReview review;

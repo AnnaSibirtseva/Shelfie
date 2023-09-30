@@ -1,18 +1,18 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:shelfie/screens/collections/collection_page.dart';
-import 'package:shelfie/screens/home/home_page.dart';
-import 'package:shelfie/screens/log_in/log_in_page.dart';
-import 'package:shelfie/screens/search/search_page.dart';
-import 'package:shelfie/screens/sign_up/sign_up_page.dart';
 
 import '../../screens/book/book_info/book_info_page.dart';
 import '../../screens/collections/books/books_page.dart';
+import '../../screens/collections/collection_page.dart';
+import '../../screens/home/home_page.dart';
+import '../../screens/log_in/log_in_page.dart';
 import '../../screens/profile/extra/settings/settings_page.dart';
 import '../../screens/profile/interactions/books/user_books_page.dart';
 import '../../screens/profile/interactions/collections/user_collections_page.dart';
 import '../../screens/profile/interactions/quotes/user_quotes_page.dart';
 import '../../screens/profile/interactions/reviews/user_review_page.dart';
 import '../../screens/profile/profile_page.dart';
+import '../../screens/search/search_page.dart';
+import '../../screens/sign_up/sign_up_page.dart';
 
 
 @AdaptiveAutoRouter(

@@ -4,19 +4,19 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/widgets/dialogs/confirmation_dialog.dart';
-import 'package:shelfie/components/widgets/error.dart';
-import 'package:shelfie/components/widgets/loading.dart';
-import 'package:shelfie/models/collection.dart';
-import 'package:shelfie/models/inherited_id.dart';
-import 'package:shelfie/screens/collections/components/collection_card.dart';
 import 'package:auto_route/auto_route.dart';
 
 import '../../../../components/constants.dart';
 import '../../../../components/image_constants.dart';
 import '../../../../components/widgets/dialogs/add_collection_dialog.dart';
 import '../../../../components/routes/route.gr.dart';
+import '../../../../components/widgets/dialogs/confirmation_dialog.dart';
 import '../../../../components/widgets/dialogs/nothing_found_dialog.dart';
+import '../../../../components/widgets/error.dart';
+import '../../../../components/widgets/loading.dart';
+import '../../../../models/collection.dart';
+import '../../../../models/inherited_id.dart';
+import '../../../collections/components/collection_card.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);

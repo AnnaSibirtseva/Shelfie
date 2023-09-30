@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
 import 'dart:math' as math;
+
+import '../../../../components/constants.dart';
 
 class MenuListItem extends StatelessWidget {
   final VoidCallback press;

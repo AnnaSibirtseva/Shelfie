@@ -5,13 +5,13 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/components/widgets/error.dart';
-import 'package:shelfie/components/widgets/loading.dart';
-import 'package:shelfie/models/user.dart';
+import '../../components/constants.dart';
 import '../../components/routes/route.gr.dart';
 import '../../components/widgets/dialogs/about_dialog.dart';
+import '../../components/widgets/error.dart';
+import '../../components/widgets/loading.dart';
 import '../../models/inherited_id.dart';
+import '../../models/user.dart';
 import 'components/menu/menu.dart';
 import 'components/profile_head.dart';
 import 'components/stats/statistic_row.dart';

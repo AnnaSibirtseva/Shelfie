@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/widgets/dialogs/nothing_found_dialog.dart';
 
+import '../../../models/inherited_id.dart';
 import '../../../models/user_review.dart';
 import 'package:auto_route/auto_route.dart';
 import '../../constants.dart';
 import '../../image_constants.dart';
 import '../dialogs/confirmation_dialog.dart';
 import 'package:http/http.dart' as http;
-import 'package:shelfie/models/inherited_id.dart';
 import 'dart:convert';
 import 'dart:io';
+
+import '../dialogs/nothing_found_dialog.dart';
 
 class UserReviewCard extends StatefulWidget {
   final UserReview review;

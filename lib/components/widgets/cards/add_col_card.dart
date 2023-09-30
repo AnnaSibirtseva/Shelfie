@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/models/user_collection.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import '../../../models/user_collection.dart';
+import '../../constants.dart';
 
 class AddCollectionCard extends StatefulWidget {
   final UserCollection collection;

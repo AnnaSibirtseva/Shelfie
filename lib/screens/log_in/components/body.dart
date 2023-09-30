@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/image_constants.dart';
-import 'package:shelfie/components/routes/route.gr.dart';
 
 import '../../../components/buttons/rounded_button.dart';
+import '../../../components/constants.dart';
+import '../../../components/image_constants.dart';
+import '../../../components/routes/route.gr.dart';
 import '../../../components/widgets/already_have_account.dart';
 import '../../../components/text_fields/password_text_field.dart';
 import '../../../components/text_fields/rounded_text_field.dart';
@@ -12,9 +13,6 @@ import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../../../models/user.dart';
 import 'package:auto_route/auto_route.dart';
 import 'background.dart';
-
-import '../../log_in/components/background.dart';
-import 'package:shelfie/components/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
