@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/components/widgets/error.dart';
-import 'package:shelfie/components/widgets/loading.dart';
+import '../../../../components/constants.dart';
+import '../../../../components/widgets/error.dart';
+import '../../../../components/widgets/loading.dart';
 import '../../../../models/inherited_id.dart';
 import '../../../../models/user_review.dart';
 import 'body.dart';

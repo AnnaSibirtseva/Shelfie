@@ -4,13 +4,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:shelfie/components/routes/route.gr.dart';
-import 'package:shelfie/models/book.dart';
-import 'package:shelfie/models/inherited_id.dart';
 import 'package:auto_route/auto_route.dart';
 
+import '../../models/book.dart';
+import '../../models/inherited_id.dart';
 import '../constants.dart';
 import '../image_constants.dart';
+import '../routes/route.gr.dart';
 import '../widgets/dialogs/nothing_found_dialog.dart';
 
 class ScanButton extends StatelessWidget {

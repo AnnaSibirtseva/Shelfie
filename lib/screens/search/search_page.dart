@@ -3,14 +3,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shelfie/components/image_constants.dart';
-import 'package:shelfie/components/widgets/dialogs/filters_dialog.dart';
-import 'package:shelfie/components/widgets/error.dart';
-import 'package:shelfie/components/widgets/loading.dart';
 import 'dart:convert';
 
 import '../../components/buttons/scan_button.dart';
 import '../../components/constants.dart';
+import '../../components/image_constants.dart';
+import '../../components/widgets/dialogs/filters_dialog.dart';
+import '../../components/widgets/error.dart';
+import '../../components/widgets/loading.dart';
 import '../../models/book.dart';
 import '../../models/inherited_id.dart';
 import 'components/list_book_card.dart';

@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/models/inherited_id.dart';
-import 'package:shelfie/models/user.dart';
 
+import '../../../components/constants.dart';
 import '../../../components/widgets/dialogs/change_avatar_dialog.dart';
 import '../../../components/widgets/dialogs/change_banner_dialog.dart';
+import '../../../models/inherited_id.dart';
+import '../../../models/user.dart';
 
 class ProfileHead extends StatefulWidget {
   final User user;

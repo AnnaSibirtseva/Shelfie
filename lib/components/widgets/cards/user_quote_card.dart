@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
 import '../../../models/user_quote.dart';
+import '../../constants.dart';
 
 class UserQuoteCard extends StatefulWidget {
   final UserQuote quote;

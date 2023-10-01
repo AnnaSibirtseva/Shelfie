@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/models/book.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:shelfie/models/book_status.dart';
 import 'dart:convert';
 
+import '../../../../../components/constants.dart';
 import '../../../../../components/image_constants.dart';
 import '../../../../../components/widgets/dialogs/nothing_found_dialog.dart';
+import '../../../../../models/book.dart';
+import '../../../../../models/book_status.dart';
 import '../../../../../models/inherited_id.dart';
 
 class StatusTabBar extends StatefulWidget {

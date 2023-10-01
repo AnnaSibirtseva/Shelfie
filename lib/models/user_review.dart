@@ -1,4 +1,4 @@
-import 'package:shelfie/components/constants.dart';
+import '../components/constants.dart';
 
 class UserReview {
   late int _id;

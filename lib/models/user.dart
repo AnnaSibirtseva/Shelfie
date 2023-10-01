@@ -1,4 +1,4 @@
-import 'package:shelfie/models/statistic.dart';
+import '../models/statistic.dart';
 
 import '../components/constants.dart';
 

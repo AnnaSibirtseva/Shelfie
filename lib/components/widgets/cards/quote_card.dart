@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/constants.dart';
 import 'package:http/http.dart' as http;
-import 'package:shelfie/models/inherited_id.dart';
 import 'dart:convert';
 
 import '../../../models/book_quote.dart';
+import '../../../models/inherited_id.dart';
+import '../../constants.dart';
 import '../../image_constants.dart';
 import '../dialogs/nothing_found_dialog.dart';
 

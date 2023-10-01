@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/routes/route.gr.dart';
 
+import '../../../components/routes/route.gr.dart';
 import '../../../models/collection.dart';
 import 'package:auto_route/auto_route.dart';
 import 'background.dart';

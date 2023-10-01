@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String url = 'api-shelfie.onrender.com';
+const String url = 'shelfie-api.onrender.com';
 
 const int iconSplitPart = 5;
 

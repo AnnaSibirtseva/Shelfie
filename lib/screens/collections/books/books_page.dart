@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/components/widgets/error.dart';
-import 'package:shelfie/components/widgets/loading.dart';
 import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
-import 'package:shelfie/models/book.dart';
-import 'package:shelfie/models/inherited_id.dart';
-import 'package:shelfie/screens/search/components/list_book_card.dart';
+import '../../../components/constants.dart';
 import '../../../components/routes/route.gr.dart';
+import '../../../components/widgets/error.dart';
+import '../../../components/widgets/loading.dart';
+import '../../../models/book.dart';
+import '../../../models/inherited_id.dart';
+import '../../search/components/list_book_card.dart';
 
 class CollectionBooksPage extends StatefulWidget {
   final int collectionId;

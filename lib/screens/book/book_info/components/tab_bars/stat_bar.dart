@@ -3,17 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:shelfie/components/constants.dart';
-import 'package:shelfie/components/widgets/cards/quote_card.dart';
-import 'package:shelfie/components/widgets/dialogs/add_book_dialog.dart';
-import 'package:shelfie/components/widgets/dialogs/add_quote_dialog.dart';
-import 'package:shelfie/models/book.dart';
-import 'package:shelfie/models/book_quote.dart';
-import 'package:shelfie/models/inherited_id.dart';
 
+import '../../../../../components/constants.dart';
+import '../../../../../components/widgets/cards/quote_card.dart';
 import '../../../../../components/widgets/cards/review_card.dart';
+import '../../../../../components/widgets/dialogs/add_book_dialog.dart';
+import '../../../../../components/widgets/dialogs/add_quote_dialog.dart';
 import '../../../../../components/widgets/dialogs/add_review_dialog.dart';
+import '../../../../../models/book.dart';
+import '../../../../../models/book_quote.dart';
 import '../../../../../models/book_review.dart';
+import '../../../../../models/inherited_id.dart';
 
 /*
 когда появится кнопка показать больше, просто будут заново инициализироваться

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:http/http.dart' as http;
-import 'package:shelfie/models/book.dart';
+import '../../../models/book.dart';
 import 'dart:convert';
 import 'dart:io';
 import '../../buttons/dialog_button.dart';
