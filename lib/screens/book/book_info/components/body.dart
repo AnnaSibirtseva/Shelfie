@@ -13,6 +13,7 @@ import 'book_desc.dart';
 import 'book_main_info.dart';
 import 'stat_row.dart';
 import 'tab_bars/stat_bar.dart';
+import 'tab_bars/status_tab_bar.dart';
 
 class Body extends StatelessWidget {
   final Book book;
@@ -105,7 +106,7 @@ class Body extends StatelessWidget {
                   quoCount: quoteList.count,
                   revCount: reviewList.count,
                 ),
-                // StatusTabBar(book: book),
+                StatusTabBar(book: book),
                 BookDesc(desc: book.getDesc() == null ? '-' : book.getDesc()!),
                 BookStatisticsTabBar(
                   reviewList: reviewList,
