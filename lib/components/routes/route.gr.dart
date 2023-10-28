@@ -11,28 +11,29 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i4;
-import 'package:flutter/material.dart' as _i15;
-import '../../screens/book/book_info/book_info_page.dart' as _i7;
-import '../../screens/collections/books/books_page.dart' as _i6;
-import '../../screens/collections/collection_page.dart' as _i5;
-import '../../screens/home/home_page.dart' as _i3;
-import '../../screens/log_in/log_in_page.dart' as _i1;
-import '../../screens/profile/extra/settings/settings_page.dart'
-    as _i14;
-import '../../screens/profile/interactions/books/user_books_page.dart'
-    as _i12;
-import '../../screens/profile/interactions/collections/user_collections_page.dart'
+import 'package:flutter/material.dart' as _i16;
+import 'package:shelfie/screens/book/book_info/book_info_page.dart' as _i7;
+import 'package:shelfie/screens/book_club/book_clubs_page.dart' as _i9;
+import 'package:shelfie/screens/collections/books/books_page.dart' as _i6;
+import 'package:shelfie/screens/collections/collection_page.dart' as _i5;
+import 'package:shelfie/screens/home/home_page.dart' as _i3;
+import 'package:shelfie/screens/log_in/log_in_page.dart' as _i1;
+import 'package:shelfie/screens/profile/extra/settings/settings_page.dart'
+    as _i15;
+import 'package:shelfie/screens/profile/interactions/books/user_books_page.dart'
     as _i13;
-import '../../screens/profile/interactions/quotes/user_quotes_page.dart'
-    as _i10;
-import '../../screens/profile/interactions/reviews/user_review_page.dart'
+import 'package:shelfie/screens/profile/interactions/collections/user_collections_page.dart'
+    as _i14;
+import 'package:shelfie/screens/profile/interactions/quotes/user_quotes_page.dart'
     as _i11;
-import '../../screens/profile/profile_page.dart' as _i9;
-import '../../screens/search/search_page.dart' as _i8;
-import '../../screens/sign_up/sign_up_page.dart' as _i2;
+import 'package:shelfie/screens/profile/interactions/reviews/user_review_page.dart'
+    as _i12;
+import 'package:shelfie/screens/profile/profile_page.dart' as _i10;
+import 'package:shelfie/screens/search/search_page.dart' as _i8;
+import 'package:shelfie/screens/sign_up/sign_up_page.dart' as _i2;
 
 class AppRouter extends _i4.RootStackRouter {
-  AppRouter([_i15.GlobalKey<_i15.NavigatorState>? navigatorKey])
+  AppRouter([_i16.GlobalKey<_i16.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
@@ -56,6 +57,10 @@ class AppRouter extends _i4.RootStackRouter {
           routeData: routeData, child: const _i4.EmptyRouterPage());
     },
     SearchRouter.name: (routeData) {
+      return _i4.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i4.EmptyRouterPage());
+    },
+    BookClubsRouter.name: (routeData) {
       return _i4.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i4.EmptyRouterPage());
     },
@@ -84,29 +89,33 @@ class AppRouter extends _i4.RootStackRouter {
       return _i4.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i8.SearchPage());
     },
+    BookClubsRoute.name: (routeData) {
+      return _i4.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i9.BookClubsPage());
+    },
     ProfileRoute.name: (routeData) {
       return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i9.ProfilePage());
+          routeData: routeData, child: const _i10.ProfilePage());
     },
     UserQuotesRoute.name: (routeData) {
       return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i10.UserQuotesPage());
+          routeData: routeData, child: const _i11.UserQuotesPage());
     },
     UserReviewRoute.name: (routeData) {
       return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i11.UserReviewPage());
+          routeData: routeData, child: const _i12.UserReviewPage());
     },
     UserBooksRoute.name: (routeData) {
       return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i12.UserBooksPage());
+          routeData: routeData, child: const _i13.UserBooksPage());
     },
     UserCollectionsRoute.name: (routeData) {
       return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i13.UserCollectionsPage());
+          routeData: routeData, child: const _i14.UserCollectionsPage());
     },
     SettingsRoute.name: (routeData) {
       return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i14.SettingsPage());
+          routeData: routeData, child: const _i15.SettingsPage());
     }
   };
 
@@ -156,6 +165,18 @@ class AppRouter extends _i4.RootStackRouter {
                 _i4.RouteConfig('*#redirect',
                     path: '*',
                     parent: SearchRouter.name,
+                    redirectTo: '',
+                    fullMatch: true)
+              ]),
+          _i4.RouteConfig(BookClubsRouter.name,
+              path: 'bookClubs',
+              parent: HomeRoute.name,
+              children: [
+                _i4.RouteConfig(BookClubsRoute.name,
+                    path: '', parent: BookClubsRouter.name),
+                _i4.RouteConfig('*#redirect',
+                    path: '*',
+                    parent: BookClubsRouter.name,
                     redirectTo: '',
                     fullMatch: true)
               ]),
@@ -218,7 +239,7 @@ class SignUpRoute extends _i4.PageRouteInfo<void> {
 /// [_i3.HomePage]
 class HomeRoute extends _i4.PageRouteInfo<HomeRouteArgs> {
   HomeRoute(
-      {required int userId, _i15.Key? key, List<_i4.PageRouteInfo>? children})
+      {required int userId, _i16.Key? key, List<_i4.PageRouteInfo>? children})
       : super(HomeRoute.name,
             path: '/home',
             args: HomeRouteArgs(userId: userId, key: key),
@@ -232,7 +253,7 @@ class HomeRouteArgs {
 
   final int userId;
 
-  final _i15.Key? key;
+  final _i16.Key? key;
 
   @override
   String toString() {
@@ -261,6 +282,16 @@ class SearchRouter extends _i4.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.EmptyRouterPage]
+class BookClubsRouter extends _i4.PageRouteInfo<void> {
+  const BookClubsRouter({List<_i4.PageRouteInfo>? children})
+      : super(BookClubsRouter.name,
+            path: 'bookClubs', initialChildren: children);
+
+  static const String name = 'BookClubsRouter';
+}
+
+/// generated route for
+/// [_i4.EmptyRouterPage]
 class ProfileRouter extends _i4.PageRouteInfo<void> {
   const ProfileRouter({List<_i4.PageRouteInfo>? children})
       : super(ProfileRouter.name, path: 'profile', initialChildren: children);
@@ -282,7 +313,7 @@ class CollectionBooksRoute extends _i4.PageRouteInfo<CollectionBooksRouteArgs> {
   CollectionBooksRoute(
       {required int collectionId,
       required String collectionName,
-      _i15.Key? key})
+      _i16.Key? key})
       : super(CollectionBooksRoute.name,
             path: 'allBooks',
             args: CollectionBooksRouteArgs(
@@ -301,7 +332,7 @@ class CollectionBooksRouteArgs {
 
   final String collectionName;
 
-  final _i15.Key? key;
+  final _i16.Key? key;
 
   @override
   String toString() {
@@ -312,7 +343,7 @@ class CollectionBooksRouteArgs {
 /// generated route for
 /// [_i7.BookInfoPage]
 class BookInfoRoute extends _i4.PageRouteInfo<BookInfoRouteArgs> {
-  BookInfoRoute({required int bookId, _i15.Key? key})
+  BookInfoRoute({required int bookId, _i16.Key? key})
       : super(BookInfoRoute.name,
             path: 'bookInfo',
             args: BookInfoRouteArgs(bookId: bookId, key: key));
@@ -325,7 +356,7 @@ class BookInfoRouteArgs {
 
   final int bookId;
 
-  final _i15.Key? key;
+  final _i16.Key? key;
 
   @override
   String toString() {
@@ -342,7 +373,15 @@ class SearchRoute extends _i4.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.ProfilePage]
+/// [_i9.BookClubsPage]
+class BookClubsRoute extends _i4.PageRouteInfo<void> {
+  const BookClubsRoute() : super(BookClubsRoute.name, path: '');
+
+  static const String name = 'BookClubsRoute';
+}
+
+/// generated route for
+/// [_i10.ProfilePage]
 class ProfileRoute extends _i4.PageRouteInfo<void> {
   const ProfileRoute() : super(ProfileRoute.name, path: '');
 
@@ -350,7 +389,7 @@ class ProfileRoute extends _i4.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i10.UserQuotesPage]
+/// [_i11.UserQuotesPage]
 class UserQuotesRoute extends _i4.PageRouteInfo<void> {
   const UserQuotesRoute() : super(UserQuotesRoute.name, path: 'userQuotes');
 
@@ -358,7 +397,7 @@ class UserQuotesRoute extends _i4.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i11.UserReviewPage]
+/// [_i12.UserReviewPage]
 class UserReviewRoute extends _i4.PageRouteInfo<void> {
   const UserReviewRoute() : super(UserReviewRoute.name, path: 'userReviews');
 
@@ -366,7 +405,7 @@ class UserReviewRoute extends _i4.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i12.UserBooksPage]
+/// [_i13.UserBooksPage]
 class UserBooksRoute extends _i4.PageRouteInfo<void> {
   const UserBooksRoute() : super(UserBooksRoute.name, path: 'userBooks');
 
@@ -374,7 +413,7 @@ class UserBooksRoute extends _i4.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i13.UserCollectionsPage]
+/// [_i14.UserCollectionsPage]
 class UserCollectionsRoute extends _i4.PageRouteInfo<void> {
   const UserCollectionsRoute()
       : super(UserCollectionsRoute.name, path: 'userCollections');
@@ -383,7 +422,7 @@ class UserCollectionsRoute extends _i4.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i14.SettingsPage]
+/// [_i15.SettingsPage]
 class SettingsRoute extends _i4.PageRouteInfo<void> {
   const SettingsRoute() : super(SettingsRoute.name, path: 'settings');
 

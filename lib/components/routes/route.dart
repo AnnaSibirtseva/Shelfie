@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 
 import '../../screens/book/book_info/book_info_page.dart';
+import '../../screens/book_club/book_clubs_page.dart';
 import '../../screens/collections/books/books_page.dart';
 import '../../screens/collections/collection_page.dart';
 import '../../screens/home/home_page.dart';
@@ -58,6 +59,15 @@ import '../../screens/sign_up/sign_up_page.dart';
           children: [
             AutoRoute(path: '', page: SearchPage),
             AutoRoute(path: 'bookInfo', page: BookInfoPage),
+            RedirectRoute(path: '*', redirectTo: ''),
+          ],
+        ),
+        AutoRoute(
+          path: 'bookClubs',
+          name: 'BookClubsRouter',
+          page: EmptyRouterPage,
+          children: [
+            AutoRoute(path: '', page: BookClubsPage),
             RedirectRoute(path: '*', redirectTo: ''),
           ],
         ),
