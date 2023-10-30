@@ -15,6 +15,7 @@ import '../../models/user.dart';
 import 'components/menu/menu.dart';
 import 'components/profile_head.dart';
 import 'components/stats/statistic_row.dart';
+import 'components/top_10/top_10_card.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -107,6 +108,7 @@ class _ProfilePage extends State<ProfilePage> {
             userStat: user.getStatistics(),
             routes: [mainRoutes[0], mainRoutes[1], mainRoutes[2]],
           ),
+          Top10Card(press: () {  },),
           Padding(
             padding: const EdgeInsets.only(top: 15, left: 10),
             child: Text('Общее'.toUpperCase(),
