@@ -108,6 +108,7 @@ class _ProfilePage extends State<ProfilePage> {
             userStat: user.getStatistics(),
             routes: [mainRoutes[0], mainRoutes[1], mainRoutes[2]],
           ),
+          // todo add top-10 route navigation
           Top10Card(press: () {  },),
           Padding(
             padding: const EdgeInsets.only(top: 15, left: 10),
