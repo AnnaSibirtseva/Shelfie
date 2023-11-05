@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'components/body.dart';
+
 class BookClubsPage extends StatefulWidget {
   const BookClubsPage({Key? key}) : super(key: key);
 
@@ -8,7 +10,6 @@ class BookClubsPage extends StatefulWidget {
 }
 
 class _BookClubsPage extends State<BookClubsPage> {
-
   @override
   void initState() {
     super.initState();
@@ -16,9 +17,6 @@ class _BookClubsPage extends State<BookClubsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-                reverse: false,
-                child: Text("BOOK CLUBS",
-                ));
+    return const SingleChildScrollView(reverse: false, child: Body());
   }
 }
