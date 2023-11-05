@@ -112,7 +112,7 @@ class _UserReviewCardState extends State<UserReviewCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '"' + review.getTitle() + '"',
+                      '"${review.getTitle()}"',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
