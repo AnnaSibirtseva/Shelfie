@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../components/constants.dart';
+import '../../../../../components/constants.dart';
 
 class TopDivider extends StatelessWidget {
   final int index;

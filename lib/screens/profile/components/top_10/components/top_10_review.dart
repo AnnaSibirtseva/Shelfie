@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../components/constants.dart';
-import '../../../models/book_review.dart';
+import '../../../../../components/constants.dart';
+import '../../../../../models/book_review.dart';
 
 class Top10ReviewCard extends StatefulWidget {
   final BookReview review;

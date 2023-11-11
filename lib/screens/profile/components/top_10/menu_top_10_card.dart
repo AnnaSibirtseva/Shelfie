@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../../components/image_constants.dart';
 import '../../../../components/constants.dart';
 
-class Top10Card extends StatelessWidget {
+class MenuTop10Card extends StatelessWidget {
   final VoidCallback press;
 
-  const Top10Card({
+  const MenuTop10Card({
     Key? key,
     required this.press,
   }) : super(key: key);
@@ -20,7 +20,7 @@ class Top10Card extends StatelessWidget {
         height: size.height * 0.1,
         margin: const EdgeInsets.only(top: 5),
         decoration: BoxDecoration(
-            image: const DecorationImage(
+            image: DecorationImage(
               image: NetworkImage(top10Background),
               fit: BoxFit.cover,
               opacity: 0.7

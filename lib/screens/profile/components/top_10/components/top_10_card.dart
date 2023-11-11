@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/models/top-10_book.dart';
+import '../../../../../models/top-10_book.dart';
 import 'top_divider.dart';
 import 'top_10_main_info.dart';
 import 'top_10_review.dart';

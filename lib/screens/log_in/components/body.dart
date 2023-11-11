@@ -1,14 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import '../../../components/buttons/rounded_button.dart';
 import '../../../components/constants.dart';
+import '../../../models/user.dart';
 import '../../../components/image_constants.dart';
 import '../../../components/routes/route.gr.dart';
 import '../../../components/widgets/already_have_account.dart';
 import '../../../components/text_fields/password_text_field.dart';
 import '../../../components/text_fields/rounded_text_field.dart';
 import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
-import '../../../controllers/user_controller/user_controller.dart';
 import 'package:auto_route/auto_route.dart';
 import 'background.dart';
 
@@ -22,6 +26,27 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   late String _email;
   final PasswordTextField passwordField = PasswordTextField();
+
+  Future<int> loginUser() async {
+    var client = http.Client();
+    final jsonString = json.encode({
+      "email": _email,
+      "password": passwordField.getPassword(),
+    });
+    try {
+      var response = await client.post(Uri.https(url, '/users/user/login'),
+          headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+          body: jsonString);
+      if (response.statusCode == 200) {
+        return User.userIdFromJson(jsonDecode(utf8.decode(response.bodyBytes)))
+            .getId();
+      } else {
+        throw Exception('Не удалось зайти в приложение');
+      }
+    } finally {
+      client.close();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +75,7 @@ class _BodyState extends State<Body> {
                                   content:
                                       Text("Выполняется вход в аккаунт...")));
                           try {
-                            int id = await UserController.postUserLogin(
-                                _email, passwordField.getPassword());
+                            int id = await loginUser();
                             context.router.push(HomeRoute(userId: id));
                           } on Exception catch (_) {
                             showDialog(

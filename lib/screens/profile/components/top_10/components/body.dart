@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/models/top-10_book.dart';
-import '../../../components/constants.dart';
-import '../../../components/widgets/error.dart';
-import '../../../components/widgets/loading.dart';
-import '../../../models/inherited_id.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../../profile/interactions/header_widget.dart';
-import 'top_10_card.dart';
+
+import '../../../../../components/constants.dart';
+import '../../../../../components/widgets/error.dart';
+import '../../../../../models/top-10_book.dart';
+import '../../../../../components/widgets/loading.dart';
+import '../../../../../models/inherited_id.dart';
+import '../../../interactions/header_widget.dart';
+import '../../../../book_club/components/top_10_card.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);

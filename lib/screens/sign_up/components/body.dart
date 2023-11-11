@@ -10,7 +10,6 @@ import '../../../components/widgets/already_have_account.dart';
 import '../../../components/text_fields/password_text_field.dart';
 import '../../../components/text_fields/rounded_text_field.dart';
 import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
-import '../../../controllers/user_controller/user_controller.dart';
 import '../../../models/user.dart';
 import 'package:auto_route/auto_route.dart';
 import '../../log_in/components/background.dart';
@@ -29,6 +28,32 @@ class _BodyState extends State<Body> {
   late String _email = '';
   late String _name = '';
   final PasswordTextField passwordField = PasswordTextField();
+
+  Future<void> addUser() async {
+    var client = http.Client();
+    final jsonString = json.encode({
+      "email": _email,
+      "password": passwordField.getPassword(),
+      "name": _name
+    });
+    try {
+      var response = await client.post(Uri.https(url, '/users/user/add'),
+          headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+          body: jsonString);
+      if (response.statusCode != 200) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const NothingFoundDialog(
+                  'Что-то пошло не так! Не удалось зарегестрировать пользователя.',
+                  warningGif,
+                  'Ошибка');
+            });
+      }
+    } finally {
+      client.close();
+    }
+  }
 
   Future<int> loginUser() async {
     var client = http.Client();
@@ -84,17 +109,7 @@ class _BodyState extends State<Body> {
                                     backgroundColor: primaryColor,
                                     content: Text(
                                         "Выполняется регистрация аккаунта...")));
-                            if (await UserController.postAddUser(
-                                _email, passwordField.getPassword(), _name)) {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return const NothingFoundDialog(
-                                        'Что-то пошло не так! Не удалось зарегестрировать пользователя.',
-                                        warningGif,
-                                        'Ошибка');
-                                  });
-                            }
+                            await addUser();
                             int id = await loginUser();
                             context.router.push(HomeRoute(userId: id));
                           }
