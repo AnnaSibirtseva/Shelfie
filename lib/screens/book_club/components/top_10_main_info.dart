@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../components/constants.dart';
+import '../../../components/constants.dart';
 import '../../../components/widgets/genre_widget.dart';
 import '../../../models/top-10_book.dart';
 
