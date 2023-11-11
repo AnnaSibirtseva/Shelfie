@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shelfie/components/widgets/genre_widget.dart';
 
 import '../../../../components/constants.dart';
 import '../../../../models/book.dart';
@@ -27,16 +28,37 @@ class _BookMainInfo extends State<BookMainInfo> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: size.width * 0.35,
-              height: size.height * 0.3,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(15)),
-                image: DecorationImage(
-                  image: NetworkImage(book.getImageUrl()),
-                  fit: BoxFit.cover,
+            Stack(
+              children: [
+                Container(
+                  width: size.width * 0.35,
+                  height: size.height * 0.3,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    image: DecorationImage(
+                      image: NetworkImage(book.getImageUrl()),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
+                InkWell(
+                  onTap: () => {},
+                  child: Container(
+                    width: size.width * 0.1,
+                    height: size.width * 0.1,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15),
+                            bottomRight: Radius.circular(15)),
+                        color: secondaryColor),
+                    child: const Icon(
+                      Icons.stars_rounded,
+                      color: primaryColor,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -67,10 +89,10 @@ class _BookMainInfo extends State<BookMainInfo> {
                         ],
                       ),
                       //for (int i = 0; i < book.getAuthors().length; i++)
-                        Text(book.getAuthors().join(', '),
-                            maxLines: 10,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 16.0)),
+                      Text(book.getAuthors().join(', '),
+                          maxLines: 10,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 16.0)),
                       const SizedBox(height: 5),
                       Flexible(
                         child: Wrap(
@@ -91,14 +113,18 @@ class _BookMainInfo extends State<BookMainInfo> {
                               spacing: 5,
                               runSpacing: 5,
                               children: [
-                                infoText('Жанры:' + (book.getGenreList().genres.isEmpty ? 'нет' : '')),
+                                infoText('Жанры:' +
+                                    (book.getGenreList().genres.isEmpty
+                                        ? 'нет'
+                                        : '')),
                                 for (int i = 0;
                                     i < book.getGenreList().genres.length;
                                     ++i)
-                                  genreWidget(book
-                                      .getGenreList()
-                                      .genres[i]
-                                      .getGenreName()),
+                                  GenreWidget(
+                                      genreName: book
+                                          .getGenreList()
+                                          .genres[i]
+                                          .getGenreName()),
                               ],
                             ),
                           ],
@@ -152,22 +178,6 @@ class _BookMainInfo extends State<BookMainInfo> {
             textAlign: TextAlign.start,
             style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold))
       ],
-    );
-  }
-
-  Widget genreWidget(String genre) {
-    return Container(
-      height: 20,
-      //margin: const EdgeInsets.only(top: 10, right: 5),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-        border: Border.all(color: primaryColor),
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
-      ),
-      child: Text(genre,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12.0)),
     );
   }
 }

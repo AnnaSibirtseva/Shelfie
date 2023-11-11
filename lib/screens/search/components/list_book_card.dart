@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../components/constants.dart';
+import '../../../components/widgets/genre_widget.dart';
 import '../../../components/widgets/status.dart';
 import '../../../models/book.dart';
 
@@ -52,7 +53,8 @@ class ListBookCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: size.width / 21)),
+                            fontWeight: FontWeight.bold,
+                            fontSize: size.width / 21)),
                     for (String author in book.getAuthors().take(2))
                       Text(author,
                           maxLines: 1,
@@ -71,8 +73,10 @@ class ListBookCard extends StatelessWidget {
                         for (int i = 0;
                             i < book.getGenreList().genres.take(3).length;
                             ++i)
-                          genreWidget(
-                              book.getGenreList().genres[i].getGenreName())
+                          GenreWidget(
+                            genreName:
+                                book.getGenreList().genres[i].getGenreName(),
+                          )
                       ],
                     ),
                     Expanded(
@@ -114,22 +118,6 @@ class ListBookCard extends StatelessWidget {
             textAlign: TextAlign.start,
             style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold))
       ],
-    );
-  }
-
-  Widget genreWidget(String genre) {
-    return Container(
-      height: 20,
-      //margin: const EdgeInsets.only(top: 10, right: 5),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-        border: Border.all(color: primaryColor),
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
-      ),
-      child: Text(genre,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12.0)),
     );
   }
 }
