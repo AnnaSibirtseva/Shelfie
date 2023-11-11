@@ -10,6 +10,8 @@ class BookReview {
   BookReview(this._id, this._reviewAuthor, this._reviewText, this._reviewTitle,
       this._rating);
 
+  BookReview.top10Review(this._reviewTitle, this._reviewText);
+
   factory BookReview.fromJson(dynamic json) {
     return BookReview(
       json['id'] as int,
@@ -19,6 +21,14 @@ class BookReview {
       json['rating'].toDouble(),
     );
   }
+
+  factory BookReview.top10fromJson(dynamic json) {
+    return BookReview.top10Review(
+      json['reviewTitle'] as String,
+      json['reviewText'] as String,
+    );
+  }
+
 
   int getId() {
     return _id;

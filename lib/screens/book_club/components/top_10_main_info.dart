@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../../../components/constants.dart';
-import '../../../models/book.dart';
+import '../../../components/widgets/genre_widget.dart';
+import '../../../models/top-10_book.dart';
 
 class Top10MainInfo extends StatelessWidget {
-  final Book book;
+  final Top10BookInfo book;
 
   const Top10MainInfo({Key? key, required this.book}) : super(key: key);
 
@@ -41,12 +42,24 @@ class Top10MainInfo extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 20.0)),
-                  for (String author in book.getAuthors())
-                    Text(author,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 16.0)),
+                  Text(book.getAuthors() == null ? "" : book.getAuthors()!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 16.0)),
                   const SizedBox(height: 10),
+
+                  Wrap(
+                    spacing: 5,
+                    runSpacing: 5,
+                    children: [
+                      for (int i = 0;
+                          i < book.getGenreList().genres.take(3).length;
+                          ++i)
+                        GenreWidget(
+                            genreName:
+                                book.getGenreList().genres[i].getGenreName())
+                    ],
+                  ),
                   Expanded(
                     child: Align(
                       alignment: Alignment.bottomRight,

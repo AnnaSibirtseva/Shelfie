@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../components/constants.dart';
-import '../../../models/inherited_id.dart';
-import '../../../models/user_review.dart';
+import '../../../models/book_review.dart';
 
 class Top10ReviewCard extends StatefulWidget {
-  final UserReview review;
+  final BookReview review;
 
   const Top10ReviewCard({Key? key, required this.review}) : super(key: key);
 
@@ -14,7 +13,7 @@ class Top10ReviewCard extends StatefulWidget {
 }
 
 class _Top10ReviewCard extends State<Top10ReviewCard> {
-  late UserReview review;
+  late BookReview review;
   bool showFlag = false;
 
   @override
@@ -27,7 +26,6 @@ class _Top10ReviewCard extends State<Top10ReviewCard> {
   Widget build(BuildContext context) {
     String revText = review.getReviewText();
     Size size = MediaQuery.of(context).size;
-    final inheritedWidget = IdInheritedWidget.of(context);
     return Container(
         width: size.width,
         decoration: const BoxDecoration(
@@ -76,19 +74,5 @@ class _Top10ReviewCard extends State<Top10ReviewCard> {
                   ),
                 ),
             ]));
-  }
-
-  Widget deleteBackGroundItem() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      decoration: const BoxDecoration(
-          color: redColor, borderRadius: BorderRadius.all(Radius.circular(15))),
-      alignment: Alignment.centerRight,
-      padding: const EdgeInsets.only(right: 20),
-      child: const Icon(
-        Icons.delete,
-        color: whiteColor,
-      ),
-    );
   }
 }
