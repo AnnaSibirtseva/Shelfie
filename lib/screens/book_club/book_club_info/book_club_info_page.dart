@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-import '../../../components/constants.dart';
-import '../../../components/widgets/error.dart';
-import '../../../components/widgets/loading.dart';
-import '../../../models/book.dart';
 import '../../../models/inherited_id.dart';
 
-class BookInfoPage extends StatefulWidget {
+class BookClubInfoPage extends StatefulWidget {
   final int bookId;
 
-  const BookInfoPage(this.bookId, {Key? key}) : super(key: key);
+  const BookClubInfoPage(this.bookId, {Key? key}) : super(key: key);
 
   @override
-  State<BookInfoPage> createState() => _BookInfoPage();
+  State<BookClubInfoPage> createState() => _BookClubInfoPage();
 }
 
-class _BookInfoPage extends State<BookInfoPage> {
+class _BookClubInfoPage extends State<BookClubInfoPage> {
 
 
   @override
