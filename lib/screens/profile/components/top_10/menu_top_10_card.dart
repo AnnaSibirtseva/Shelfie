@@ -20,7 +20,7 @@ class MenuTop10Card extends StatelessWidget {
         height: size.height * 0.1,
         margin: const EdgeInsets.only(top: 5),
         decoration: BoxDecoration(
-            image: DecorationImage(
+            image: const DecorationImage(
               image: NetworkImage(top10Background),
               fit: BoxFit.cover,
               opacity: 0.7

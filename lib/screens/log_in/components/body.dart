@@ -71,13 +71,16 @@ class _BodyState extends State<Body> {
                         press: () async {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
+                                  duration: Duration(seconds: 30),
                                   backgroundColor: primaryColor,
                                   content:
                                       Text("Выполняется вход в аккаунт...")));
                           try {
                             int id = await loginUser();
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
                             context.router.push(HomeRoute(userId: id));
                           } on Exception catch (_) {
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {

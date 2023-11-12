@@ -29,7 +29,7 @@ class _BodyState extends State<Body> {
   late String _name = '';
   final PasswordTextField passwordField = PasswordTextField();
 
-  Future<void> addUser() async {
+  Future<bool> addUser() async {
     var client = http.Client();
     final jsonString = json.encode({
       "email": _email,
@@ -41,6 +41,7 @@ class _BodyState extends State<Body> {
           headers: {HttpHeaders.contentTypeHeader: 'application/json'},
           body: jsonString);
       if (response.statusCode != 200) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -49,10 +50,12 @@ class _BodyState extends State<Body> {
                   warningGif,
                   'Ошибка');
             });
+        return false;
       }
     } finally {
       client.close();
     }
+    return true;
   }
 
   Future<int> loginUser() async {
@@ -106,12 +109,16 @@ class _BodyState extends State<Body> {
                           if (checkConstraints()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
+                                    duration: Duration(seconds: 30),
                                     backgroundColor: primaryColor,
                                     content: Text(
                                         "Выполняется регистрация аккаунта...")));
-                            await addUser();
-                            int id = await loginUser();
-                            context.router.push(HomeRoute(userId: id));
+                            if (await addUser()) {
+                              int id = await loginUser();
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+                              context.router.push(HomeRoute(userId: id));
+                            }
                           }
                           //context.router.pop(true);
                         }),
