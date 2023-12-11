@@ -160,18 +160,10 @@ class AddReviewDialog extends Dialog {
                   ),
                   DialogButton(
                       press: () async {
-                        if (_text.isNotEmpty) {
-                          if (checkRestrictions(context)) {
+                        if (checkRestrictions(context)) {
                             await addReview(context);
                             context.router.pop(true);
                           }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  backgroundColor: redColor,
-                                  content:
-                                      Text("Рецензия не может быть пустой!")));
-                        }
                       },
                       isAsync: true,
                       reverse: false,
@@ -186,6 +178,9 @@ class AddReviewDialog extends Dialog {
   }
 
   bool checkRestrictions(BuildContext context) {
+    if (_title.isEmpty && _text.isEmpty) {
+      return true;
+    }
     if (_title.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: redColor,

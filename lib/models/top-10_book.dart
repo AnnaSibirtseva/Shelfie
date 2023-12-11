@@ -15,6 +15,8 @@ class Top10BookInfo {
   Top10BookInfo(this._id, this._title, this._coverImageUrl, this._author,
       this._userRating, this._ageRestriction, this._genres, this._bookReview);
 
+  Top10BookInfo.light(this._id, this._title, this._coverImageUrl, this._author);
+
   factory Top10BookInfo.fromJson(dynamic json) {
     String coverImageUrl = defaultBookCoverImg;
     BookReview? bookReview;
@@ -34,6 +36,22 @@ class Top10BookInfo {
         GenresList.fromJson(json),
         bookReview);
   }
+
+  factory Top10BookInfo.lightFromJson(dynamic json) {
+    String coverImageUrl = defaultBookCoverImg;
+    if (json['coverImageUrl'] != null) {
+      coverImageUrl = json['coverImageUrl'] as String;
+    }
+    return Top10BookInfo.light(json['id'] as int, json['title'] as String,
+        coverImageUrl, json['author'] as String?);
+  }
+
+  @override
+  bool operator ==(Object other) => other is Top10BookInfo && _id == other._id;
+
+  @override
+  int get hashCode =>
+      Object.hash(_id, _title, _author, _coverImageUrl);
 
   int getId() {
     return _id;
@@ -78,6 +96,22 @@ class Top10BookList {
     return Top10BookList(
       (json['booksTopDetailed'] as List)
           .map((e) => Top10BookInfo.fromJson(e))
+          .toList(),
+      json['userId'] as int,
+    );
+  }
+}
+
+class Top10BookListLight {
+  int userId;
+  List<Top10BookInfo> topBooks = [];
+
+  Top10BookListLight(this.topBooks, this.userId);
+
+  factory Top10BookListLight.fromJson(dynamic json) {
+    return Top10BookListLight(
+      (json['booksTop'] as List)
+          .map((e) => Top10BookInfo.lightFromJson(e))
           .toList(),
       json['userId'] as int,
     );

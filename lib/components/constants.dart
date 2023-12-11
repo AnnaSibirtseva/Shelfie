@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String url = 'shelfie-api-gateway-shlf-13.onrender.com';
+const String url = 'shelfie-api-gateway-shlf-14.onrender.com';
 
 const int iconSplitPart = 5;
 
@@ -8,6 +8,7 @@ const primaryColor = Color(0xFF3949AB);
 const secondaryColor = Color(0xFFE8EAF6);
 const menuIconsGrayColor = Color(0xFFADADAD);
 const redColor = Color(0xFFE57373);
+const lightGrayColor = Color(0xFFE0DCDC);
 const grayColor = Colors.black38;
 const blackColor = Colors.black;
 const whiteColor = Colors.white;

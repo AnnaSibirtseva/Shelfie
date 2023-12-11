@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie/components/widgets/genre_widget.dart';
+import '../../../../components/widgets/dialogs/change_top_10.dart';
+import '../../../../models/inherited_id.dart';
 
 import '../../../../components/constants.dart';
 import '../../../../models/book.dart';
+import '../../../../models/top-10_book.dart';
 
 class BookMainInfo extends StatefulWidget {
   final Book book;
@@ -16,6 +19,7 @@ class BookMainInfo extends StatefulWidget {
 class _BookMainInfo extends State<BookMainInfo> {
   @override
   Widget build(BuildContext context) {
+    final inheritedWidget = IdInheritedWidget.of(context);
     Size size = MediaQuery.of(context).size;
     Book book = widget.book;
 
@@ -42,7 +46,22 @@ class _BookMainInfo extends State<BookMainInfo> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => {},
+                  onTap: () => {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ChangeTop10Dialog(
+                            inheritedWidget.id,
+                            Top10BookInfo.light(
+                                book.getId(),
+                                book.getTitle(),
+                                book.getImageUrl(),
+                                book.getAuthors().isEmpty
+                                    ? ""
+                                    : book.getAuthors().first),
+                          );
+                        })
+                  },
                   child: Container(
                     width: size.width * 0.1,
                     height: size.width * 0.1,
