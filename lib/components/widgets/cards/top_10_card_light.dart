@@ -6,14 +6,14 @@ import '../../constants.dart';
 
 class Top10CardLight extends StatefulWidget {
   late List<Top10BookInfo> books;
-  final Top10BookInfo newBook;
+  final Top10BookInfo? newBook;
 
   Top10CardLight({super.key, required this.books, required this.newBook});
 
   @override
   State<Top10CardLight> createState() => _Top10CardLightState();
 
-  List<Top10BookInfo> getBooks(){
+  List<Top10BookInfo> getBooks() {
     return books;
   }
 }
@@ -25,7 +25,7 @@ class _Top10CardLightState extends State<Top10CardLight> {
   void initState() {
     _items = widget.books;
     var newBook = widget.newBook;
-    if (!_items.contains(newBook)) {
+    if (newBook != null && _items.contains(newBook)) {
       _items.add(newBook);
     }
     super.initState();

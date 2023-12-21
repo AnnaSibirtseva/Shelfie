@@ -8,6 +8,8 @@ import 'dart:convert';
 import '../../../../../components/constants.dart';
 import '../../../../../components/image_constants.dart';
 import '../../../../../components/routes/route.gr.dart';
+import '../../../../../components/widgets/dialogs/change_top_10.dart';
+import '../../../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../../../../../components/widgets/error.dart';
 import '../../../../../components/widgets/nothing_found.dart';
 import '../../../../../models/top-10_book.dart';
@@ -65,13 +67,57 @@ class _BodyState extends State<Body> {
                 child: SingleChildScrollView(
                   reverse: false,
                   child: Column(children: [
-                    const Padding(
-                      padding: EdgeInsets.only(
-                        left: 15,
-                      ),
-                      child: HeaderWidget(
-                        text: 'Топ-10',
-                        icon: 'book',
+                    Container(
+                      margin:
+                          const EdgeInsets.only(left: 15, right: 15, top: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          SizedBox(
+                            height: size.height * 0.01,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                height: size.height * 0.09,
+                                width: size.width * 0.09,
+                                child:
+                                    //Image.network('https://disk.yandex.ru/i/i8FVLoIZxIl8xQ')
+                                    Image.asset('assets/images/book.png'),
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                'Топ-10',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'VelaSansExtraBold',
+                                    //color: Colors.black,
+                                    fontSize: size.width / 12,
+                                    fontWeight: FontWeight.w800),
+                              ),
+                              const Spacer(),
+                              GestureDetector(
+                                onTap: () => {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return ChangeTop10Dialog(
+                                          inheritedWidget.id,
+                                          null,
+                                        );
+                                      }).then(onGoBack)
+                                },
+                                child: const SizedBox(
+                                    width: 45,
+                                    height: 45,
+                                    child: Icon(
+                                      Icons.settings_rounded,
+                                      color: Colors.black,
+                                    )),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                     if (top10books.isEmpty)

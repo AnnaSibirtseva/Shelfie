@@ -16,7 +16,7 @@ import 'nothing_found_dialog.dart';
 
 class ChangeTop10Dialog extends Dialog {
   final int userId;
-  final Top10BookInfo newBook;
+  final Top10BookInfo? newBook;
 
   const ChangeTop10Dialog(this.userId, this.newBook, {Key? key})
       : super(key: key);
@@ -156,12 +156,6 @@ class ChangeTop10Dialog extends Dialog {
                                       warningGif,
                                       'Ошибка')));
                         }
-
-                        // todo warning about 11th book
-                        // if (checkRestrictions(context)) {
-                        //   await addReview(context);
-                        //   context.router.pop(true);
-                        // }
                       },
                       isAsync: true,
                       reverse: false,

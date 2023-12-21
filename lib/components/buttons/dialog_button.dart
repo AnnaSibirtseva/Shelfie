@@ -28,6 +28,12 @@ class DialogButton extends StatelessWidget {
   Widget newElevatedButton(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          shape: const StadiumBorder(),
+          primary: reverse ? whiteColor : primaryColor,
+          side: BorderSide(width: reverse ? 1 : 0, color: primaryColor),
+          padding: const EdgeInsets.symmetric(horizontal: 10)),
+      onPressed: isAsync ? press : () => press,
       child: Text(
         text,
         style: TextStyle(
@@ -35,12 +41,6 @@ class DialogButton extends StatelessWidget {
             fontWeight: FontWeight.w700,
             color: reverse ? primaryColor : whiteColor),
       ),
-      style: ElevatedButton.styleFrom(
-          shape: const StadiumBorder(),
-          primary: reverse ? whiteColor : primaryColor,
-          side: BorderSide(width: reverse ? 1 : 0, color: primaryColor),
-          padding: const EdgeInsets.symmetric(horizontal: 10)),
-      onPressed: isAsync ? press : () => press,
     );
   }
 }
