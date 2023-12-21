@@ -3,8 +3,11 @@ import 'package:shelfie/components/routes/route.gr.dart';
 import '../../components/bottom_menu/bottom_bar_item.dart';
 
 import '../../components/bottom_menu/bottom_bar_bubble.dart';
+import '../../components/secure_storage/storage_item.dart';
 import '../../models/inherited_id.dart';
 import 'package:auto_route/auto_route.dart';
+
+import '../splash/splash_page.dart';
 
 class HomePage extends StatefulWidget {
   final int userId;
@@ -38,6 +41,7 @@ class _HomePage extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    storageService.writeSecureData(StorageItem("id", widget.userId.toString()));
     return IdInheritedWidget(
         id: widget.userId,
         child: Scaffold(

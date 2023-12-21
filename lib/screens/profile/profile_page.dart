@@ -93,6 +93,8 @@ class _ProfilePage extends State<ProfilePage> {
       () => context.router.navigate(const LogInRoute())
     ];
 
+
+
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.only(
