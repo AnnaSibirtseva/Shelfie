@@ -36,7 +36,7 @@ class ConfirmationDialog extends Dialog {
                   Text('Подтверждение',
                       style: TextStyle(
                           fontFamily: 'VelaSansExtraBold',
-                          fontSize: size.width / 20,
+                          fontSize: size.width / 21,
                           fontWeight: FontWeight.w800)),
                   const Spacer(),
                   Icon(
@@ -53,7 +53,7 @@ class ConfirmationDialog extends Dialog {
                   text,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: size.width / 22, fontWeight: FontWeight.normal),
+                      fontSize: size.width / 24, fontWeight: FontWeight.normal),
                 ),
               ),
               const SizedBox(height: 25),

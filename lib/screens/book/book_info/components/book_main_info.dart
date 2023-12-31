@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/widgets/genre_widget.dart';
+import '../../../../components/widgets/genre_widget.dart';
 import '../../../../components/widgets/dialogs/change_top_10.dart';
 import '../../../../models/inherited_id.dart';
 
@@ -24,7 +24,7 @@ class _BookMainInfo extends State<BookMainInfo> {
     Book book = widget.book;
 
     return Container(
-        margin: EdgeInsets.symmetric(vertical: size.height * 0.01),
+        margin: EdgeInsets.only(bottom: size.height * 0.01),
         padding: const EdgeInsets.all(5),
         height: size.height * 0.3,
         width: size.width,
