@@ -10,288 +10,309 @@
 //
 // ignore_for_file: type=lint
 
-import 'package:auto_route/auto_route.dart' as _i4;
-import 'package:flutter/material.dart' as _i22;
-import '../../../screens/book/book_info/book_info_page.dart' as _i7;
-import '../../../screens/book_club/book_club_info/book_club_info_page.dart'
-    as _i10;
-import '../../../screens/book_club/book_clubs_page.dart' as _i9;
-import '../../../screens/book_club/event_info/event_info_page.dart'
+import 'package:auto_route/auto_route.dart' as _i5;
+import 'package:flutter/material.dart' as _i23;
+import 'package:shelfie/screens/book/book_info/book_info_page.dart' as _i8;
+import 'package:shelfie/screens/book_club/book_club_info/book_club_info_page.dart'
     as _i11;
-import '../../../screens/collections/books/books_page.dart' as _i6;
-import '../../../screens/collections/collection_page.dart' as _i5;
-import '../../../screens/home/home_page.dart' as _i3;
-import '../../../screens/log_in/log_in_page.dart' as _i1;
-import '../../../screens/profile/components/top_10/top_10_page.dart'
-    as _i18;
-import '../../../screens/profile/extra/settings/settings_page.dart'
-    as _i17;
-import '../../../screens/profile/interactions/achievements/achievements_page.dart'
-    as _i20;
-import '../../../screens/profile/interactions/books/user_books_page.dart'
-    as _i15;
-import '../../../screens/profile/interactions/collections/user_collections_page.dart'
-    as _i16;
-import '../../../screens/profile/interactions/events/events_page.dart'
-    as _i21;
-import '../../../screens/profile/interactions/quotes/user_quotes_page.dart'
-    as _i13;
-import '../../../screens/profile/interactions/reviews/user_review_page.dart'
-    as _i14;
-import '../../../screens/profile/interactions/statistics/statistics_page.dart'
+import 'package:shelfie/screens/book_club/book_clubs_page.dart' as _i10;
+import 'package:shelfie/screens/book_club/event_info/event_info_page.dart'
+    as _i12;
+import 'package:shelfie/screens/collections/books/books_page.dart' as _i7;
+import 'package:shelfie/screens/collections/collection_page.dart' as _i6;
+import 'package:shelfie/screens/home/home_page.dart' as _i4;
+import 'package:shelfie/screens/log_in/log_in_page.dart' as _i2;
+import 'package:shelfie/screens/profile/components/top_10/top_10_page.dart'
     as _i19;
-import '../../../screens/profile/profile_page.dart' as _i12;
-import '../../../screens/search/search_page.dart' as _i8;
-import '../../../screens/sign_up/sign_up_page.dart' as _i2;
+import 'package:shelfie/screens/profile/extra/settings/settings_page.dart'
+    as _i18;
+import 'package:shelfie/screens/profile/interactions/achievements/achievements_page.dart'
+    as _i21;
+import 'package:shelfie/screens/profile/interactions/books/user_books_page.dart'
+    as _i16;
+import 'package:shelfie/screens/profile/interactions/collections/user_collections_page.dart'
+    as _i17;
+import 'package:shelfie/screens/profile/interactions/events/events_page.dart'
+    as _i22;
+import 'package:shelfie/screens/profile/interactions/quotes/user_quotes_page.dart'
+    as _i14;
+import 'package:shelfie/screens/profile/interactions/reviews/user_review_page.dart'
+    as _i15;
+import 'package:shelfie/screens/profile/interactions/statistics/statistics_page.dart'
+    as _i20;
+import 'package:shelfie/screens/profile/profile_page.dart' as _i13;
+import 'package:shelfie/screens/search/search_page.dart' as _i9;
+import 'package:shelfie/screens/sign_up/sign_up_page.dart' as _i3;
+import 'package:shelfie/screens/splash/splash_screen.dart' as _i1;
 
-class AppRouter extends _i4.RootStackRouter {
-  AppRouter([_i22.GlobalKey<_i22.NavigatorState>? navigatorKey])
+class AppRouter extends _i5.RootStackRouter {
+  AppRouter([_i23.GlobalKey<_i23.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i4.PageFactory> pagesMap = {
+  final Map<String, _i5.PageFactory> pagesMap = {
+    SplashScreen.name: (routeData) {
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i1.SplashScreen());
+    },
     LogInRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i1.LogInPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i2.LogInPage());
     },
     SignUpRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i2.SignUpPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i3.SignUpPage());
     },
     HomeRoute.name: (routeData) {
       final args = routeData.argsAs<HomeRouteArgs>();
-      return _i4.AdaptivePage<dynamic>(
+      return _i5.AdaptivePage<dynamic>(
           routeData: routeData,
-          child: _i3.HomePage(args.userId, key: args.key));
+          child: _i4.HomePage(args.userId, key: args.key));
     },
     CollectionsRouter.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i4.EmptyRouterPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i5.EmptyRouterPage());
     },
     SearchRouter.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i4.EmptyRouterPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i5.EmptyRouterPage());
     },
     BookClubsRouter.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i4.EmptyRouterPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i5.EmptyRouterPage());
     },
     ProfileRouter.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i4.EmptyRouterPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i5.EmptyRouterPage());
     },
     CollectionsRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i5.CollectionsPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i6.CollectionsPage());
     },
     CollectionBooksRoute.name: (routeData) {
       final args = routeData.argsAs<CollectionBooksRouteArgs>();
-      return _i4.AdaptivePage<dynamic>(
+      return _i5.AdaptivePage<dynamic>(
           routeData: routeData,
-          child: _i6.CollectionBooksPage(args.collectionId, args.collectionName,
+          child: _i7.CollectionBooksPage(args.collectionId, args.collectionName,
               key: args.key));
     },
     BookInfoRoute.name: (routeData) {
       final args = routeData.argsAs<BookInfoRouteArgs>();
-      return _i4.AdaptivePage<dynamic>(
+      return _i5.AdaptivePage<dynamic>(
           routeData: routeData,
-          child: _i7.BookInfoPage(args.bookId, key: args.key));
+          child: _i8.BookInfoPage(args.bookId, key: args.key));
     },
     SearchRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i8.SearchPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i9.SearchPage());
     },
     BookClubsRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i9.BookClubsPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i10.BookClubsPage());
     },
     BookClubInfoRoute.name: (routeData) {
       final args = routeData.argsAs<BookClubInfoRouteArgs>();
-      return _i4.AdaptivePage<dynamic>(
+      return _i5.AdaptivePage<dynamic>(
           routeData: routeData,
-          child: _i10.BookClubInfoPage(args.bookId, key: args.key));
+          child: _i11.BookClubInfoPage(args.bookId, key: args.key));
     },
     EventInfoRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i11.EventInfoPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i12.EventInfoPage());
     },
     ProfileRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i12.ProfilePage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i13.ProfilePage());
     },
     UserQuotesRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i13.UserQuotesPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i14.UserQuotesPage());
     },
     UserReviewRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i14.UserReviewPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i15.UserReviewPage());
     },
     UserBooksRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i15.UserBooksPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i16.UserBooksPage());
     },
     UserCollectionsRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i16.UserCollectionsPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i17.UserCollectionsPage());
     },
     SettingsRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i17.SettingsPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i18.SettingsPage());
     },
     Top10Route.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i18.Top10Page());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i19.Top10Page());
     },
     StatisticsRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i19.StatisticsPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i20.StatisticsPage());
     },
     AchievementsRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i20.AchievementsPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i21.AchievementsPage());
     },
     EventsRoute.name: (routeData) {
-      return _i4.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i21.EventsPage());
+      return _i5.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i22.EventsPage());
     }
   };
 
   @override
-  List<_i4.RouteConfig> get routes => [
-        _i4.RouteConfig('/#redirect',
-            path: '/', redirectTo: '/login', fullMatch: true),
-        _i4.RouteConfig(LogInRoute.name, path: '/login', children: [
-          _i4.RouteConfig('*#redirect',
+  List<_i5.RouteConfig> get routes => [
+        _i5.RouteConfig('/#redirect',
+            path: '/', redirectTo: '/splash', fullMatch: true),
+        _i5.RouteConfig(SplashScreen.name, path: '/splash', children: [
+          _i5.RouteConfig('*#redirect',
+              path: '*',
+              parent: SplashScreen.name,
+              redirectTo: '',
+              fullMatch: true)
+        ]),
+        _i5.RouteConfig(LogInRoute.name, path: '/login', children: [
+          _i5.RouteConfig('*#redirect',
               path: '*',
               parent: LogInRoute.name,
               redirectTo: '',
               fullMatch: true)
         ]),
-        _i4.RouteConfig(SignUpRoute.name, path: '/signup', children: [
-          _i4.RouteConfig('*#redirect',
+        _i5.RouteConfig(SignUpRoute.name, path: '/signup', children: [
+          _i5.RouteConfig('*#redirect',
               path: '*',
               parent: SignUpRoute.name,
               redirectTo: '',
               fullMatch: true)
         ]),
-        _i4.RouteConfig(HomeRoute.name, path: '/home', children: [
-          _i4.RouteConfig(CollectionsRouter.name,
+        _i5.RouteConfig(HomeRoute.name, path: '/home', children: [
+          _i5.RouteConfig(CollectionsRouter.name,
               path: 'collections',
               parent: HomeRoute.name,
               children: [
-                _i4.RouteConfig(CollectionsRoute.name,
+                _i5.RouteConfig(CollectionsRoute.name,
                     path: '', parent: CollectionsRouter.name),
-                _i4.RouteConfig(CollectionBooksRoute.name,
+                _i5.RouteConfig(CollectionBooksRoute.name,
                     path: 'allBooks', parent: CollectionsRouter.name),
-                _i4.RouteConfig(BookInfoRoute.name,
+                _i5.RouteConfig(BookInfoRoute.name,
                     path: 'bookInfo', parent: CollectionsRouter.name),
-                _i4.RouteConfig('*#redirect',
+                _i5.RouteConfig('*#redirect',
                     path: '*',
                     parent: CollectionsRouter.name,
                     redirectTo: '',
                     fullMatch: true)
               ]),
-          _i4.RouteConfig(SearchRouter.name,
+          _i5.RouteConfig(SearchRouter.name,
               path: 'search',
               parent: HomeRoute.name,
               children: [
-                _i4.RouteConfig(SearchRoute.name,
+                _i5.RouteConfig(SearchRoute.name,
                     path: '', parent: SearchRouter.name),
-                _i4.RouteConfig(BookInfoRoute.name,
+                _i5.RouteConfig(BookInfoRoute.name,
                     path: 'bookInfo', parent: SearchRouter.name),
-                _i4.RouteConfig('*#redirect',
+                _i5.RouteConfig('*#redirect',
                     path: '*',
                     parent: SearchRouter.name,
                     redirectTo: '',
                     fullMatch: true)
               ]),
-          _i4.RouteConfig(BookClubsRouter.name,
+          _i5.RouteConfig(BookClubsRouter.name,
               path: 'bookClubs',
               parent: HomeRoute.name,
               children: [
-                _i4.RouteConfig(BookClubsRoute.name,
+                _i5.RouteConfig(BookClubsRoute.name,
                     path: '', parent: BookClubsRouter.name),
-                _i4.RouteConfig(BookClubInfoRoute.name,
+                _i5.RouteConfig(BookClubInfoRoute.name,
                     path: 'bookClubInfo', parent: BookClubsRouter.name),
-                _i4.RouteConfig(BookInfoRoute.name,
+                _i5.RouteConfig(BookInfoRoute.name,
                     path: 'bookInfo', parent: BookClubsRouter.name),
-                _i4.RouteConfig(EventInfoRoute.name,
+                _i5.RouteConfig(EventInfoRoute.name,
                     path: 'eventInfo', parent: BookClubsRouter.name),
-                _i4.RouteConfig('*#redirect',
+                _i5.RouteConfig('*#redirect',
                     path: '*',
                     parent: BookClubsRouter.name,
                     redirectTo: '',
                     fullMatch: true)
               ]),
-          _i4.RouteConfig(ProfileRouter.name,
+          _i5.RouteConfig(ProfileRouter.name,
               path: 'profile',
               parent: HomeRoute.name,
               children: [
-                _i4.RouteConfig(ProfileRoute.name,
+                _i5.RouteConfig(ProfileRoute.name,
                     path: '', parent: ProfileRouter.name),
-                _i4.RouteConfig(UserQuotesRoute.name,
+                _i5.RouteConfig(UserQuotesRoute.name,
                     path: 'userQuotes', parent: ProfileRouter.name),
-                _i4.RouteConfig(UserReviewRoute.name,
+                _i5.RouteConfig(UserReviewRoute.name,
                     path: 'userReviews', parent: ProfileRouter.name),
-                _i4.RouteConfig(UserBooksRoute.name,
+                _i5.RouteConfig(UserBooksRoute.name,
                     path: 'userBooks', parent: ProfileRouter.name),
-                _i4.RouteConfig(UserCollectionsRoute.name,
+                _i5.RouteConfig(UserCollectionsRoute.name,
                     path: 'userCollections', parent: ProfileRouter.name),
-                _i4.RouteConfig(CollectionBooksRoute.name,
+                _i5.RouteConfig(CollectionBooksRoute.name,
                     path: 'allBooks', parent: ProfileRouter.name),
-                _i4.RouteConfig(BookInfoRoute.name,
+                _i5.RouteConfig(BookInfoRoute.name,
                     path: 'bookInfo', parent: ProfileRouter.name),
-                _i4.RouteConfig(SettingsRoute.name,
+                _i5.RouteConfig(SettingsRoute.name,
                     path: 'settings', parent: ProfileRouter.name),
-                _i4.RouteConfig(Top10Route.name,
+                _i5.RouteConfig(Top10Route.name,
                     path: 'top10', parent: ProfileRouter.name),
-                _i4.RouteConfig(StatisticsRoute.name,
+                _i5.RouteConfig(StatisticsRoute.name,
                     path: 'statistics', parent: ProfileRouter.name),
-                _i4.RouteConfig(AchievementsRoute.name,
+                _i5.RouteConfig(AchievementsRoute.name,
                     path: 'achievements', parent: ProfileRouter.name),
-                _i4.RouteConfig(EventsRoute.name,
+                _i5.RouteConfig(EventsRoute.name,
                     path: 'events', parent: ProfileRouter.name),
-                _i4.RouteConfig('*#redirect',
+                _i5.RouteConfig('*#redirect',
                     path: '*',
                     parent: ProfileRouter.name,
                     redirectTo: '',
                     fullMatch: true)
               ]),
-          _i4.RouteConfig('*#redirect',
+          _i5.RouteConfig('*#redirect',
               path: '*',
               parent: HomeRoute.name,
               redirectTo: '/home',
               fullMatch: true)
         ]),
-        _i4.RouteConfig('*#redirect',
+        _i5.RouteConfig('*#redirect',
             path: '*', redirectTo: '/home', fullMatch: true)
       ];
 }
 
 /// generated route for
-/// [_i1.LogInPage]
-class LogInRoute extends _i4.PageRouteInfo<void> {
-  const LogInRoute({List<_i4.PageRouteInfo>? children})
+/// [_i1.SplashScreen]
+class SplashScreen extends _i5.PageRouteInfo<void> {
+  const SplashScreen({List<_i5.PageRouteInfo>? children})
+      : super(SplashScreen.name, path: '/splash', initialChildren: children);
+
+  static const String name = 'SplashScreen';
+}
+
+/// generated route for
+/// [_i2.LogInPage]
+class LogInRoute extends _i5.PageRouteInfo<void> {
+  const LogInRoute({List<_i5.PageRouteInfo>? children})
       : super(LogInRoute.name, path: '/login', initialChildren: children);
 
   static const String name = 'LogInRoute';
 }
 
 /// generated route for
-/// [_i2.SignUpPage]
-class SignUpRoute extends _i4.PageRouteInfo<void> {
-  const SignUpRoute({List<_i4.PageRouteInfo>? children})
+/// [_i3.SignUpPage]
+class SignUpRoute extends _i5.PageRouteInfo<void> {
+  const SignUpRoute({List<_i5.PageRouteInfo>? children})
       : super(SignUpRoute.name, path: '/signup', initialChildren: children);
 
   static const String name = 'SignUpRoute';
 }
 
 /// generated route for
-/// [_i3.HomePage]
-class HomeRoute extends _i4.PageRouteInfo<HomeRouteArgs> {
+/// [_i4.HomePage]
+class HomeRoute extends _i5.PageRouteInfo<HomeRouteArgs> {
   HomeRoute(
-      {required int userId, _i22.Key? key, List<_i4.PageRouteInfo>? children})
+      {required int userId, _i23.Key? key, List<_i5.PageRouteInfo>? children})
       : super(HomeRoute.name,
             path: '/home',
             args: HomeRouteArgs(userId: userId, key: key),
@@ -305,7 +326,7 @@ class HomeRouteArgs {
 
   final int userId;
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
@@ -314,9 +335,9 @@ class HomeRouteArgs {
 }
 
 /// generated route for
-/// [_i4.EmptyRouterPage]
-class CollectionsRouter extends _i4.PageRouteInfo<void> {
-  const CollectionsRouter({List<_i4.PageRouteInfo>? children})
+/// [_i5.EmptyRouterPage]
+class CollectionsRouter extends _i5.PageRouteInfo<void> {
+  const CollectionsRouter({List<_i5.PageRouteInfo>? children})
       : super(CollectionsRouter.name,
             path: 'collections', initialChildren: children);
 
@@ -324,18 +345,18 @@ class CollectionsRouter extends _i4.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.EmptyRouterPage]
-class SearchRouter extends _i4.PageRouteInfo<void> {
-  const SearchRouter({List<_i4.PageRouteInfo>? children})
+/// [_i5.EmptyRouterPage]
+class SearchRouter extends _i5.PageRouteInfo<void> {
+  const SearchRouter({List<_i5.PageRouteInfo>? children})
       : super(SearchRouter.name, path: 'search', initialChildren: children);
 
   static const String name = 'SearchRouter';
 }
 
 /// generated route for
-/// [_i4.EmptyRouterPage]
-class BookClubsRouter extends _i4.PageRouteInfo<void> {
-  const BookClubsRouter({List<_i4.PageRouteInfo>? children})
+/// [_i5.EmptyRouterPage]
+class BookClubsRouter extends _i5.PageRouteInfo<void> {
+  const BookClubsRouter({List<_i5.PageRouteInfo>? children})
       : super(BookClubsRouter.name,
             path: 'bookClubs', initialChildren: children);
 
@@ -343,29 +364,29 @@ class BookClubsRouter extends _i4.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.EmptyRouterPage]
-class ProfileRouter extends _i4.PageRouteInfo<void> {
-  const ProfileRouter({List<_i4.PageRouteInfo>? children})
+/// [_i5.EmptyRouterPage]
+class ProfileRouter extends _i5.PageRouteInfo<void> {
+  const ProfileRouter({List<_i5.PageRouteInfo>? children})
       : super(ProfileRouter.name, path: 'profile', initialChildren: children);
 
   static const String name = 'ProfileRouter';
 }
 
 /// generated route for
-/// [_i5.CollectionsPage]
-class CollectionsRoute extends _i4.PageRouteInfo<void> {
+/// [_i6.CollectionsPage]
+class CollectionsRoute extends _i5.PageRouteInfo<void> {
   const CollectionsRoute() : super(CollectionsRoute.name, path: '');
 
   static const String name = 'CollectionsRoute';
 }
 
 /// generated route for
-/// [_i6.CollectionBooksPage]
-class CollectionBooksRoute extends _i4.PageRouteInfo<CollectionBooksRouteArgs> {
+/// [_i7.CollectionBooksPage]
+class CollectionBooksRoute extends _i5.PageRouteInfo<CollectionBooksRouteArgs> {
   CollectionBooksRoute(
       {required int collectionId,
       required String collectionName,
-      _i22.Key? key})
+      _i23.Key? key})
       : super(CollectionBooksRoute.name,
             path: 'allBooks',
             args: CollectionBooksRouteArgs(
@@ -384,7 +405,7 @@ class CollectionBooksRouteArgs {
 
   final String collectionName;
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
@@ -393,9 +414,9 @@ class CollectionBooksRouteArgs {
 }
 
 /// generated route for
-/// [_i7.BookInfoPage]
-class BookInfoRoute extends _i4.PageRouteInfo<BookInfoRouteArgs> {
-  BookInfoRoute({required int bookId, _i22.Key? key})
+/// [_i8.BookInfoPage]
+class BookInfoRoute extends _i5.PageRouteInfo<BookInfoRouteArgs> {
+  BookInfoRoute({required int bookId, _i23.Key? key})
       : super(BookInfoRoute.name,
             path: 'bookInfo',
             args: BookInfoRouteArgs(bookId: bookId, key: key));
@@ -408,7 +429,7 @@ class BookInfoRouteArgs {
 
   final int bookId;
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
@@ -417,25 +438,25 @@ class BookInfoRouteArgs {
 }
 
 /// generated route for
-/// [_i8.SearchPage]
-class SearchRoute extends _i4.PageRouteInfo<void> {
+/// [_i9.SearchPage]
+class SearchRoute extends _i5.PageRouteInfo<void> {
   const SearchRoute() : super(SearchRoute.name, path: '');
 
   static const String name = 'SearchRoute';
 }
 
 /// generated route for
-/// [_i9.BookClubsPage]
-class BookClubsRoute extends _i4.PageRouteInfo<void> {
+/// [_i10.BookClubsPage]
+class BookClubsRoute extends _i5.PageRouteInfo<void> {
   const BookClubsRoute() : super(BookClubsRoute.name, path: '');
 
   static const String name = 'BookClubsRoute';
 }
 
 /// generated route for
-/// [_i10.BookClubInfoPage]
-class BookClubInfoRoute extends _i4.PageRouteInfo<BookClubInfoRouteArgs> {
-  BookClubInfoRoute({required int bookId, _i22.Key? key})
+/// [_i11.BookClubInfoPage]
+class BookClubInfoRoute extends _i5.PageRouteInfo<BookClubInfoRouteArgs> {
+  BookClubInfoRoute({required int bookId, _i23.Key? key})
       : super(BookClubInfoRoute.name,
             path: 'bookClubInfo',
             args: BookClubInfoRouteArgs(bookId: bookId, key: key));
@@ -448,7 +469,7 @@ class BookClubInfoRouteArgs {
 
   final int bookId;
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
@@ -457,48 +478,48 @@ class BookClubInfoRouteArgs {
 }
 
 /// generated route for
-/// [_i11.EventInfoPage]
-class EventInfoRoute extends _i4.PageRouteInfo<void> {
+/// [_i12.EventInfoPage]
+class EventInfoRoute extends _i5.PageRouteInfo<void> {
   const EventInfoRoute() : super(EventInfoRoute.name, path: 'eventInfo');
 
   static const String name = 'EventInfoRoute';
 }
 
 /// generated route for
-/// [_i12.ProfilePage]
-class ProfileRoute extends _i4.PageRouteInfo<void> {
+/// [_i13.ProfilePage]
+class ProfileRoute extends _i5.PageRouteInfo<void> {
   const ProfileRoute() : super(ProfileRoute.name, path: '');
 
   static const String name = 'ProfileRoute';
 }
 
 /// generated route for
-/// [_i13.UserQuotesPage]
-class UserQuotesRoute extends _i4.PageRouteInfo<void> {
+/// [_i14.UserQuotesPage]
+class UserQuotesRoute extends _i5.PageRouteInfo<void> {
   const UserQuotesRoute() : super(UserQuotesRoute.name, path: 'userQuotes');
 
   static const String name = 'UserQuotesRoute';
 }
 
 /// generated route for
-/// [_i14.UserReviewPage]
-class UserReviewRoute extends _i4.PageRouteInfo<void> {
+/// [_i15.UserReviewPage]
+class UserReviewRoute extends _i5.PageRouteInfo<void> {
   const UserReviewRoute() : super(UserReviewRoute.name, path: 'userReviews');
 
   static const String name = 'UserReviewRoute';
 }
 
 /// generated route for
-/// [_i15.UserBooksPage]
-class UserBooksRoute extends _i4.PageRouteInfo<void> {
+/// [_i16.UserBooksPage]
+class UserBooksRoute extends _i5.PageRouteInfo<void> {
   const UserBooksRoute() : super(UserBooksRoute.name, path: 'userBooks');
 
   static const String name = 'UserBooksRoute';
 }
 
 /// generated route for
-/// [_i16.UserCollectionsPage]
-class UserCollectionsRoute extends _i4.PageRouteInfo<void> {
+/// [_i17.UserCollectionsPage]
+class UserCollectionsRoute extends _i5.PageRouteInfo<void> {
   const UserCollectionsRoute()
       : super(UserCollectionsRoute.name, path: 'userCollections');
 
@@ -506,32 +527,32 @@ class UserCollectionsRoute extends _i4.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i17.SettingsPage]
-class SettingsRoute extends _i4.PageRouteInfo<void> {
+/// [_i18.SettingsPage]
+class SettingsRoute extends _i5.PageRouteInfo<void> {
   const SettingsRoute() : super(SettingsRoute.name, path: 'settings');
 
   static const String name = 'SettingsRoute';
 }
 
 /// generated route for
-/// [_i18.Top10Page]
-class Top10Route extends _i4.PageRouteInfo<void> {
+/// [_i19.Top10Page]
+class Top10Route extends _i5.PageRouteInfo<void> {
   const Top10Route() : super(Top10Route.name, path: 'top10');
 
   static const String name = 'Top10Route';
 }
 
 /// generated route for
-/// [_i19.StatisticsPage]
-class StatisticsRoute extends _i4.PageRouteInfo<void> {
+/// [_i20.StatisticsPage]
+class StatisticsRoute extends _i5.PageRouteInfo<void> {
   const StatisticsRoute() : super(StatisticsRoute.name, path: 'statistics');
 
   static const String name = 'StatisticsRoute';
 }
 
 /// generated route for
-/// [_i20.AchievementsPage]
-class AchievementsRoute extends _i4.PageRouteInfo<void> {
+/// [_i21.AchievementsPage]
+class AchievementsRoute extends _i5.PageRouteInfo<void> {
   const AchievementsRoute()
       : super(AchievementsRoute.name, path: 'achievements');
 
@@ -539,8 +560,8 @@ class AchievementsRoute extends _i4.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i21.EventsPage]
-class EventsRoute extends _i4.PageRouteInfo<void> {
+/// [_i22.EventsPage]
+class EventsRoute extends _i5.PageRouteInfo<void> {
   const EventsRoute() : super(EventsRoute.name, path: 'events');
 
   static const String name = 'EventsRoute';
