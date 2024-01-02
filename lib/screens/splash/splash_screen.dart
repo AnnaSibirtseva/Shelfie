@@ -1,6 +1,12 @@
+import 'dart:async';
+
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:shelfie/screens/home/home_page.dart';
-import 'package:shelfie/screens/log_in/log_in_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../components/constants.dart';
+import '../../components/image_constants.dart';
+import '../../components/routes/route.gr.dart';
+import '../../screens/log_in/log_in_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -17,22 +23,41 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _startApp() async {
-    //int? _id = (await storageService.readSecureData("id")) as int?;
-    // if (_id != null) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (context) => const LogInPage()));
-    // } else {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (context) => HomePage(_id!)));
-    // }
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    int? id = preferences.getInt('userId');
+    if (id == null) {
+      Timer(
+          Duration(seconds: 3),
+          () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const LogInPage())));
+    } else {
+      Timer(Duration(seconds: 3),
+          () => context.router.push(HomeRoute(userId: id)));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("Splashscreen"),
+      backgroundColor: Colors.white,
+        body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.network(
+            splashBook,
+            height: 125.0,
+            width: 125.0,
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'SHELFIE',
+            style: TextStyle(
+                fontSize: 24.0, fontWeight: FontWeight.w900, color: blackColor),
+          ),
+        ],
       ),
-    );
+    ));
   }
 }

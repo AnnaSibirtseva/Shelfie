@@ -9,3 +9,4 @@ const String noTop10 = "https://im.wampi.ru/2023/12/09/free-sticker-reading.png"
 const String quoteImg = 'https://ie.wampi.ru/2023/03/04/imageef4a214a62549bba.png';
 
 const String top10Background = "https://ie.wampi.ru/2023/10/30/imageacadfd106622bcd3.png";
+const String splashBook = "https://im.wampi.ru/2024/01/02/magic-book.gif";

@@ -14,6 +14,7 @@ import '../../../components/text_fields/password_text_field.dart';
 import '../../../components/text_fields/rounded_text_field.dart';
 import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'background.dart';
 
 class Body extends StatefulWidget {
@@ -77,6 +78,9 @@ class _BodyState extends State<Body> {
                                       Text("Выполняется вход в аккаунт...")));
                           try {
                             int id = await loginUser();
+                            SharedPreferences preferences =
+                                await SharedPreferences.getInstance();
+                            preferences.setInt('userId', id);
                             ScaffoldMessenger.of(context).hideCurrentSnackBar();
                             context.router.push(HomeRoute(userId: id));
                           } on Exception catch (_) {

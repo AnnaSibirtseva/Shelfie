@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'components/constants.dart';
 import 'components/routes/route.gr.dart';
 
