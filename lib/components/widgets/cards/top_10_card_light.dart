@@ -43,25 +43,9 @@ class _Top10CardLightState extends State<Top10CardLight> {
             key: Key('$index'),
             color: index >= 10 ? lightGrayColor : secondaryColor,
             child: Dismissible(
-                // confirmDismiss: (DismissDirection direction) {
-                //   return showDialog(
-                //     context: context,
-                //     builder: (BuildContext context) {
-                //       return ConfirmationDialog(
-                //         text:
-                //             'Вы действительно хотите удалить эту книгу из своего топа?',
-                //         press: () {
-                //           setState(() {
-                //             _items.removeAt(index);
-                //           });
-                //           context.router.pop(true);
-                //         },
-                //       );
-                //     },
-                //   );
-                // },
-                background: const DismissBackground(),
-                key: Key(_items[index].getTitle() + _items[index].getImageUrl()),
+                background: const DismissBackground(verticalMargin: 0),
+                key:
+                    Key(_items[index].getTitle() + _items[index].getImageUrl()),
                 onDismissed: (direction) {
                   setState(() {
                     _items.removeAt(index);
