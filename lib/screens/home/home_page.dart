@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie/components/routes/route.gr.dart';
+import '../../components/routes/route.gr.dart';
 import '../../components/bottom_menu/bottom_bar_item.dart';
 
 import '../../components/bottom_menu/bottom_bar_bubble.dart';

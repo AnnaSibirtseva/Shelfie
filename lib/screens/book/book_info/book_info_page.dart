@@ -50,12 +50,13 @@ class _BookInfoPage extends State<BookInfoPage> {
         future: getAllBookInfo(inheritedWidget.id),
         builder: (BuildContext context, AsyncSnapshot<Book> snapshot) {
           if (snapshot.hasData) {
-            return Scaffold(
+            return SafeArea(
+                child: Scaffold(
               body: SingleChildScrollView(
                 reverse: false,
                 child: Body(book: snapshot.data!),
               ),
-            );
+            ));
           } else if (snapshot.hasError) {
             return WebErrorWidget(errorMessage: snapshot.error.toString());
           } else {

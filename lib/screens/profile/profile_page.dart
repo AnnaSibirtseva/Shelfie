@@ -51,9 +51,10 @@ class _ProfilePage extends State<ProfilePage> {
         future: getUser(inheritedWidget.id),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
           if (snapshot.hasData) {
-            return Scaffold(
-                body: SingleChildScrollView(
-                    reverse: false, child: buildBody(snapshot.data!)));
+            return SafeArea(
+                child: Scaffold(
+                    body: SingleChildScrollView(
+                        reverse: false, child: buildBody(snapshot.data!))));
           } else if (snapshot.hasError) {
             return WebErrorWidget(errorMessage: snapshot.error.toString());
           } else {
@@ -111,7 +112,9 @@ class _ProfilePage extends State<ProfilePage> {
             routes: [mainRoutes[0], mainRoutes[1], mainRoutes[2]],
           ),
           // todo add top-10 route navigation
-          MenuTop10Card(press: () => context.router.push(const Top10Route()).then(onGoBack),),
+          MenuTop10Card(
+            press: () => context.router.push(const Top10Route()).then(onGoBack),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 15, left: 10),
             child: Text('Общее'.toUpperCase(),

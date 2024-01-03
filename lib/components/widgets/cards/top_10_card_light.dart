@@ -1,14 +1,18 @@
 import 'dart:ui';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../../../models/top-10_book.dart';
 import '../../constants.dart';
+import '../dialogs/confirmation_dialog.dart';
+import 'dismiss_background.dart';
 
 class Top10CardLight extends StatefulWidget {
   late List<Top10BookInfo> books;
   late Top10BookInfo? newBook;
 
-  Top10CardLight({required this.books, required this.newBook});
+  Top10CardLight({Key? key, required this.books, required this.newBook});
+
 
   @override
   State<Top10CardLight> createState() => _Top10CardLightState();
@@ -25,7 +29,7 @@ class _Top10CardLightState extends State<Top10CardLight> {
   void initState() {
     _items = widget.books;
     var newBook = widget.newBook;
-    if (newBook != null && _items.contains(newBook)) {
+    if (newBook != null && !_items.contains(newBook)) {
       _items.add(newBook);
     }
     super.initState();
@@ -39,71 +43,80 @@ class _Top10CardLightState extends State<Top10CardLight> {
         Card(
             key: Key('$index'),
             color: index >= 10 ? lightGrayColor : secondaryColor,
-            child: Opacity(
-              opacity: index >= 10 ? 0.6 : 1,
-              child: Container(
-                margin: const EdgeInsets.only(
-                    left: 10, right: 5, top: 5, bottom: 5),
-                height: size.height * 0.095,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${index + 1}.',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          color: index >= 10 ? grayColor : primaryColor,
-                          fontSize: size.width / 23,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(width: 10),
-                    Container(
-                      width: size.width * 0.12,
-                      height: size.height * 0.085,
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(
-                            color: index >= 10 ? grayColor : primaryColor),
-                        image: DecorationImage(
-                          image: NetworkImage(_items[index].getImageUrl()),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            child: Dismissible(
+                background: const DismissBackground(verticalMargin: 0),
+                key:
+                    Key(_items[index].getTitle() + _items[index].getImageUrl()),
+                onDismissed: (direction) {
+                  setState(() {
+                    _items.removeAt(index);
+                  });
+                },
+                child: Opacity(
+                  opacity: index >= 10 ? 0.6 : 1,
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        left: 10, right: 5, top: 5, bottom: 5),
+                    height: size.height * 0.095,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          '"${_items[index].getTitle()}"',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: size.width / 24,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          "${_items[index].getAuthors()}",
+                          '${index + 1}.',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                              fontSize: size.width / 27,
-                              fontWeight: FontWeight.w300),
+                              color: index >= 10 ? grayColor : primaryColor,
+                              fontSize: size.width / 23,
+                              fontWeight: FontWeight.bold),
                         ),
+                        const SizedBox(width: 10),
+                        Container(
+                          width: size.width * 0.12,
+                          height: size.height * 0.085,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            border: Border.all(
+                                color: index >= 10 ? grayColor : primaryColor),
+                            image: DecorationImage(
+                              image: NetworkImage(_items[index].getImageUrl()),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '"${_items[index].getTitle()}"',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: size.width / 24,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            Text(
+                              "${_items[index].getAuthors()}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: size.width / 27,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                          ],
+                        )),
                       ],
-                    )),
-                  ],
-                ),
-              ),
-            )),
+                    ),
+                  ),
+                ))),
     ];
 
     Widget proxyDecorator(

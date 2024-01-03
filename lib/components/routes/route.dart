@@ -20,7 +20,8 @@ import '../../screens/profile/interactions/statistics/statistics_page.dart';
 import '../../screens/profile/profile_page.dart';
 import '../../screens/search/search_page.dart';
 import '../../screens/sign_up/sign_up_page.dart';
-import '../../screens/splash/splash_page.dart';
+import '../../screens/splash/splash_screen.dart';
+
 
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',
@@ -34,7 +35,6 @@ import '../../screens/splash/splash_page.dart';
       ],
     ),
     AutoRoute(
-      initial: true,
       path: '/login',
       page: LogInPage,
       children: [
