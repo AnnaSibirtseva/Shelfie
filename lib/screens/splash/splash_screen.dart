@@ -4,7 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/constants.dart';
-import '../../components/image_constants.dart';
 import '../../components/routes/route.gr.dart';
 import '../../screens/log_in/log_in_page.dart';
 
@@ -45,8 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.network(
-            splashBook,
+          Image.asset('assets/images/magic-book.gif',
             height: 125.0,
             width: 125.0,
           ),
