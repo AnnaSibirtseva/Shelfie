@@ -9,9 +9,10 @@ import 'dismiss_background.dart';
 
 class Top10CardLight extends StatefulWidget {
   late List<Top10BookInfo> books;
-  final Top10BookInfo? newBook;
+  late Top10BookInfo? newBook;
 
   Top10CardLight({Key? key, required this.books, required this.newBook});
+
 
   @override
   State<Top10CardLight> createState() => _Top10CardLightState();
