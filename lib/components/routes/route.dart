@@ -22,6 +22,7 @@ import '../../screens/search/search_page.dart';
 import '../../screens/sign_up/sign_up_page.dart';
 import '../../screens/splash/splash_screen.dart';
 
+
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
