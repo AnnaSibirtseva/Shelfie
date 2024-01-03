@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../components/buttons/rounded_button.dart';
 import '../../../components/constants.dart';
@@ -115,6 +116,9 @@ class _BodyState extends State<Body> {
                                         "Выполняется регистрация аккаунта...")));
                             if (await addUser()) {
                               int id = await loginUser();
+                              SharedPreferences preferences =
+                                  await SharedPreferences.getInstance();
+                              preferences.setInt('userId', id);
                               ScaffoldMessenger.of(context)
                                   .hideCurrentSnackBar();
                               context.router.push(HomeRoute(userId: id));
