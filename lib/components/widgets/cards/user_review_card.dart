@@ -113,7 +113,7 @@ class _UserReviewCardState extends State<UserReviewCard> {
                   children: [
                     Text(
                       '"${review.getTitle()}"',
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -152,20 +152,23 @@ class _UserReviewCardState extends State<UserReviewCard> {
             ),
             // const Divider(color: Colors.white70,),
             const SizedBox(height: 15),
-            Text(
-              review.getReviewTitle(),
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                  fontSize: size.width / 22, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 5),
-            Text(
-              revText,
-              textAlign: TextAlign.justify,
-              maxLines: showFlag ? null : 7,
-              style: TextStyle(
-                  fontSize: size.width / 24, fontWeight: FontWeight.normal),
-            ),
+            if (review.getReviewTitle().isNotEmpty &&
+                review.getReviewTitle() != '-')
+              Text(
+                review.getReviewTitle(),
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                    fontSize: size.width / 22, fontWeight: FontWeight.bold),
+              ),
+            if (revText.isNotEmpty && revText != '-') const SizedBox(height: 5),
+            if (revText.isNotEmpty && revText != '-')
+              Text(
+                revText,
+                textAlign: TextAlign.justify,
+                maxLines: showFlag ? null : 7,
+                style: TextStyle(
+                    fontSize: size.width / 24, fontWeight: FontWeight.normal),
+              ),
             if (revText.isNotEmpty && revText.length > 250)
               InkWell(
                   onTap: () {
@@ -198,8 +201,7 @@ class _UserReviewCardState extends State<UserReviewCard> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: const BoxDecoration(
-          color: redColor,
-          borderRadius: BorderRadius.all(Radius.circular(15))),
+          color: redColor, borderRadius: BorderRadius.all(Radius.circular(15))),
       alignment: Alignment.centerRight,
       padding: const EdgeInsets.only(right: 20),
       child: const Icon(
