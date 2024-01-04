@@ -16,6 +16,7 @@ import '../../../../../models/book_review.dart';
 import '../../../../../models/inherited_id.dart';
 import '../../../components/widgets/cards/serch_club_card.dart';
 import '../../../models/book_club.dart';
+import '../../../models/tag.dart';
 
 class SearchTabBar extends StatefulWidget {
   // final BookReviewList reviewList;
@@ -178,11 +179,19 @@ class _StackOverState extends State<SearchTabBar>
                           bookClub: BookClub.light(
                               1,
                               "Космолюбы ,e,e keejkje ekrj ",
-                              "Для фанатов книжек про космос and someone else we don't care just anyone hello yes ",
                               "https://fotokonkurs.ru/cache/photo_1000w/photos/2015/11/20/9/03ffc28a9124158ed75bd731f01c527a/1524747579123e8af3f7b1c7346acbb0f9cf4404.jpg",
                               (i % 2).isEven,
                               120,
-                              (i % 2 + 1).isEven),
+                              (i % 2 + 1).isEven,
+                              ClubTagList(
+                                [
+                                  ClubTag(2, "Bebebebebebbebebebe"),
+                                  ClubTag(2, "Bebebebebebbebebebe"),
+                                  ClubTag(2, "Bebebebebebbebebebe"),
+                                  ClubTag(2, "Фантастика")
+                                ]
+                              )
+                          ),
                         ),
                       // for (BookReview review in reviewList.reviews)
                       //   ReviewCard(review: review)

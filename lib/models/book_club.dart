@@ -1,3 +1,5 @@
+import 'package:shelfie_diploma_app/models/tag.dart';
+
 class BookClub {
   late int _id;
   late String _name;
@@ -6,10 +8,10 @@ class BookClub {
   late bool _isPublic;
   late int _membersCount;
   late bool _isUserInClub;
-  late List<String> _tags;
+  late ClubTagList _tags;
 
-  BookClub.light(this._id, this._name, this._description, this._coverImageUrl,
-      this._isPublic, this._membersCount, this._isUserInClub) {}
+  BookClub.light(this._id, this._name, this._coverImageUrl,
+      this._isPublic, this._membersCount, this._isUserInClub, this._tags) {}
 
   int getId() {
     return _id;
@@ -37,5 +39,9 @@ class BookClub {
 
   bool isUserInClub() {
     return _isUserInClub;
+  }
+
+  ClubTagList getClubTags() {
+    return _tags;
   }
 }

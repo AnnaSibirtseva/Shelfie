@@ -1,8 +1,10 @@
+import 'package:extended_wrap/extended_wrap.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/book_club.dart';
 import '../../../screens/book_club/components/club_name_widget.dart';
 import '../../constants.dart';
+import '../genre_widget.dart';
 
 class SearchBookClubCard extends StatelessWidget {
   final VoidCallback press;
@@ -23,7 +25,7 @@ class SearchBookClubCard extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: size.height * 0.01),
         padding: const EdgeInsets.only(top: 5, bottom: 5, right: 10),
-        height: cardHeight,
+        height: cardHeight + 10,
         width: size.width,
         child: Row(
           children: [
@@ -53,15 +55,21 @@ class SearchBookClubCard extends StatelessWidget {
                       fontSize: 18.0,
                       clubName: bookClub.getName(),
                     ),
-                    Text(
-                        bookClub.getDescription() == null
-                            ? "-"
-                            : bookClub.getDescription()!,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 12.0)),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
+                    ExtendedWrap(
+                      maxLines: 2,
+                      spacing: 5,
+                      runSpacing: 5,
+                      children: [
+                        for (int i = 0;
+                            i < bookClub.getClubTags().tags.take(3).length;
+                            ++i)
+                          GenreWidget(
+                            genreName:
+                                bookClub.getClubTags().tags[i].getTagName(),
+                          )
+                      ],
+                    ),
                     Expanded(
                       child: Align(
                           alignment: Alignment.bottomLeft,
