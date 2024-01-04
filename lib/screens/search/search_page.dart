@@ -186,7 +186,7 @@ class _SearchPage extends State<SearchPage> {
           border: Border.all(color: primaryColor, width: 1.5)),
       child: TextField(
         keyboardType: TextInputType.emailAddress,
-        onSubmitted: (value) {
+        onChanged: (value) {
           query = value;
           setState(() {});
         },
