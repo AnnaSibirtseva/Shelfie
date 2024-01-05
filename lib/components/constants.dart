@@ -33,6 +33,9 @@ const List extraUserMenu = [
   'Выйти'
 ];
 
+const noInternetErrorMessage =
+    "Ой!\nНе удалось подключиться к интернету\nПроверьте подключение и попробуйте снова";
+
 const int minName = 2;
 const int maxName = 30;
 const int minMail = 7;

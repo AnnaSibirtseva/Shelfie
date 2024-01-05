@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '../../../models/inherited_id.dart';
 
 class BookClubInfoPage extends StatefulWidget {
-  final int bookId;
+  final int bookClubId;
 
-  const BookClubInfoPage(this.bookId, {Key? key}) : super(key: key);
+  const BookClubInfoPage(this.bookClubId, {Key? key}) : super(key: key);
 
   @override
   State<BookClubInfoPage> createState() => _BookClubInfoPage();

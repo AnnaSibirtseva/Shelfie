@@ -8,13 +8,16 @@ import 'dart:convert';
 import '../../components/buttons/scan_button.dart';
 import '../../components/constants.dart';
 import '../../components/image_constants.dart';
+import '../../components/widgets/cards/serch_club_card.dart';
 import '../../components/widgets/dialogs/filters_dialog.dart';
 import '../../components/widgets/error.dart';
 import '../../components/widgets/loading.dart';
 import '../../models/book.dart';
+import '../../models/book_club.dart';
 import '../../models/inherited_id.dart';
 import 'package:auto_route/auto_route.dart';
 import '../../components/routes/route.gr.dart';
+import '../../models/tag.dart';
 import 'tab_bars/search_tab_bar.dart';
 
 class BookClubsPage extends StatefulWidget {
@@ -24,38 +27,55 @@ class BookClubsPage extends StatefulWidget {
   State<BookClubsPage> createState() => _ClubsSearchPage();
 }
 
-class _ClubsSearchPage extends State<BookClubsPage> {
+class _ClubsSearchPage extends State<BookClubsPage>
+    with SingleTickerProviderStateMixin {
   late int id;
+  late TabController _tabController;
+  late List<BookClub> _userClubs;
+  late List<BookClub> _allClubs;
+
   late String query;
   late List<String> tags;
+  late int membersAmount;
+
   late FiltersDialog dialog;
 
   @override
   void initState() {
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     super.initState();
     query = '';
     tags = [];
+    membersAmount = 0;
     dialog = FiltersDialog();
   }
 
-  Future<List<Book>> searchBooks() async {
+  _getBookClubs() async {
+    _userClubs = await searchBooks(true);
+    _allClubs = await searchBooks(false);
+  }
+
+  Future<List<BookClub>> searchBooks(bool getPersonalClubs) async {
     var client = http.Client();
     final jsonString = json.encode({
       "query": query,
+      "membersAmount": membersAmount,
       if (tags.isNotEmpty) "tags": tags,
       "take": 500,
       "skip": 0
     });
     try {
-      var response = await client.post(Uri.https(url, '/books/search/'),
+      var response = await client.post(Uri.https(url, '/clubs/search/'),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
-            'userId': id.toString()
+            'userId': id.toString(),
+            'getPersonalClubs': getPersonalClubs.toString()
           },
           body: jsonString);
       if (response.statusCode == 200) {
-        return BookList.fromJson(jsonDecode(utf8.decode(response.bodyBytes)))
-            .foundBooks;
+        return BookClubsList.fromJson(
+                jsonDecode(utf8.decode(response.bodyBytes)))
+            .clubs;
       } else {
         throw Exception();
       }
@@ -82,10 +102,13 @@ class _ClubsSearchPage extends State<BookClubsPage> {
     id = inheritedWidget.id;
     Size size = MediaQuery.of(context).size;
     // keyboard ScrollViewDismissBehavior on drag
-    return FutureBuilder<List<Book>>(
-        future: searchBooks(),
-        builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
+    return FutureBuilder<List<List<BookClub>>>(
+        future: Future.wait([searchBooks(true), searchBooks(false)]),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<List<BookClub>>> snapshot) {
           if (snapshot.hasData) {
+            _userClubs = snapshot.data![0];
+            _allClubs = snapshot.data![1];
             return SafeArea(
                 child: Scaffold(
               body: SingleChildScrollView(
@@ -136,7 +159,7 @@ class _ClubsSearchPage extends State<BookClubsPage> {
                           const SizedBox(
                             height: 100,
                           ),
-                          SearchTabBar(),
+                          buildInteractionsTabBar(context),
                           if (snapshot.data!.isEmpty) nothingFound(),
                           // for (int i = 0; i < snapshot.data!.length; ++i)
                           //   if (snapshot.data!.length > i)
@@ -155,7 +178,7 @@ class _ClubsSearchPage extends State<BookClubsPage> {
               ),
             ));
           } else if (snapshot.hasError) {
-            return WebErrorWidget(errorMessage: snapshot.error.toString());
+            return const WebErrorWidget(errorMessage: noInternetErrorMessage);
           } else {
             // By default, show a loading spinner.
             return const LoadingWidget();
@@ -215,5 +238,112 @@ class _ClubsSearchPage extends State<BookClubsPage> {
             ),
           ],
         ));
+  }
+
+  Widget buildInteractionsTabBar(BuildContext context) {
+    final inheritedWidget = IdInheritedWidget.of(context);
+    id = inheritedWidget.id;
+    Size size = MediaQuery.of(context).size;
+    return Expanded(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 40,
+            margin: const EdgeInsets.only(bottom: 5),
+            decoration: BoxDecoration(
+              color: secondaryColor,
+              borderRadius: BorderRadius.circular(
+                25.0,
+              ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                    child: TabBar(
+                  // isScrollable: true,
+                  controller: _tabController,
+                  indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      25.0,
+                    ),
+                    color: primaryColor,
+                  ),
+                  labelColor: Colors.white,
+                  unselectedLabelColor: Colors.black,
+                  unselectedLabelStyle: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w500),
+                  labelStyle: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w700),
+                  tabs: const [
+                    Tab(text: 'Мои  ' /*reviewList.count.toString()*/),
+                    Tab(text: 'Все  ' /*quotesList.count.toString()*/)
+                  ],
+                )),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: size.width,
+            child: ElevatedButton(
+              onPressed: () => {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: secondaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+              ),
+              // showDialog(
+              // context: context,
+              // builder: (BuildContext context) =>
+              //     AddReviewDialog(
+              //         book: widget.book,
+              //         id: inheritedWidget.id)),
+              // .then(onReviewsGoBack),
+              child: const Text('Добавить клуб',
+                  style: TextStyle(color: grayColor)),
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                // first tab bar view widget
+                SingleChildScrollView(
+                  reverse: false,
+                  child: Column(
+                    children: [
+                      for (int i = 0; i < _userClubs.length; ++i)
+                        SearchBookClubCard(
+                          press: () => (context.router.push(BookClubInfoRoute(
+                              bookId: _userClubs[i].getId()))),
+                          bookClub: _userClubs[i],
+                        ),
+                      // for (BookReview review in reviewList.reviews)
+                      //   ReviewCard(review: review)
+                    ],
+                  ),
+                ),
+
+                // second tab bar view widget
+                SingleChildScrollView(
+                  reverse: false,
+                  child: Column(
+                    children: [
+                      for (int i = 0; i < _allClubs.length; ++i)
+                        SearchBookClubCard(
+                          press: () => (context.router.push(
+                              BookClubInfoRoute(bookId: _allClubs[i].getId()))),
+                          bookClub: _allClubs[i],
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -56,7 +56,7 @@ class _ProfilePage extends State<ProfilePage> {
                     body: SingleChildScrollView(
                         reverse: false, child: buildBody(snapshot.data!))));
           } else if (snapshot.hasError) {
-            return WebErrorWidget(errorMessage: snapshot.error.toString());
+            return const WebErrorWidget(errorMessage: noInternetErrorMessage);
           } else {
             // By default, show a loading spinner.
             return const LoadingWidget();

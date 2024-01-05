@@ -56,18 +56,23 @@ class _SearchPage extends State<SearchPage> {
       "skip": 0
     });
     try {
-      var response = await client.post(Uri.https(url, '/books/search/'),
-          headers: {
-            HttpHeaders.contentTypeHeader: 'application/json',
-            'userId': id.toString()
-          },
-          body: jsonString);
+      var response = await client
+          .post(Uri.https(url, '/books/search/'),
+              headers: {
+                HttpHeaders.contentTypeHeader: 'application/json',
+                'userId': id.toString()
+              },
+              body: jsonString)
+          .timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         return BookList.fromJson(jsonDecode(utf8.decode(response.bodyBytes)))
             .foundBooks;
       } else {
         throw Exception();
       }
+    } on TimeoutException catch (_) {
+      throw TimeoutException(
+          "Превышел лимит ожидания ответа от сервера.\nПопробуйте позже, сейчас хостинг перезагружается - это может занять какое-то время");
     } finally {
       client.close();
     }
@@ -165,7 +170,7 @@ class _SearchPage extends State<SearchPage> {
               ),
             ));
           } else if (snapshot.hasError) {
-            return WebErrorWidget(errorMessage: snapshot.error.toString());
+            return const WebErrorWidget(errorMessage: noInternetErrorMessage);
           } else {
             // By default, show a loading spinner.
             return const LoadingWidget();

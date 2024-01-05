@@ -17,10 +17,13 @@ class WebErrorWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(
-            "assets/images/error.png",
+            "assets/images/no_internet.png",
+            height: 300,
+            width: 300,
           ),
           Text(
             errorMessage,
+            textAlign: TextAlign.center,
             style: const TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w900,

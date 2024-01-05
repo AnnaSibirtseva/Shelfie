@@ -6,7 +6,7 @@ import '../../../screens/book_club/components/club_name_widget.dart';
 import '../../constants.dart';
 import '../genre_widget.dart';
 
-class SearchBookClubCard extends StatelessWidget {
+class SearchBookClubCard extends StatefulWidget {
   final VoidCallback press;
   final BookClub bookClub;
 
@@ -17,11 +17,16 @@ class SearchBookClubCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<SearchBookClubCard> createState() => _SearchBookClubCardState();
+}
+
+class _SearchBookClubCardState extends State<SearchBookClubCard> {
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double cardHeight = size.height * 0.15;
     return InkWell(
-      onTap: press,
+      onTap: widget.press,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: size.height * 0.01),
         padding: const EdgeInsets.only(top: 5, bottom: 5, right: 10),
@@ -34,8 +39,19 @@ class SearchBookClubCard extends StatelessWidget {
               height: cardHeight,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
+                border: Border.all(color: secondaryColor),
+                image: const DecorationImage(
+                  image: NetworkImage(defaultCollectionImg),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              foregroundDecoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: secondaryColor),
                 image: DecorationImage(
-                  image: NetworkImage(bookClub.getCoverImgUrl()),
+                  image: NetworkImage(widget.bookClub.getCoverImgUrl()),
+                  onError: (error, stackTrace) =>
+                      NetworkImage(defaultCollectionImg),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -43,17 +59,17 @@ class SearchBookClubCard extends StatelessWidget {
             Flexible(
               child: Container(
                 padding: const EdgeInsets.only(left: 15),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     ClubNameWithPrivacyName(
-                      isPublic: bookClub.isPublic(),
+                      isPublic: widget.bookClub.isPublic(),
                       fontSize: 18.0,
-                      clubName: bookClub.getName(),
+                      clubName: widget.bookClub.getName(),
                     ),
                     const SizedBox(height: 5),
                     ExtendedWrap(
@@ -62,18 +78,25 @@ class SearchBookClubCard extends StatelessWidget {
                       runSpacing: 5,
                       children: [
                         for (int i = 0;
-                            i < bookClub.getClubTags().tags.take(3).length;
+                            i <
+                                widget.bookClub
+                                    .getClubTags()
+                                    .tags
+                                    .take(3)
+                                    .length;
                             ++i)
                           GenreWidget(
-                            genreName:
-                                bookClub.getClubTags().tags[i].getTagName(),
+                            genreName: widget.bookClub
+                                .getClubTags()
+                                .tags[i]
+                                .getTagName(),
                           )
                       ],
                     ),
                     Expanded(
                       child: Align(
                           alignment: Alignment.bottomLeft,
-                          child: membersWidget(bookClub.isUserInClub())),
+                          child: membersWidget(widget.bookClub.isUserInClub())),
                     ),
                   ],
                 ),
@@ -96,7 +119,7 @@ class SearchBookClubCard extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         // Flexible(child:
-        Text('${bookClub.getMembersCount()} участников',
+        Text('${widget.bookClub.getMembersCount()} участников',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(

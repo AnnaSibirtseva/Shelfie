@@ -1,3 +1,5 @@
+import 'package:shelfie_diploma_app/components/constants.dart';
+import 'package:shelfie_diploma_app/models/parser.dart';
 import 'package:shelfie_diploma_app/models/tag.dart';
 
 class BookClub {
@@ -10,8 +12,28 @@ class BookClub {
   late bool _isUserInClub;
   late ClubTagList _tags;
 
-  BookClub.light(this._id, this._name, this._coverImageUrl,
-      this._isPublic, this._membersCount, this._isUserInClub, this._tags) {}
+  BookClub.light(this._id, this._name, this._coverImageUrl, this._isPublic,
+      this._membersCount, this._isUserInClub, this._tags) {}
+
+  factory BookClub.lightFromJson(dynamic json) {
+    String coverImageUrl = defaultCollectionImg;
+    if (json['coverImageUrl'] != null) {
+      coverImageUrl = getImage(json['coverImageUrl'] as String);
+    }
+    return BookClub.light(
+      json['id'] as int,
+      json['name'] as String,
+      coverImageUrl,
+      json['isPublic'] as bool,
+      json['membersAmount'] as int,
+      json['isUserInClub'] as bool,
+      ClubTagList.fromJson(json),
+    );
+  }
+
+  void setImgDefault() {
+    _coverImageUrl = defaultCollectionImg;
+  }
 
   int getId() {
     return _id;
@@ -43,5 +65,18 @@ class BookClub {
 
   ClubTagList getClubTags() {
     return _tags;
+  }
+}
+
+class BookClubsList {
+  List<BookClub> clubs = [];
+  int count;
+
+  BookClubsList(this.clubs, this.count);
+
+  factory BookClubsList.fromJson(dynamic json) {
+    return BookClubsList(
+        (json['clubs'] as List).map((e) => BookClub.lightFromJson(e)).toList(),
+        json['count'] as int);
   }
 }
