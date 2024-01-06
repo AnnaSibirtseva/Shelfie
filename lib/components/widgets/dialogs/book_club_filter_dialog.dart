@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 import '../../../models/filters.dart';
+import '../../../models/tag.dart';
 import '../../../screens/filter/conponents/filter_list.dart';
 import '../../../screens/filter/conponents/filter_text.dart';
 import '../../../screens/filter/conponents/slider.dart';
@@ -11,22 +12,30 @@ import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
 import '../error.dart';
 
-class FiltersDialog extends Dialog {
-  late FilterList genres;
-  late FilterList restrictions;
-  SliderWidget slider = SliderWidget(maxValue: 10.0);
+class BookClubFiltersDialog extends Dialog {
+  late FilterList tags = FilterList(data: const []);
+  late FilterList privacy = FilterList(data: const []);
+  late List<ClubTag> fullTags;
 
-  FiltersDialog({Key? key}) : super(key: key);
+  late List<String> tagNames = [];
 
-  Future<Filters> getFilters() async {
+  SliderWidget slider = SliderWidget(
+    maxValue: 100.0,
+  );
+
+  BookClubFiltersDialog({Key? key}) : super(key: key);
+
+  Future<List<ClubTag>> getFilters() async {
     var client = http.Client();
     try {
       var response =
-          await client.get(Uri.https(url, '/books/search/filters'), headers: {
+          await client.get(Uri.https(url, '/clubs/search/tags'), headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
       });
       if (response.statusCode == 200) {
-        return Filters.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+        return BookClubFilters.fromJson(
+                jsonDecode(utf8.decode(response.bodyBytes)))
+            .tags;
       } else {
         throw Exception();
       }
@@ -39,12 +48,18 @@ class FiltersDialog extends Dialog {
     return slider.getRating().round();
   }
 
-  List<String> getSelectedGenres() {
-    return genres.selectedItemsList;
+  List<String> getSelectedTags() {
+    List<String> ids = [];
+    for (var item in fullTags) {
+      if (tags.selectedItemsList.contains(item.getTagName())) {
+        ids.add(item.getId().toString());
+      }
+    }
+    return ids;
   }
 
-  List<String> getSelectedRestrictions() {
-    return restrictions.selectedItemsList;
+  List<String> getSelectedPrivacy() {
+    return privacy.selectedItemsList;
   }
 
   @override
@@ -58,17 +73,25 @@ class FiltersDialog extends Dialog {
             padding: const EdgeInsets.all(5),
             width: size.width * 0.8,
             height: size.height * 0.84,
-            child: FutureBuilder<Filters>(
+            child: FutureBuilder<List<ClubTag>>(
                 future: getFilters(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<Filters> snapshot) {
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<ClubTag>> snapshot) {
                   if (snapshot.hasData) {
-                    genres = FilterList(
-                      data: snapshot.data!.genres,
+                    fullTags = snapshot.data!;
+                    for (var tag in fullTags) {
+                      tagNames.add(tag.getTagName());
+                    }
+                    var saved = tags.selectedItemsList;
+                    tags = FilterList(
+                      data: tagNames,
                     );
-                    restrictions = FilterList(
-                      data: snapshot.data!.ageRestrictions,
+                    tags.selectedItemsList = saved;
+                    saved = privacy.selectedItemsList;
+                    privacy = FilterList(
+                      data: ["Открытый", "Закрытый"],
                     );
+                    privacy.selectedItemsList = saved;
 
                     return SingleChildScrollView(
                       reverse: false,
@@ -78,19 +101,33 @@ class FiltersDialog extends Dialog {
                           SizedBox(
                             height: size.height * 0.01,
                           ),
-                          const FilterText(text: 'Жанр', icon: 'mask'),
-                          genres,
-                          const FilterText(text: 'Рейтинг', icon: 'star'),
+                          const FilterText(text: 'Теги', icon: null),
+                          tags,
+                          const FilterText(text: 'Участники', icon: null),
                           slider,
-                          const FilterText(text: 'Ограничения', icon: null),
-                          restrictions,
+                          const FilterText(text: 'Приватность', icon: null),
+                          privacy,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               DialogButton(
                                   press: () {
+                                    tags.selectedItemsList = [];
+                                    privacy.selectedItemsList = [];
+                                    slider = SliderWidget(
+                                      maxValue: 100.0,
+                                    );
+                                    context.router.pop();
+                                  },
+                                  isAsync: true,
+                                  reverse: true,
+                                  text: 'Сбросить'),
+                              const SizedBox(width: 10,),
+                              DialogButton(
+                                  press: () {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(
+                                            duration: Duration(seconds: 30),
                                             backgroundColor: primaryColor,
                                             content: Text("Загрузка...")));
                                     context.router.pop();

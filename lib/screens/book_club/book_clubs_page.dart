@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -9,15 +10,17 @@ import '../../components/buttons/scan_button.dart';
 import '../../components/constants.dart';
 import '../../components/image_constants.dart';
 import '../../components/widgets/cards/serch_club_card.dart';
+import '../../components/widgets/dialogs/book_club_filter_dialog.dart';
 import '../../components/widgets/dialogs/filters_dialog.dart';
 import '../../components/widgets/error.dart';
 import '../../components/widgets/loading.dart';
 import '../../models/book.dart';
 import '../../models/book_club.dart';
 import '../../models/inherited_id.dart';
-import 'package:auto_route/auto_route.dart';
+
 import '../../components/routes/route.gr.dart';
 import '../../models/tag.dart';
+import '../filter/conponents/filter_list.dart';
 import 'tab_bars/search_tab_bar.dart';
 
 class BookClubsPage extends StatefulWidget {
@@ -38,7 +41,7 @@ class _ClubsSearchPage extends State<BookClubsPage>
   late List<String> tags;
   late int membersAmount;
 
-  late FiltersDialog dialog;
+  late BookClubFiltersDialog dialog;
 
   @override
   void initState() {
@@ -47,12 +50,7 @@ class _ClubsSearchPage extends State<BookClubsPage>
     query = '';
     tags = [];
     membersAmount = 0;
-    dialog = FiltersDialog();
-  }
-
-  _getBookClubs() async {
-    _userClubs = await searchBooks(true);
-    _allClubs = await searchBooks(false);
+    dialog = BookClubFiltersDialog();
   }
 
   Future<List<BookClub>> searchBooks(bool getPersonalClubs) async {
@@ -92,12 +90,14 @@ class _ClubsSearchPage extends State<BookClubsPage>
   }
 
   FutureOr setFilters(dynamic value) {
-    tags = dialog.getSelectedGenres();
+    tags = dialog.getSelectedTags();
+    membersAmount = dialog.slider.getRating().round();
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     final inheritedWidget = IdInheritedWidget.of(context);
     id = inheritedWidget.id;
     Size size = MediaQuery.of(context).size;
@@ -121,6 +121,7 @@ class _ClubsSearchPage extends State<BookClubsPage>
                           onTap: () => showDialog(
                               context: context,
                               builder: (BuildContext context) {
+                                //dialog.privacy = FilterList(data: privacy);
                                 return dialog;
                               }).then(setFilters),
                           child: Container(
