@@ -13,7 +13,6 @@ import '../error.dart';
 
 class FiltersDialog extends Dialog {
   late FilterList genres;
-  late FilterList countries;
   late FilterList restrictions;
   SliderWidget slider = SliderWidget();
 
@@ -44,10 +43,6 @@ class FiltersDialog extends Dialog {
     return genres.selectedItemsList;
   }
 
-  List<String> getSelectedCountries() {
-    return countries.selectedItemsList;
-  }
-
   List<String> getSelectedRestrictions() {
     return restrictions.selectedItemsList;
   }
@@ -71,9 +66,6 @@ class FiltersDialog extends Dialog {
                     genres = FilterList(
                       data: snapshot.data!.genres,
                     );
-                    countries = FilterList(
-                      data: snapshot.data!.languages,
-                    );
                     restrictions = FilterList(
                       data: snapshot.data!.ageRestrictions,
                     );
@@ -88,8 +80,6 @@ class FiltersDialog extends Dialog {
                           ),
                           const FilterText(text: 'Жанр', icon: 'mask'),
                           genres,
-                          const FilterText(text: 'Страна', icon: 'flag'),
-                          countries,
                           const FilterText(text: 'Рейтинг', icon: 'star'),
                           slider,
                           const FilterText(text: 'Ограничения', icon: null),

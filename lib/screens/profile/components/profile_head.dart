@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../components/constants.dart';
+import '../../../components/image_constants.dart';
 import '../../../components/widgets/dialogs/change_avatar_dialog.dart';
 import '../../../components/widgets/dialogs/change_banner_dialog.dart';
 import '../../../models/inherited_id.dart';
@@ -61,9 +62,19 @@ class _ProfileHead extends State<ProfileHead> {
             child: Container(
               height: size.height * 0.2,
               decoration: BoxDecoration(
+                border: Border.all(color: secondaryColor),
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                image: const DecorationImage(
+                  image: NetworkImage(wrongLongImage),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              foregroundDecoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
                 image: DecorationImage(
                   image: NetworkImage(user.getBannerImageUrl()),
+                  onError: (error, stackTrace) =>
+                  const NetworkImage(defaultCollectionImg),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -78,10 +89,20 @@ class _ProfileHead extends State<ProfileHead> {
                 child: Container(
                   height: size.height * 0.2,
                   decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: secondaryColor),
+                    image: const DecorationImage(
+                      image: NetworkImage(wrongCircleImage),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  foregroundDecoration: BoxDecoration(
                     border: Border.all(color: secondaryColor),
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       image: NetworkImage(user.getProfileImageUrl()),
+                      onError: (error, stackTrace) =>
+                          const NetworkImage(defaultCollectionImg),
                       fit: BoxFit.cover,
                     ),
                   ),

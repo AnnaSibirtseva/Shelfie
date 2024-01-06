@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../models/book_club.dart';
 import '../../../screens/book_club/components/club_name_widget.dart';
 import '../../constants.dart';
+import '../../image_constants.dart';
 import '../genre_widget.dart';
 
 class SearchBookClubCard extends StatefulWidget {
@@ -41,7 +42,7 @@ class _SearchBookClubCardState extends State<SearchBookClubCard> {
                 shape: BoxShape.circle,
                 border: Border.all(color: secondaryColor),
                 image: const DecorationImage(
-                  image: NetworkImage(defaultCollectionImg),
+                  image: NetworkImage(wrongCircleImage),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -51,7 +52,7 @@ class _SearchBookClubCardState extends State<SearchBookClubCard> {
                 image: DecorationImage(
                   image: NetworkImage(widget.bookClub.getCoverImgUrl()),
                   onError: (error, stackTrace) =>
-                      NetworkImage(defaultCollectionImg),
+                      const NetworkImage(wrongCircleImage),
                   fit: BoxFit.cover,
                 ),
               ),

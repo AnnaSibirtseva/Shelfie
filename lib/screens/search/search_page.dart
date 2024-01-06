@@ -86,7 +86,6 @@ class _SearchPage extends State<SearchPage> {
   }
 
   FutureOr setFilters(dynamic value) {
-    languages = dialog.getSelectedCountries();
     genres = dialog.getSelectedGenres();
     ageRestrictions = dialog.getSelectedRestrictions();
     minRating = dialog.getMinRating();

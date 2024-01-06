@@ -92,7 +92,7 @@ class _ClubsSearchPage extends State<BookClubsPage>
   }
 
   FutureOr setFilters(dynamic value) {
-    tags = dialog.getSelectedCountries();
+    tags = dialog.getSelectedGenres();
     setState(() {});
   }
 
