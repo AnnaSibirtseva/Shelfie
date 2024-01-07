@@ -10,6 +10,7 @@ import '../../components/buttons/scan_button.dart';
 import '../../components/constants.dart';
 import '../../components/image_constants.dart';
 import '../../components/widgets/cards/serch_club_card.dart';
+import '../../components/widgets/dialogs/add_book_club_dialog.dart';
 import '../../components/widgets/dialogs/book_club_filter_dialog.dart';
 import '../../components/widgets/dialogs/filters_dialog.dart';
 import '../../components/widgets/error.dart';
@@ -83,9 +84,8 @@ class _ClubsSearchPage extends State<BookClubsPage>
   }
 
   FutureOr onGoBack(dynamic value) {
-    context.router.navigate(const SearchRouter());
-    context.router.pushNamed('/bookClubs');
-    context.router.push(const SearchRouter());
+    context.router.pushNamed('/home');
+    context.router.push(const BookClubsRoute());
     setState(() {});
   }
 
@@ -287,20 +287,19 @@ class _ClubsSearchPage extends State<BookClubsPage>
           SizedBox(
             width: size.width,
             child: ElevatedButton(
-              onPressed: () => {},
+              onPressed: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      AddBookClubDialog(
+                          id: inheritedWidget.id))
+                    .then(onGoBack),
               style: ElevatedButton.styleFrom(
                 backgroundColor: secondaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
               ),
-              // showDialog(
-              // context: context,
-              // builder: (BuildContext context) =>
-              //     AddReviewDialog(
-              //         book: widget.book,
-              //         id: inheritedWidget.id)),
-              // .then(onReviewsGoBack),
+
               child: const Text('Добавить клуб',
                   style: TextStyle(color: grayColor)),
             ),

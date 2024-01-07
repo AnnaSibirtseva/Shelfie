@@ -5,6 +5,7 @@ import '../../../components/constants.dart';
 class FilterList extends StatefulWidget {
   final List<String> data;
   late List<String> selectedItemsList = [];
+  late int? maxElems = null;
 
   FilterList({Key? key, required this.data}) : super(key: key);
 
@@ -116,9 +117,16 @@ class _FilterList extends State<FilterList> {
         widget.selectedItemsList.remove(widget.data[index]);
       });
     } else {
-      setState(() {
-        widget.selectedItemsList.add(widget.data[index]);
-      });
+      if (widget.maxElems != null &&
+          widget.selectedItemsList.length >= widget.maxElems!) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: redColor,
+            content: Text("У клуба может быть только 5 тегов")));
+      } else {
+        setState(() {
+          widget.selectedItemsList.add(widget.data[index]);
+        });
+      }
     }
   }
 }

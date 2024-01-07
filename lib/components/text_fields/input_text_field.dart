@@ -23,7 +23,7 @@ class _InputTextFieldState extends State<InputTextField> {
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.only(top: 10, bottom: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       width: size.width * 0.8,
       height: size.height * widget.height,
       decoration: BoxDecoration(
