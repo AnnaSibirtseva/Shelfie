@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -28,7 +30,8 @@ class _CollectionsPage extends State<CollectionsPage> {
     var client = http.Client();
     try {
       var response = await client
-          .get(Uri.https(url, '/shelves/collections/common', {'take': '10'}));
+          .get(Uri.https(url, '/shelves/collections/common', {'take': '10'}))
+          .timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         return RecommendedCollections.fromJson(
                 jsonDecode(utf8.decode(response.bodyBytes)))
@@ -36,6 +39,9 @@ class _CollectionsPage extends State<CollectionsPage> {
       } else {
         throw Exception();
       }
+    } on TimeoutException catch (_) {
+      throw TimeoutException(
+          "Превышел лимит ожидания ответа от сервера.\nПопробуйте позже, сейчас хостинг перезагружается - это может занять какое-то время");
     } finally {
       client.close();
     }
@@ -54,6 +60,9 @@ class _CollectionsPage extends State<CollectionsPage> {
                   collection: snapshot.data!,
                 ));
           } else if (snapshot.hasError) {
+            if ( snapshot.error.runtimeType == TimeoutException) {
+              return WebErrorWidget(errorMessage: snapshot.error.toString());
+            }
             return const WebErrorWidget(errorMessage: noInternetErrorMessage);
           } else {
             // By default, show a loading spinner.

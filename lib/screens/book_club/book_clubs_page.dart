@@ -64,13 +64,15 @@ class _ClubsSearchPage extends State<BookClubsPage>
       "skip": 0
     });
     try {
-      var response = await client.post(Uri.https(url, '/clubs/search/'),
-          headers: {
-            HttpHeaders.contentTypeHeader: 'application/json',
-            'userId': id.toString(),
-            'getPersonalClubs': getPersonalClubs.toString()
-          },
-          body: jsonString);
+      var response = await client
+          .post(Uri.https(url, '/clubs/search/'),
+              headers: {
+                HttpHeaders.contentTypeHeader: 'application/json',
+                'userId': id.toString(),
+                'getPersonalClubs': getPersonalClubs.toString()
+              },
+              body: jsonString)
+          .timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         return BookClubsList.fromJson(
                 jsonDecode(utf8.decode(response.bodyBytes)))
@@ -78,6 +80,9 @@ class _ClubsSearchPage extends State<BookClubsPage>
       } else {
         throw Exception();
       }
+    } on TimeoutException catch (_) {
+      throw TimeoutException(
+          "Превышел лимит ожидания ответа от сервера.\nПопробуйте позже, сейчас хостинг перезагружается - это может занять какое-то время");
     } finally {
       client.close();
     }
@@ -290,16 +295,13 @@ class _ClubsSearchPage extends State<BookClubsPage>
               onPressed: () => showDialog(
                   context: context,
                   builder: (BuildContext context) =>
-                      AddBookClubDialog(
-                          id: inheritedWidget.id))
-                    .then(onGoBack),
+                      AddBookClubDialog(id: inheritedWidget.id)).then(onGoBack),
               style: ElevatedButton.styleFrom(
                 backgroundColor: secondaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
               ),
-
               child: const Text('Добавить клуб',
                   style: TextStyle(color: grayColor)),
             ),

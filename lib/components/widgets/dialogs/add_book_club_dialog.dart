@@ -16,7 +16,9 @@ import 'nothing_found_dialog.dart';
 
 class AddBookClubDialog extends Dialog {
   final int id;
-  late String _text = '';
+  late String _name = '';
+  late String _description = '';
+  late String _coverImageUrl = '';
 
   late FilterList tags = FilterList(data: const []);
   late List<ClubTag> fullTags;
@@ -55,12 +57,19 @@ class AddBookClubDialog extends Dialog {
     }
   }
 
-  Future<void> addQuote(BuildContext context) async {
+  Future<void> addClub(BuildContext context) async {
     var client = http.Client();
-    final jsonString = json.encode({"bookId": 2, "text": _text});
+    final jsonString = json.encode({
+      "name": _name,
+      "description": _description,
+      if (_coverImageUrl.trim().isNotEmpty) "coverImageUrl": _coverImageUrl,
+      //"bannerImageUrl": ,
+      "isPublic": isPublic,
+      "tagIds": getSelectedTags(),
+    });
     try {
       var response = await client.post(
-          Uri.https(url, '/interactions/quotes/add'),
+          Uri.https(url, '/clubs/create'),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
             'userId': id.toString()
@@ -72,7 +81,7 @@ class AddBookClubDialog extends Dialog {
             builder: (BuildContext context) =>
             const Center(
                 child: NothingFoundDialog(
-                    'Что-то пошло не так!\nЦитата не была добавлена.',
+                    'Что-то пошло не так!\n Не удалось создать клуб.',
                     warningGif,
                     'Ошибка')));
       }
@@ -128,7 +137,7 @@ class AddBookClubDialog extends Dialog {
                           maxLen: 50,
                           height: 0.1,
                           onChanged: (String value) {
-                            _text = value;
+                            _name = value;
                           },
                         ),
                         const SizedBox(height: 10),
@@ -137,7 +146,17 @@ class AddBookClubDialog extends Dialog {
                           maxLen: 250,
                           height: 0.2,
                           onChanged: (String value) {
-                            _text = value;
+                            _description = value;
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        textTitle(size, 'Аватар'),
+                        InputTextField(
+                          maxLen: 0,
+                          height: 0.1,
+                          hintText: 'Прямая ссылка на изображение',
+                          onChanged: (String value) {
+                            _coverImageUrl = value;
                           },
                         ),
                         const SizedBox(height: 5),
@@ -156,10 +175,12 @@ class AddBookClubDialog extends Dialog {
                                   for (var tag in fullTags) {
                                     tagNames.add(tag.getTagName());
                                   }
+                                  var saved = tags.selectedItemsList;
                                   tags = FilterList(
                                     data: tagNames,
                                   );
                                   tags.maxElems = 5;
+                                  tags.selectedItemsList = saved;
                                   return SingleChildScrollView(child: tags);
                                 } else if (snapshot.hasError) {
                                   return WebErrorWidget(
@@ -184,10 +205,10 @@ class AddBookClubDialog extends Dialog {
                             const Spacer(),
                             Switch(
                               thumbIcon: thumbIcon,
-                              value: isPublic,
+                              value: !isPublic,
                               onChanged: (bool value) {
                                 setState(() {
-                                  isPublic = value;
+                                  isPublic = !value;
                                 });
                               },
                               inactiveThumbColor: grayColor,
@@ -217,16 +238,15 @@ class AddBookClubDialog extends Dialog {
                             ),
                             DialogButton(
                                 press: () async {
-                                  if (_text.isNotEmpty &&
-                                      checkRestrictions(context)) {
-                                    await addQuote(context);
+                                  if (_name.trim().isNotEmpty) {
+                                    await addClub(context);
                                     context.router.pop(true);
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(
                                             backgroundColor: redColor,
                                             content: Text(
-                                                "Цитата не может быть пустой!")));
+                                                "Имя клуба не не может быть пустым!")));
                                   }
                                 },
                                 isAsync: true,
@@ -270,7 +290,17 @@ class AddBookClubDialog extends Dialog {
 
 
   bool checkRestrictions(BuildContext context) {
-    if (_text.length < minQuoteText) {
+    if (_name.length < minQuoteText) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: redColor,
+          content: Text("Текст цитаты должен быть от 2 символов")));
+      return false;
+    }
+    return true;
+  }
+
+  bool checkNameRestrictions(BuildContext context) {
+    if (_name.length < minQuoteText) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: redColor,
           content: Text("Текст цитаты должен быть от 2 символов")));

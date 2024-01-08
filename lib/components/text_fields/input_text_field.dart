@@ -4,13 +4,15 @@ import '../constants.dart';
 class InputTextField extends StatefulWidget {
   final double height;
   final int maxLen;
+  final String hintText;
   final ValueChanged<String> onChanged;
 
   const InputTextField(
       {Key? key,
       required this.onChanged,
       required this.height,
-      required this.maxLen})
+      required this.maxLen,
+      this.hintText=''})
       : super(key: key);
 
   @override
@@ -37,7 +39,8 @@ class _InputTextFieldState extends State<InputTextField> {
         maxLines: widget.maxLen == 0 ? 1 : null,
         style: const TextStyle(fontSize: 15),
         cursorColor: primaryColor,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
+          hintText: widget.hintText,
           border: InputBorder.none,
         ),
       ),

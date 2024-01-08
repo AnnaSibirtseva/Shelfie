@@ -33,12 +33,17 @@ class _ProfilePage extends State<ProfilePage> {
   Future<User> getUser(int id) async {
     var client = http.Client();
     try {
-      var response = await client.get(Uri.http(url, '/users/profile/$id'));
+      var response = await client
+          .get(Uri.http(url, '/users/profile/$id'))
+          .timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         return User.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
       } else {
         throw Exception();
       }
+    } on TimeoutException catch (_) {
+      throw TimeoutException(
+          "Превышел лимит ожидания ответа от сервера.\nПопробуйте позже, сейчас хостинг перезагружается - это может занять какое-то время");
     } finally {
       client.close();
     }
@@ -93,8 +98,6 @@ class _ProfilePage extends State<ProfilePage> {
       // log out page
       () => context.router.navigate(const LogInRoute())
     ];
-
-
 
     Size size = MediaQuery.of(context).size;
     return Container(
