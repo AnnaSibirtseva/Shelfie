@@ -7,13 +7,27 @@ class BookClub {
   late String _name;
   late String? _description;
   late String _coverImageUrl;
+  late String _bannerImageUrl;
   late bool _isPublic;
   late int _membersCount;
   late bool _isUserInClub;
+  late bool _isUserAdminInClub;
   late ClubTagList _tags;
 
   BookClub.light(this._id, this._name, this._coverImageUrl, this._isPublic,
       this._membersCount, this._isUserInClub, this._tags) {}
+
+  BookClub(
+      this._id,
+      this._name,
+      this._description,
+      this._coverImageUrl,
+      this._bannerImageUrl,
+      this._isPublic,
+      this._membersCount,
+      this._isUserInClub,
+      this._isUserAdminInClub,
+      this._tags) {}
 
   factory BookClub.lightFromJson(dynamic json) {
     String coverImageUrl = defaultCollectionImg;
@@ -31,8 +45,35 @@ class BookClub {
     );
   }
 
+  factory BookClub.fromJson(dynamic json) {
+    String coverImageUrl = defaultCollectionImg;
+    String bannerImageUrl = defaultCollectionImg;
+    if (json['coverImageUrl'] != null) {
+      coverImageUrl = getImage(json['coverImageUrl'] as String);
+    }
+    if (json['bannerImageUrl'] != null) {
+      bannerImageUrl = getImage(json['bannerImageUrl'] as String);
+    }
+    return BookClub(
+      json['id'] as int,
+      json['name'] as String,
+      json['description'] as String?,
+      coverImageUrl,
+      bannerImageUrl,
+      json['isPublic'] as bool,
+      json['membersAmount'] as int,
+      json['isUserInClub'] as bool,
+      json['isUserAdminInClub'] as bool,
+      ClubTagList.fromJson(json),
+    );
+  }
+
   void setImgDefault() {
     _coverImageUrl = defaultCollectionImg;
+  }
+
+  bool getIsUserAdminInClub() {
+    return _isUserAdminInClub;
   }
 
   int getId() {
@@ -49,6 +90,10 @@ class BookClub {
 
   String getCoverImgUrl() {
     return _coverImageUrl;
+  }
+
+  String getBannerImgUrl() {
+    return _bannerImageUrl;
   }
 
   bool isPublic() {

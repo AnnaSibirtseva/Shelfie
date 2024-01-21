@@ -31,7 +31,7 @@ class _CollectionsPage extends State<CollectionsPage> {
     try {
       var response = await client
           .get(Uri.https(url, '/shelves/collections/common', {'take': '10'}))
-          .timeout(const Duration(seconds: 10));
+          .timeout(const Duration(seconds: 20));
       if (response.statusCode == 200) {
         return RecommendedCollections.fromJson(
                 jsonDecode(utf8.decode(response.bodyBytes)))

@@ -63,7 +63,7 @@ class _SearchPage extends State<SearchPage> {
                 'userId': id.toString()
               },
               body: jsonString)
-          .timeout(const Duration(seconds: 10));
+          .timeout(const Duration(seconds: 15));
       if (response.statusCode == 200) {
         return BookList.fromJson(jsonDecode(utf8.decode(response.bodyBytes)))
             .foundBooks;

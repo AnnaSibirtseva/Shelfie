@@ -35,7 +35,7 @@ class _ProfilePage extends State<ProfilePage> {
     try {
       var response = await client
           .get(Uri.http(url, '/users/profile/$id'))
-          .timeout(const Duration(seconds: 10));
+          .timeout(const Duration(seconds: 15));
       if (response.statusCode == 200) {
         return User.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
       } else {
@@ -114,7 +114,6 @@ class _ProfilePage extends State<ProfilePage> {
             userStat: user.getStatistics(),
             routes: [mainRoutes[0], mainRoutes[1], mainRoutes[2]],
           ),
-          // todo add top-10 route navigation
           MenuTop10Card(
             press: () => context.router.push(const Top10Route()).then(onGoBack),
           ),

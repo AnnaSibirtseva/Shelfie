@@ -65,7 +65,7 @@ class _ProfileHead extends State<ProfileHead> {
                 border: Border.all(color: secondaryColor),
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
                 image: const DecorationImage(
-                  image: NetworkImage(wrongLongImage),
+                  image: NetworkImage(defaultCollectionImg),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -92,7 +92,7 @@ class _ProfileHead extends State<ProfileHead> {
                     shape: BoxShape.circle,
                     border: Border.all(color: secondaryColor),
                     image: const DecorationImage(
-                      image: NetworkImage(wrongCircleImage),
+                      image: NetworkImage(defaultCollectionImg),
                       fit: BoxFit.cover,
                     ),
                   ),

@@ -10,6 +10,7 @@ const menuIconsGrayColor = Color(0xFFADADAD);
 const redColor = Color(0xFFE57373);
 const lightGrayColor = Color(0xFFE0DCDC);
 const grayColor = Colors.black38;
+const darkGrayColor = Colors.black54;
 const blackColor = Colors.black;
 const whiteColor = Colors.white;
 

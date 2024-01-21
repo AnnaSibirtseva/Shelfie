@@ -72,7 +72,7 @@ class _ClubsSearchPage extends State<BookClubsPage>
                 'getPersonalClubs': getPersonalClubs.toString()
               },
               body: jsonString)
-          .timeout(const Duration(seconds: 10));
+          .timeout(const Duration(seconds: 30));
       if (response.statusCode == 200) {
         return BookClubsList.fromJson(
                 jsonDecode(utf8.decode(response.bodyBytes)))
@@ -158,7 +158,7 @@ class _ClubsSearchPage extends State<BookClubsPage>
                     Container(
                       margin: EdgeInsets.only(
                           left: 15, right: 15, bottom: size.height * 0.01),
-                      height: size.height * 1.5,
+                      height: size.height * 0.9,
                       width: size.width,
                       child: Column(
                         children: [

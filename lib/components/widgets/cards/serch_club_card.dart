@@ -45,6 +45,13 @@ class _SearchBookClubCardState extends State<SearchBookClubCard> {
                   image: NetworkImage(wrongCircleImage),
                   fit: BoxFit.cover,
                 ),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.blueGrey,
+                    blurRadius: 5,
+                    offset: Offset(0, 7),
+                  ),
+                ],
               ),
               foregroundDecoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -71,6 +78,8 @@ class _SearchBookClubCardState extends State<SearchBookClubCard> {
                       isPublic: widget.bookClub.isPublic(),
                       fontSize: 18.0,
                       clubName: widget.bookClub.getName(),
+                      isBold: false,
+                      isUserAdminInClub: false,
                     ),
                     const SizedBox(height: 5),
                     ExtendedWrap(
