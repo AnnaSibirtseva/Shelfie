@@ -6,11 +6,15 @@ import 'dart:convert';
 
 import '../../../models/inherited_id.dart';
 import '../../../models/user_collection.dart';
+import '../../../screens/book_club/book_club_info/components/drop_down_menu.dart';
 import '../../constants.dart';
 
 class FutureEventCard extends StatefulWidget {
+  final bool isAdmin;
+
   const FutureEventCard({
     Key? key,
+    required this.isAdmin,
   }) : super(key: key);
 
   @override
@@ -46,9 +50,7 @@ class _AddCollectionCardState extends State<FutureEventCard> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
 
     final inheritedWidget = IdInheritedWidget.of(context);
     id = inheritedWidget.id;
@@ -69,50 +71,78 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                 width: size.width,
                 child: Row(
                   children: [
-                    Container(
-                        width: size.width * 0.35,
-                        decoration: const BoxDecoration(
-                          borderRadius:
-                          BorderRadius.only(topLeft: Radius.circular(15)),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                "https://i.pinimg.com/736x/d0/e3/33/d0e333e4cba6f8d183d08bae6c455a8b--rocket-ships-reading.jpg"),
-                            fit: BoxFit.cover,
+                    Stack(
+                      children: [
+                        Container(
+                            width: size.width * 0.35,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15)),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                    "https://i.pinimg.com/736x/d0/e3/33/d0e333e4cba6f8d183d08bae6c455a8b--rocket-ships-reading.jpg"),
+                                fit: BoxFit.cover,
+                              ),
+                            )),
+                        if (widget.isAdmin)
+                          InkWell(
+                            onTap: () => {},
+                            child: Container(
+                              width: size.width * 0.1,
+                              height: size.width * 0.1,
+                              decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      topRight: Radius.circular(15),
+                                      bottomRight: Radius.circular(15)),
+                                  color: secondaryColor),
+                              child: const Icon(
+                                Icons.mode_edit_rounded,
+                                color: primaryColor,
+                              ),
+                            ),
                           ),
-                        )),
+                      ],
+                    ),
                     Flexible(
                       child: SingleChildScrollView(
                         child: SizedBox(
-                          height: size.height * 0.3,
                           child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Flexible(
-                                    child: Text("Печенье и Хокинг".replaceAll("", "\u{200B}"),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: size.width * 0.045)),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  eventPropNameText(
-                                      "Книгa: ",
-                                      size,
-                                      '"Черные дыры и молодые Вселенные"'),
-                                  const SizedBox(height: 10),
-                                  eventPropText("Место: ", size, "Дом бабули Мэй", 3),
-                                  const SizedBox(height: 10),
-                                  eventPropText("Время: ", size, "04.07.2024", 1),
-                                  const SizedBox(height: 10),
-                                  eventPropText("Участники: ", size, "5", 1),
-                                ],
-                              ),
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                      "Печенье и Хокинг"
+                                          .replaceAll("", "\u{200B}"),
+                                      softWrap: false,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: size.width * 0.045)),
+                                ),
+                                const SizedBox(height: 10),
+                                eventPropNameText("Книгa: ", size,
+                                    '"Черные дыры и молодые Вселенные"'),
+                                const SizedBox(height: 10),
+                                eventPropText(
+                                    "Место: ",
+                                    size,
+                                    "Дом бабули Мэй  (Украинский бульвар 6, кв 216, п 5)",
+                                    3),
+                                const SizedBox(height: 10),
+                                eventPropText("Время: ", size, "04.07.2024", 1),
+                                const SizedBox(height: 10),
+                                eventPropText("Участники: ", size, "5", 1),
+                                const SizedBox(height: 10),
+                                DropDownMenu()
+                              ],
                             ),
+                          ),
                         ),
                       ),
                     )
@@ -151,30 +181,6 @@ class _AddCollectionCardState extends State<FutureEventCard> {
 
   Widget eventPropNameText(String name, Size size, String text) {
     return Flexible(
-      child: RichText(
-          softWrap: false,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.justify,
-          text: TextSpan(
-              text: name,
-              style: TextStyle(
-                  color: blackColor,
-                  fontWeight: FontWeight.w400,
-                  fontSize: size.width * 0.036),
-              children: <TextSpan>[
-              TextSpan(text: text,
-              style: TextStyle(
-                  color: primaryColor,
-                  decoration: TextDecoration.underline,
-                  fontWeight: FontWeight.w400,
-                  fontSize: size.width * 0.04)),
-      ],
-    )));
-  }
-
-  Widget eventPropText(String name, Size size, String text, int maxLines) {
-    return Flexible(
         child: RichText(
             softWrap: false,
             maxLines: 2,
@@ -185,9 +191,35 @@ class _AddCollectionCardState extends State<FutureEventCard> {
               style: TextStyle(
                   color: blackColor,
                   fontWeight: FontWeight.w400,
+                  fontSize: size.width * 0.036),
+              children: <TextSpan>[
+                TextSpan(
+                    text: text,
+                    style: TextStyle(
+                        color: primaryColor,
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.w400,
+                        fontSize: size.width * 0.04)),
+              ],
+            )));
+  }
+
+  Widget eventPropText(String name, Size size, String text, int maxLines) {
+    return Flexible(
+        child: RichText(
+            softWrap: false,
+            maxLines: maxLines,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.justify,
+            text: TextSpan(
+              text: name,
+              style: TextStyle(
+                  color: blackColor,
+                  fontWeight: FontWeight.w400,
                   fontSize: size.width * 0.038),
               children: <TextSpan>[
-                TextSpan(text: text,
+                TextSpan(
+                    text: text,
                     style: TextStyle(
                         color: blackColor,
                         fontWeight: FontWeight.w400,

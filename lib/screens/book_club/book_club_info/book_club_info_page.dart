@@ -66,7 +66,7 @@ class _BookClubInfoPage extends State<BookClubInfoPage> {
                     reverse: false,
                     child: Container(
                         margin: EdgeInsets.only(bottom: size.height * 0.1),
-                        height: size.height,
+                        height: size.height * 1.3,
                         width: size.width,
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

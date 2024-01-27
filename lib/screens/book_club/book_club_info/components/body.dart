@@ -13,6 +13,7 @@ import '../../../../components/widgets/loading.dart';
 import '../../../../models/book_club.dart';
 import '../../../../models/inherited_id.dart';
 import '../../components/club_name_widget.dart';
+import 'drop_down_menu.dart';
 
 class BookClubBody extends StatefulWidget {
   final int clubId;
@@ -82,7 +83,7 @@ class _BookClubBody extends State<BookClubBody> {
             BookClub club = snapshot.data!;
             return Flexible(
                 child: Container(
-              height: size.height * 0.8,
+              height: size.height * 1,
               margin: EdgeInsets.only(left: 20, top: 5, right: 15),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -96,22 +97,20 @@ class _BookClubBody extends State<BookClubBody> {
                       )),
                   const SizedBox(height: 5),
                   Flexible(
-                    child: Container(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            child: SingleChildScrollView(
-                              child: Text(club.getDescription() ?? "-",
-                                  textAlign: TextAlign.justify,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 13,
-                                  )),
-                            ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: SingleChildScrollView(
+                            child: Text(club.getDescription() ?? "-",
+                                textAlign: TextAlign.justify,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 13,
+                                )),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(
@@ -141,8 +140,10 @@ class _BookClubBody extends State<BookClubBody> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  FutureEventCard(),
-
+                  FutureEventCard(
+                    isAdmin: true,
+                  ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ));
@@ -150,7 +151,8 @@ class _BookClubBody extends State<BookClubBody> {
             return const WebErrorWidget(errorMessage: noInternetErrorMessage);
           } else {
             // By default, show a loading spinner.
-            return const SmallLoadingWidget();
+            return const Center(
+                child: CircularProgressIndicator(color: primaryColor));
           }
         });
   }

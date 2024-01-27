@@ -34,6 +34,8 @@ const List extraUserMenu = [
   'Выйти'
 ];
 
+const List<String> eventAttendance = ['Не решил', 'Приду', 'Не приду'];
+
 const noInternetErrorMessage =
     "Ой!\nНе удалось подключиться к интернету\nПроверьте подключение и попробуйте снова";
 

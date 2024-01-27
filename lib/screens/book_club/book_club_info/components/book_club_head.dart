@@ -100,7 +100,7 @@ class _ProfileHead extends State<BookClubHead> {
               right: 0,
               left: 0.0,
               bottom: 0.0,
-              top: size.height * 0.1,
+              top: size.height * 0.11,
               child: Row(
                 children: [
                   GestureDetector(
