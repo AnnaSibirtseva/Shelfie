@@ -61,23 +61,22 @@ class _BookClubInfoPage extends State<BookClubInfoPage> {
         builder: (BuildContext context, AsyncSnapshot<BookClub> snapshot) {
           if (snapshot.hasData) {
             BookClub bookClub = snapshot.data!;
-            return Scaffold(
-                body: SingleChildScrollView(
-                    reverse: false,
-                    child: Container(
-                        margin: EdgeInsets.only(bottom: size.height * 0.1),
-                        height: size.height * 1.3,
-                        width: size.width,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              BookClubHead(bookClub: bookClub),
-                              BookClubBody(
-                                clubId: bookClub.getId(),
-                              ),
-                            ]))));
+            return Container(
+                margin: EdgeInsets.only(bottom: size.height * 0.01),
+                height: size.height * 1,
+                width: size.width,
+                child: SingleChildScrollView(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        BookClubHead(bookClub: bookClub),
+                        BookClubBody(
+                          clubId: bookClub.getId(),
+                        ),
+                      ]),
+                ));
           } else if (snapshot.hasError) {
             return const WebErrorWidget(errorMessage: noInternetErrorMessage);
           } else {

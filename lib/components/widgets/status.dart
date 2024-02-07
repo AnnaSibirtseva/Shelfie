@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 
-import '../../models/book_status.dart';
+import '../../models/enums/book_status.dart';
 import '../../models/inherited_id.dart';
 import '../constants.dart';
 import '../image_constants.dart';

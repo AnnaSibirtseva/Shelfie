@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import '../constants.dart';
 
 class WebErrorWidget extends StatelessWidget {
+  final double size;
   final String errorMessage;
 
   const WebErrorWidget({
     Key? key,
     this.errorMessage = 'Something went wrong',
+    this.size = 300,
   }) : super(key: key);
 
   @override
@@ -18,16 +20,19 @@ class WebErrorWidget extends StatelessWidget {
         children: <Widget>[
           Image.asset(
             "assets/images/no_internet.png",
-            height: 300,
-            width: 300,
+            height: size,
+            width: size,
           ),
-          Text(
-            errorMessage,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w900,
-                color: primaryColor),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              errorMessage,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w900,
+                  color: primaryColor),
+            ),
           ),
         ],
       ),

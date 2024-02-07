@@ -54,7 +54,7 @@ class _ClubsSearchPage extends State<BookClubsPage>
     dialog = BookClubFiltersDialog();
   }
 
-  Future<List<BookClub>> searchBooks(bool getPersonalClubs) async {
+  Future<List<BookClub>> searchBookClubs(bool getPersonalClubs) async {
     var client = http.Client();
     final jsonString = json.encode({
       "query": query,
@@ -108,7 +108,7 @@ class _ClubsSearchPage extends State<BookClubsPage>
     Size size = MediaQuery.of(context).size;
     // keyboard ScrollViewDismissBehavior on drag
     return FutureBuilder<List<List<BookClub>>>(
-        future: Future.wait([searchBooks(true), searchBooks(false)]),
+        future: Future.wait([searchBookClubs(true), searchBookClubs(false)]),
         builder: (BuildContext context,
             AsyncSnapshot<List<List<BookClub>>> snapshot) {
           if (snapshot.hasData) {

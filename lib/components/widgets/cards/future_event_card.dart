@@ -4,17 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../../models/club_event.dart';
 import '../../../models/inherited_id.dart';
 import '../../../models/user_collection.dart';
 import '../../../screens/book_club/book_club_info/components/drop_down_menu.dart';
 import '../../constants.dart';
+import '../error.dart';
 
 class FutureEventCard extends StatefulWidget {
-  final bool isAdmin;
+  final int clubId;
 
   const FutureEventCard({
     Key? key,
-    required this.isAdmin,
+    required this.clubId,
   }) : super(key: key);
 
   @override
@@ -29,18 +31,19 @@ class _AddCollectionCardState extends State<FutureEventCard> {
     super.initState();
   }
 
-  Future<void> addToCollection(int id) async {
+  Future<BookClubEvent> getClubEvent(int id) async {
     var client = http.Client();
-    final jsonString = json.encode({});
     try {
-      var response = await client.post(
-          Uri.https(url, '/shelves/collections//add/'),
+      var response = await client.get(
+          Uri.https(url, '/clubs/detailed/${widget.clubId}/event/nearest'),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
             'userId': id.toString()
-          },
-          body: jsonString);
-      if (response.statusCode != 200) {
+          });
+      if (response.statusCode == 200) {
+        return BookClubEvent.fromJson(
+            jsonDecode(utf8.decode(response.bodyBytes)));
+      } else {
         throw Exception();
       }
     } finally {
@@ -55,93 +58,133 @@ class _AddCollectionCardState extends State<FutureEventCard> {
     final inheritedWidget = IdInheritedWidget.of(context);
     id = inheritedWidget.id;
 
-    return InkWell(
-      child: Container(
-        margin: const EdgeInsets.only(right: 5, top: 5),
-        height: size.height * 0.35,
-        width: size.width,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-          border: Border.all(color: secondaryColor, width: 3),
-        ),
-        child: Column(
-          children: [
-            Expanded(
-              child: SizedBox(
+    return FutureBuilder<BookClubEvent>(
+        future: getClubEvent(inheritedWidget.id),
+        builder: (BuildContext context, AsyncSnapshot<BookClubEvent> snapshot) {
+          if (snapshot.hasData) {
+            BookClubEvent event = snapshot.data!;
+            return InkWell(
+              child: Container(
+                margin: const EdgeInsets.only(right: 5, top: 5),
+                height: size.height * 0.35,
                 width: size.width,
-                child: Row(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  border: Border.all(color: secondaryColor, width: 3),
+                ),
+                child: Column(
                   children: [
-                    Stack(
-                      children: [
-                        Container(
-                            width: size.width * 0.35,
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15)),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://i.pinimg.com/736x/d0/e3/33/d0e333e4cba6f8d183d08bae6c455a8b--rocket-ships-reading.jpg"),
-                                fit: BoxFit.cover,
-                              ),
-                            )),
-                        if (widget.isAdmin)
-                          InkWell(
-                            onTap: () => {},
-                            child: Container(
-                              width: size.width * 0.1,
-                              height: size.width * 0.1,
-                              decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(15),
-                                      topRight: Radius.circular(15),
-                                      bottomRight: Radius.circular(15)),
-                                  color: secondaryColor),
-                              child: const Icon(
-                                Icons.mode_edit_rounded,
-                                color: primaryColor,
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                    Flexible(
-                      child: SingleChildScrollView(
-                        child: SizedBox(
-                          child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    Expanded(
+                      child: SizedBox(
+                        width: size.width,
+                        child: Row(
+                          children: [
+                            Stack(
                               children: [
-                                Flexible(
-                                  child: Text(
-                                      "Печенье и Хокинг"
-                                          .replaceAll("", "\u{200B}"),
-                                      softWrap: false,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: size.width * 0.045)),
-                                ),
-                                const SizedBox(height: 10),
-                                eventPropNameText("Книгa: ", size,
-                                    '"Черные дыры и молодые Вселенные"'),
-                                const SizedBox(height: 10),
-                                eventPropText(
-                                    "Место: ",
-                                    size,
-                                    "Дом бабули Мэй  (Украинский бульвар 6, кв 216, п 5)",
-                                    3),
-                                const SizedBox(height: 10),
-                                eventPropText("Время: ", size, "04.07.2024", 1),
-                                const SizedBox(height: 10),
-                                eventPropText("Участники: ", size, "5", 1),
-                                const SizedBox(height: 10),
-                                DropDownMenu()
+                                Container(
+                                    width: size.width * 0.35,
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(15)),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            event.getCoverImageUrl()),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )),
+                                if (event.getCanBeEditedByUser())
+                                  InkWell(
+                                    onTap: () => {},
+                                    child: Container(
+                                      width: size.width * 0.1,
+                                      height: size.width * 0.1,
+                                      decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(15),
+                                              topRight: Radius.circular(15),
+                                              bottomRight: Radius.circular(15)),
+                                          color: secondaryColor),
+                                      child: const Icon(
+                                        Icons.mode_edit_rounded,
+                                        color: primaryColor,
+                                      ),
+                                    ),
+                                  ),
                               ],
                             ),
+                            Flexible(
+                              child: SingleChildScrollView(
+                                child: SizedBox(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                              event
+                                                  .getTitle()
+                                                  .replaceAll("", "\u{200B}"),
+                                              softWrap: false,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w900,
+                                                  fontSize:
+                                                      size.width * 0.045)),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        eventPropNameText("Книгa: ", size,
+                                            '"${event.getBookInfo().getTitle()}"'),
+                                        const SizedBox(height: 10),
+                                        eventPropText("Место: ", size,
+                                            event.getPlace(), 3),
+                                        const SizedBox(height: 10),
+                                        eventPropText(
+                                            "Время: ", size, "04.07.2024", 1),
+                                        const SizedBox(height: 10),
+                                        eventPropText(
+                                            "Участники: ",
+                                            size,
+                                            event
+                                                .getParticipantsAmount()
+                                                .toString(),
+                                            1),
+                                        const SizedBox(height: 10),
+                                        DropDownMenu()
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: size.height * 0.05,
+                      width: size.width,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(15),
+                              bottomLeft: Radius.circular(15)),
+                          color: secondaryColor),
+                      child: GestureDetector(
+                        onTap: () => {},
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Комментарии",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 18,
+                                color: darkGrayColor),
                           ),
                         ),
                       ),
@@ -149,34 +192,20 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                   ],
                 ),
               ),
-            ),
-            Container(
-              height: size.height * 0.05,
-              width: size.width,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(15),
-                      bottomLeft: Radius.circular(15)),
-                  color: secondaryColor),
-              child: GestureDetector(
-                onTap: () => {},
-                child: const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Комментарии",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18,
-                        color: darkGrayColor),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+            );
+          } else if (snapshot.hasError) {
+            String message =
+                "Не удалось получить информацию по ближайшему событию";
+            if (snapshot.error != null) {
+              message = "Нет ближайших событий";
+            }
+            return WebErrorWidget(size: 150, errorMessage: message);
+          } else {
+            // By default, show a loading spinner.
+            return const Center(
+                child: CircularProgressIndicator(color: primaryColor));
+          }
+        });
   }
 
   Widget eventPropNameText(String name, Size size, String text) {

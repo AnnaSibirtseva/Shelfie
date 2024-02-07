@@ -80,6 +80,7 @@ class _SearchBookClubCardState extends State<SearchBookClubCard> {
                       clubName: widget.bookClub.getName(),
                       isBold: false,
                       isUserAdminInClub: false,
+                      clubId: widget.bookClub.getId(),
                     ),
                     const SizedBox(height: 5),
                     ExtendedWrap(

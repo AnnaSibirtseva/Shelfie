@@ -1,4 +1,4 @@
-import '../models/book_status.dart';
+import 'enums/book_status.dart';
 
 import '../components/constants.dart';
 import 'book_stat.dart';
@@ -23,6 +23,8 @@ class Book {
     _status = BookStatus.values
         .firstWhere((e) => e.toString() == "BookStatus." + strStatus);
   }
+
+  Book.eventInfo(this._id, this._title);
 
   Book.allInfo(
       this._id,
@@ -75,6 +77,12 @@ class Book {
         BookStatistic.fromJson(json['statistics']),
         json['description'] as String?,
         json['status'] as String);
+  }
+
+  factory Book.eventInfoFromJson(dynamic json) {
+    return Book.eventInfo(
+        json['id'] as int,
+        json['title'] as String);
   }
 
   int getId() {

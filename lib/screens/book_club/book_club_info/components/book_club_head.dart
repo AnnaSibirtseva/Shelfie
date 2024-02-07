@@ -141,7 +141,8 @@ class _ProfileHead extends State<BookClubHead> {
                             fontSize: size.width * 0.05,
                             clubName: bookClub.getName(),
                             isBold: true,
-                            isUserAdminInClub: true,
+                            isUserAdminInClub: bookClub.getIsUserAdminInClub(),
+                            clubId: bookClub.getId(),
                           ),
 
                           const SizedBox(height: 3),

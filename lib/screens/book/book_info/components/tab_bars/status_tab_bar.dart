@@ -9,7 +9,7 @@ import '../../../../../components/constants.dart';
 import '../../../../../components/image_constants.dart';
 import '../../../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../../../../../models/book.dart';
-import '../../../../../models/book_status.dart';
+import '../../../../../models/enums/book_status.dart';
 import '../../../../../models/inherited_id.dart';
 
 class StatusTabBar extends StatefulWidget {

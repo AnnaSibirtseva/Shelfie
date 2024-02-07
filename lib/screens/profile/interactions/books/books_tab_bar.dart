@@ -9,7 +9,7 @@ import 'dart:convert';
 
 import '../../../../components/widgets/cards/user_book_card.dart';
 import '../../../../components/widgets/error.dart';
-import '../../../../models/book_status.dart';
+import '../../../../models/enums/book_status.dart';
 import '../../../../models/inherited_id.dart';
 import '../../../../models/user_book.dart';
 
