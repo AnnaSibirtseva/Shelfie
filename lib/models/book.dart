@@ -1,6 +1,6 @@
+import '../components/image_constants.dart';
 import 'enums/book_status.dart';
 
-import '../components/constants.dart';
 import 'book_stat.dart';
 import 'genre.dart';
 

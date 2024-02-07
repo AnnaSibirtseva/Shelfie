@@ -1,4 +1,4 @@
-import '../components/constants.dart';
+import '../components/image_constants.dart';
 import 'book_review.dart';
 import 'genre.dart';
 

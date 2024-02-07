@@ -5,6 +5,7 @@ class InputTextField extends StatefulWidget {
   final double height;
   final int maxLen;
   final String hintText;
+  final String? defaultText;
   final ValueChanged<String> onChanged;
 
   const InputTextField(
@@ -12,7 +13,8 @@ class InputTextField extends StatefulWidget {
       required this.onChanged,
       required this.height,
       required this.maxLen,
-      this.hintText=''})
+      this.hintText = '',
+      this.defaultText = null})
       : super(key: key);
 
   @override
@@ -32,7 +34,8 @@ class _InputTextFieldState extends State<InputTextField> {
           color: whiteColor,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: grayColor)),
-      child: TextField(
+      child: TextFormField(
+        initialValue: widget.defaultText,
         onChanged: widget.onChanged,
         keyboardType: TextInputType.multiline,
         maxLength: widget.maxLen == 0 ? TextField.noMaxLength : widget.maxLen,
@@ -41,6 +44,7 @@ class _InputTextFieldState extends State<InputTextField> {
         cursorColor: primaryColor,
         decoration: InputDecoration(
           hintText: widget.hintText,
+          hintStyle: const TextStyle(color: darkGrayColor, fontSize: 14),
           border: InputBorder.none,
         ),
       ),

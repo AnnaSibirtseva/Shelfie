@@ -1,6 +1,5 @@
+import '../components/image_constants.dart';
 import '../models/statistic.dart';
-
-import '../components/constants.dart';
 
 class User {
   late int _id;

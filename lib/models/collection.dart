@@ -1,4 +1,5 @@
 import '../components/constants.dart';
+import '../components/image_constants.dart';
 
 class Collection {
   late int _id;

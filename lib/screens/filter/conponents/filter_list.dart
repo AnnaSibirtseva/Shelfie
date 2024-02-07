@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/constants.dart';
@@ -119,9 +120,24 @@ class _FilterList extends State<FilterList> {
     } else {
       if (widget.maxElems != null &&
           widget.selectedItemsList.length >= widget.maxElems!) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            backgroundColor: redColor,
-            content: Text("У клуба может быть только 5 тегов")));
+            Flushbar(
+              margin: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(15),
+              borderRadius: BorderRadius.circular(10),
+              backgroundColor: redColor,
+              messageText: const Text(
+                "У клуба не может быть больше 5 тегов",
+                style: TextStyle(fontSize: 14.0,
+                    color: whiteColor,
+                    fontWeight: FontWeight.w500),
+              ),
+              icon: const Icon(
+                Icons.info_outline,
+                size: 28.0,
+                color: whiteColor,
+              ),
+              duration: const Duration(seconds: 3),
+            ).show(context);
       } else {
         setState(() {
           widget.selectedItemsList.add(widget.data[index]);

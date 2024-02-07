@@ -71,10 +71,15 @@ class _BodyState extends State<Body> {
                         text: 'Войти',
                         press: () async {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  duration: Duration(seconds: 30),
+                              SnackBar(
+                                margin: const EdgeInsets.all(5),
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  duration: const Duration(seconds: 30),
                                   backgroundColor: primaryColor,
-                                  content:
+                                  content: const
                                       Text("Выполняется вход в аккаунт...")));
                           try {
                             int id = await loginUser();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../components/constants.dart';
+import '../components/image_constants.dart';
 
 String getImage(String imageUrl) {
   try {

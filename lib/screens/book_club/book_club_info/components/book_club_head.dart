@@ -121,8 +121,7 @@ class _ProfileHead extends State<BookClubHead> {
                         border: Border.all(color: secondaryColor),
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image: NetworkImage(
-                              "https://yt3.googleusercontent.com/ytc/APkrFKbTPLpiVMOCrpT-ZtOdECDVBvYXuJLK9PS0jBj2=s900-c-k-c0x00ffffff-no-rj"),
+                          image: NetworkImage(bookClub.getCoverImgUrl()),
                           onError: (error, stackTrace) =>
                               const NetworkImage(defaultCollectionImg),
                           fit: BoxFit.cover,
@@ -142,7 +141,7 @@ class _ProfileHead extends State<BookClubHead> {
                             clubName: bookClub.getName(),
                             isBold: true,
                             isUserAdminInClub: bookClub.getIsUserAdminInClub(),
-                            clubId: bookClub.getId(),
+                            club: bookClub,
                           ),
 
                           const SizedBox(height: 3),

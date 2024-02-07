@@ -38,6 +38,7 @@ class _SearchBookClubCardState extends State<SearchBookClubCard> {
             Container(
               width: cardHeight,
               height: cardHeight,
+              margin: EdgeInsets.only(left: 5),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: secondaryColor),
@@ -49,7 +50,7 @@ class _SearchBookClubCardState extends State<SearchBookClubCard> {
                   BoxShadow(
                     color: Colors.blueGrey,
                     blurRadius: 5,
-                    offset: Offset(0, 7),
+                    offset: Offset(0, 3),
                   ),
                 ],
               ),
@@ -80,7 +81,7 @@ class _SearchBookClubCardState extends State<SearchBookClubCard> {
                       clubName: widget.bookClub.getName(),
                       isBold: false,
                       isUserAdminInClub: false,
-                      clubId: widget.bookClub.getId(),
+                      club: widget.bookClub,
                     ),
                     const SizedBox(height: 5),
                     ExtendedWrap(

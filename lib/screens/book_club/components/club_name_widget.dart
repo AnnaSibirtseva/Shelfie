@@ -8,11 +8,12 @@ import '../../../components/image_constants.dart';
 import '../../../components/routes/route.gr.dart';
 import '../../../components/widgets/dialogs/change_book_club_info_dialog.dart';
 import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
+import '../../../models/book_club.dart';
 import '../../../models/inherited_id.dart';
 
 class ClubNameWithPrivacyName extends StatefulWidget {
   final bool isPublic;
-  final int clubId;
+  final BookClub club;
   final String clubName;
   final double fontSize;
   final bool isBold;
@@ -25,7 +26,7 @@ class ClubNameWithPrivacyName extends StatefulWidget {
       required this.clubName,
       required this.isBold,
       required this.isUserAdminInClub,
-      required this.clubId});
+      required this.club});
 
   @override
   State<ClubNameWithPrivacyName> createState() =>
@@ -35,7 +36,7 @@ class ClubNameWithPrivacyName extends StatefulWidget {
 class _ClubNameWithPrivacyNameState extends State<ClubNameWithPrivacyName> {
   FutureOr onGoBack(dynamic value) {
     context.router.pop();
-    context.router.push(BookClubInfoRoute(bookId: widget.clubId));
+    context.router.push(BookClubInfoRoute(bookId: widget.club.getId()));
   }
 
   @override
@@ -74,13 +75,16 @@ class _ClubNameWithPrivacyNameState extends State<ClubNameWithPrivacyName> {
                     builder: (BuildContext context) => Center(
                             child: ChangeClubInfoDialog(
                           userId: inheritedWidget.id,
-                          clubId: widget.clubId,
+                          club: widget.club,
                         ))).then(onGoBack);
               },
-              child: Icon(
-                Icons.settings_rounded,
-                color: primaryColor,
-                size: widget.fontSize,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Icon(
+                  Icons.settings_rounded,
+                  color: primaryColor,
+                  size: widget.fontSize,
+                ),
               )),
         if (widget.isUserAdminInClub) const SizedBox(width: 15),
       ],

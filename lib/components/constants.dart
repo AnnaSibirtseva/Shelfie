@@ -14,9 +14,6 @@ const darkGrayColor = Colors.black54;
 const blackColor = Colors.black;
 const whiteColor = Colors.white;
 
-const defaultCollectionImg =
-    'https://im.wampi.ru/2023/01/02/image43d81c00455799a6.png';
-const defaultBookCoverImg = 'https://im.wampi.ru/2023/03/26/emptybook.png';
 const defaultCollectionName = '-';
 const defaultCollectionDesc = '-';
 

@@ -109,11 +109,16 @@ class _BodyState extends State<Body> {
                         press: () async {
                           if (checkConstraints()) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    duration: Duration(seconds: 30),
+                                SnackBar(
+                                    margin: const EdgeInsets.all(5),
+                                    behavior: SnackBarBehavior.floating,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    duration: const Duration(seconds: 30),
                                     backgroundColor: primaryColor,
-                                    content: Text(
-                                        "Выполняется регистрация аккаунта...")));
+                                    content: const
+                                    Text("Выполняется регистрация аккаунта...")));
                             if (await addUser()) {
                               int id = await loginUser();
                               SharedPreferences preferences =

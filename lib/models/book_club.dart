@@ -1,6 +1,7 @@
-import 'package:shelfie_diploma_app/components/constants.dart';
 import 'package:shelfie_diploma_app/models/parser.dart';
 import 'package:shelfie_diploma_app/models/tag.dart';
+
+import '../components/image_constants.dart';
 
 class BookClub {
   late int _id;

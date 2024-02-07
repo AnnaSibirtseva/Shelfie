@@ -1,4 +1,4 @@
-import '../components/constants.dart';
+import '../components/image_constants.dart';
 
 class UserReview {
   late int _id;
