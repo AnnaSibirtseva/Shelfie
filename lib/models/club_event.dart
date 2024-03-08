@@ -29,6 +29,7 @@ class BookClubEvent {
       participationStatus) {
     _eventStatus = EventStatus.values
         .firstWhere((e) => e.toString() == "EventStatus." + eventStatus);
+    participationStatus ??= "NotSet";
     _userParticipationStatus = UserEventStatus.values.firstWhere(
             (e) => e.toString() == "UserEventStatus." + participationStatus);
     _date = DateTime.parse(date);
@@ -51,7 +52,7 @@ class BookClubEvent {
         json['canBeEditedByUser'] as bool,
         json['isPassed'] as bool,
         json['eventStatus'] as String,
-        json['userParticipationStatus'] as String);
+        json['userParticipationStatus'] as String?);
   }
 
   int getId() {

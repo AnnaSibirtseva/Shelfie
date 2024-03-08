@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:shelfie_diploma_app/components/constants.dart';
 import 'package:text_scroll/text_scroll.dart';
 
-import '../../../components/image_constants.dart';
 import '../../../components/routes/route.gr.dart';
 import '../../../components/widgets/dialogs/change_book_club_info_dialog.dart';
-import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../../../models/book_club.dart';
 import '../../../models/inherited_id.dart';
 
@@ -59,8 +57,8 @@ class _ClubNameWithPrivacyNameState extends State<ClubNameWithPrivacyName> {
           ),
         if (!widget.isPublic) const SizedBox(width: 5),
         Expanded(
-          child: TextScroll(widget.clubName.replaceAll("", "\u{200B}"),
-              //intervalSpaces: 0,
+          child: TextScroll(widget.clubName,
+              intervalSpaces: 5,
               velocity: Velocity(pixelsPerSecond: Offset(50, 0)),
               fadedBorder: true,
               fadeBorderVisibility: FadeBorderVisibility.auto,
