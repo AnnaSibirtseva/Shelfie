@@ -6,18 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../components/constants.dart';
-import '../../../../components/image_constants.dart';
 import '../../../../components/widgets/cards/future_event_card.dart';
 import '../../../../components/widgets/dialogs/add_event_dialog.dart';
 import '../../../../components/widgets/error.dart';
-import '../../../../components/widgets/loading.dart';
 import '../../../../models/book_club.dart';
 import '../../../../models/club_event.dart';
 import '../../../../models/enums/join_status.dart';
 import '../../../../models/inherited_id.dart';
-import '../../components/club_name_widget.dart';
 import 'body_private.dart';
 import 'future_event_card.dart';
+import 'past_event_card.dart';
 
 class BookClubBody extends StatefulWidget {
   final int clubId;
@@ -81,11 +79,32 @@ class _BookClubBody extends State<BookClubBody>
     }
   }
 
-  Future<List<dynamic>> getClubEvents(int id) async {
+  Future<List<dynamic>> getClubFutureEvents(int id) async {
     var client = http.Client();
     try {
       var response = await client.get(
           Uri.https(url, '/clubs/detailed/${widget.clubId}/event/featured'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            'userId': id.toString()
+          });
+      if (response.statusCode == 200) {
+        return jsonDecode(utf8.decode(response.bodyBytes))
+            .map((e) => BookClubEvent.fromJson(e))
+            .toList();
+      } else {
+        throw Exception();
+      }
+    } finally {
+      client.close();
+    }
+  }
+
+  Future<List<dynamic>> getClubPastEvents(int id) async {
+    var client = http.Client();
+    try {
+      var response = await client.get(
+          Uri.https(url, '/clubs/detailed/${widget.clubId}/event/past'),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
             'userId': id.toString()
@@ -240,11 +259,15 @@ class _BookClubBody extends State<BookClubBody>
     final inheritedWidget = IdInheritedWidget.of(context);
     id = inheritedWidget.id;
     Size size = MediaQuery.of(context).size;
-    return FutureBuilder<dynamic>(
-        future: getClubEvents(inheritedWidget.id),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+    return FutureBuilder<List<dynamic>>(
+        future: Future.wait([
+          getClubFutureEvents(inheritedWidget.id),
+          getClubPastEvents(inheritedWidget.id)
+        ]),
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.hasData) {
-            var events = snapshot.data!;
+            var futureEvents = snapshot.data![0];
+            var pastEvents = snapshot.data![1];
             return Flexible(
               child: SizedBox(
                 height: size.height * 0.6,
@@ -333,10 +356,10 @@ class _BookClubBody extends State<BookClubBody>
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           for (int i = 1;
-                                              i < events.length;
+                                              i < futureEvents.length;
                                               ++i)
                                             ClubFutureEventCard(
-                                              event: events[i] as BookClubEvent,
+                                              event: futureEvents[i] as BookClubEvent,
                                             ),
                                         ],
                                       )),
@@ -346,19 +369,22 @@ class _BookClubBody extends State<BookClubBody>
                           ),
 
                           // second tab bar view widget
-                          SingleChildScrollView(
-                            reverse: false,
-                            child: Column(
-                              children: [
-                                // for (int i = 0; i < _allClubs.length; ++i)
-                                //   SearchBookClubCard(
-                                //     press: () => (context.router.push(
-                                //         BookClubInfoRoute(bookId: _allClubs[i].getId()))),
-                                //     bookClub: _allClubs[i],
-                                //   ),
-                              ],
+                          Expanded(
+                            child: SizedBox(
+                              height: size.height * 0.9,
+                              child: SingleChildScrollView(
+                                  reverse: false,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      for (int i = 0; i < pastEvents.length; ++i)
+                                        ClubPastEventCard(
+                                          event: pastEvents[i] as BookClubEvent,
+                                        ),
+                                    ],
+                                  )),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),

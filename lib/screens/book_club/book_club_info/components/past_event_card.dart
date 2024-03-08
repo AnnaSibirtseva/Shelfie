@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shelfie_diploma_app/models/enums/event_status.dart';
 import 'package:text_scroll/text_scroll.dart';
 import 'dart:convert';
 
@@ -15,19 +16,19 @@ import '../../../../models/enums/user_event_status.dart';
 import '../../../../models/inherited_id.dart';
 import '../../../../models/parser.dart';
 
-class ClubFutureEventCard extends StatefulWidget {
+class ClubPastEventCard extends StatefulWidget {
   final BookClubEvent event;
 
-  const ClubFutureEventCard({
+  const ClubPastEventCard({
     Key? key,
     required this.event,
   }) : super(key: key);
 
   @override
-  State<ClubFutureEventCard> createState() => _AddCollectionCardState();
+  State<ClubPastEventCard> createState() => _AClubPastEventCardState();
 }
 
-class _AddCollectionCardState extends State<ClubFutureEventCard> {
+class _AClubPastEventCardState extends State<ClubPastEventCard> {
   late int id;
   late String selectedItem =
       getStringStatForUi(widget.event.getUserParticipationStatus());
@@ -76,19 +77,32 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
                             )),
                         if (event.getCanBeEditedByUser())
                           InkWell(
-                            onTap: () => {},
+                            onTap: () => event.getCanBeEditedByUser() ? {} : {},
                             child: Container(
-                              width: size.width * 0.1,
+                              width: size.width * 0.2,
                               height: size.width * 0.1,
+                              padding: EdgeInsets.all(5),
                               decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(15),
                                       topRight: Radius.circular(15),
                                       bottomRight: Radius.circular(15)),
                                   color: secondaryColor),
-                              child: const Icon(
-                                Icons.mode_edit_rounded,
-                                color: primaryColor,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.star_rounded,
+                                    color: primaryColor,
+                                    size: 21,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text('0.0',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: primaryColor,
+                                          fontSize: size.width * 0.035))
+                                ],
                               ),
                             ),
                           ),
@@ -105,14 +119,13 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Flexible(
-                                  child: TextScroll(
-                                      event.getTitle(),
+                                  child: TextScroll(event.getTitle(),
                                       intervalSpaces: 5,
                                       velocity: const Velocity(
                                           pixelsPerSecond: Offset(50, 0)),
                                       fadedBorder: true,
                                       fadeBorderVisibility:
-                                      FadeBorderVisibility.auto,
+                                          FadeBorderVisibility.auto,
                                       fadeBorderSide: FadeBorderSide.right,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w900,
@@ -143,7 +156,9 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
                                     event.getParticipantsAmount().toString(),
                                     1),
                                 const SizedBox(height: 10),
-                                buildDropDown(context, event)
+                                buildDropDown(context, event),
+                                const SizedBox(height: 10),
+                                builEventStatWidget(context, event),
                               ],
                             ),
                           ),
@@ -239,30 +254,6 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
             )));
   }
 
-  Future<void> changeStatus(String status, int eventId) async {
-    var client = http.Client();
-    try {
-      var response = await client
-          .post(Uri.https(url, '/events/member/participate'), headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
-        'userId': id.toString(),
-        'eventId': eventId.toString(),
-        'status': getStringStatForApi(selectedItem).name
-      });
-      if (response.statusCode != 200) {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) => const Center(
-                child: NothingFoundDialog(
-                    'Что-то пошло не так!\nСтатус не был изменен.',
-                    warningGif,
-                    'Ошибка')));
-      }
-    } finally {
-      client.close();
-    }
-  }
-
   Future<void> getEvent(int eventId) async {
     var client = http.Client();
     try {
@@ -292,52 +283,45 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
   Widget buildDropDown(BuildContext context, BookClubEvent event) {
     Size size = MediaQuery.of(context).size;
 
-    final inheritedWidget = IdInheritedWidget.of(context);
-    id = inheritedWidget.id;
+    return Flexible(
+      child: Container(
+          width: size.width * 0.5,
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            border: Border.all(color: grayColor, width: 1.5),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+          padding: EdgeInsets.all(2),
+          child: Center(
+            child: Text(getStringStatForUi(event.getUserParticipationStatus()),
+                style: TextStyle(
+                    color: darkGrayColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: size.width * 0.035)),
+          )),
+    );
+  }
+
+  Widget builEventStatWidget(BuildContext context, BookClubEvent event) {
+    Size size = MediaQuery.of(context).size;
 
     return Flexible(
       child: Container(
-        width: size.width * 0.5,
-        decoration: const BoxDecoration(
-          color: primaryColor,
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        padding: EdgeInsets.only(
-          left: size.width * 0.1,
-        ),
-        child: DropdownButtonHideUnderline(
-          child: ButtonTheme(
-            alignedDropdown: true,
-            child: DropdownButton<String>(
-              isDense: true,
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              dropdownColor: primaryColor,
-              value: selectedItem,
-              style: TextStyle(fontWeight: FontWeight.bold),
-              icon: const Icon(
-                Icons.keyboard_arrow_down,
-                color: whiteColor,
-              ),
-              onChanged: (newValue) async {
-                selectedItem = newValue!;
-                await changeStatus(selectedItem, event.getId());
-                await getEvent(event.getId());
-                setState(() {});
-              },
-              items:
-                  eventAttendance.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(
-                    value,
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              }).toList(),
-            ),
+          width: size.width * 0.5,
+          decoration: BoxDecoration(
+            color: event.getEventStatus() == EventStatus.Canceled
+                ? brightRedColor
+                : greenColor,
+            borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
-        ),
-      ),
+          padding: EdgeInsets.all(3),
+          child: Center(
+            child: Text(getStringEventStatForUi(event.getEventStatus()),
+                style: TextStyle(
+                    color: whiteColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: size.width * 0.035)),
+          )),
     );
   }
 }

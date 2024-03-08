@@ -13,6 +13,8 @@ const grayColor = Colors.black38;
 const darkGrayColor = Colors.black54;
 const blackColor = Colors.black;
 const whiteColor = Colors.white;
+const greenColor = Color(0xFF00A550);
+const brightRedColor = Color(0xFFDD5D50);
 
 const defaultCollectionName = '-';
 const defaultCollectionDesc = '-';
