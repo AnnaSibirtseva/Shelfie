@@ -8,13 +8,15 @@ import 'package:http/http.dart' as http;
 import '../../../../components/constants.dart';
 import '../../../../components/image_constants.dart';
 import '../../../../components/widgets/cards/future_event_card.dart';
+import '../../../../components/widgets/dialogs/add_event_dialog.dart';
 import '../../../../components/widgets/error.dart';
 import '../../../../components/widgets/loading.dart';
 import '../../../../models/book_club.dart';
 import '../../../../models/club_event.dart';
+import '../../../../models/enums/join_status.dart';
 import '../../../../models/inherited_id.dart';
 import '../../components/club_name_widget.dart';
-import 'drop_down_menu.dart';
+import 'body_private.dart';
 import 'future_event_card.dart';
 
 class BookClubBody extends StatefulWidget {
@@ -41,7 +43,7 @@ class _BookClubBody extends State<BookClubBody>
     var client = http.Client();
     try {
       var response = await client.post(
-        Uri.http(url, '/clubs/join'),
+        Uri.https(url, '/clubs/join'),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
           'userId': id.toString(),
@@ -89,9 +91,6 @@ class _BookClubBody extends State<BookClubBody>
             'userId': id.toString()
           });
       if (response.statusCode == 200) {
-        var a = jsonDecode(utf8.decode(response.bodyBytes))
-            .map((e) => BookClubEvent.fromJson(e))
-            .toList();
         return jsonDecode(utf8.decode(response.bodyBytes))
             .map((e) => BookClubEvent.fromJson(e))
             .toList();
@@ -101,6 +100,10 @@ class _BookClubBody extends State<BookClubBody>
     } finally {
       client.close();
     }
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
   }
 
   @override
@@ -136,7 +139,7 @@ class _BookClubBody extends State<BookClubBody>
                       children: [
                         Flexible(
                           child: SingleChildScrollView(
-                            child: Text(club.getDescription() ?? "-",
+                            child: Text(club.getDescriptionNotNull(),
                                 textAlign: TextAlign.justify,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w500,
@@ -155,8 +158,9 @@ class _BookClubBody extends State<BookClubBody>
                         setState(() {});
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            club.isUserInClub() ? secondaryColor : primaryColor,
+                        backgroundColor: club.isUserInClub()
+                            ? secondaryColor
+                            : getButtonColor(club.getJoinRequestStatus()),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -166,19 +170,23 @@ class _BookClubBody extends State<BookClubBody>
                               ? 'Покинуть'
                               : (club.isPublic()
                                   ? 'Вступить'
-                                  : 'Подать заявку'),
+                                  : getButtonText(club.getJoinRequestStatus())),
                           style: TextStyle(
-                              color:
-                                  club.isUserInClub() ? grayColor : whiteColor,
+                              color: club.isUserInClub()
+                                  ? grayColor
+                                  : getTextColor(club.getJoinRequestStatus()),
                               fontWeight: FontWeight.w800)),
                     ),
                   ),
                   const SizedBox(height: 10),
-                  FutureEventCard(
-                    clubId: club.getId(),
-                  ),
-                  const SizedBox(height: 20),
-                  buildInteractionsTabBar(context)
+                  if (lock(club)) const PrivateBody(),
+                  if (!lock(club))
+                    FutureEventCard(
+                      clubId: club.getId(),
+                    ),
+                  if (!lock(club)) const SizedBox(height: 20),
+                  if (!lock(club)) buildInteractionsTabBar(context, club),
+                  if (lock(club)) const SizedBox(height: 20),
                 ],
               ),
             ));
@@ -192,7 +200,43 @@ class _BookClubBody extends State<BookClubBody>
         });
   }
 
-  Widget buildInteractionsTabBar(BuildContext context) {
+  String getButtonText(JoinRequestStatus? status) {
+    switch (status) {
+      case JoinRequestStatus.Approved:
+        return 'Покинуть';
+      case JoinRequestStatus.Pending:
+        return 'Заявка в обработке';
+      case JoinRequestStatus.Declined:
+        return 'Подать заявку снова';
+      default:
+        return 'Подать заявку';
+    }
+  }
+
+  Color getTextColor(JoinRequestStatus? status) {
+    if (status == JoinRequestStatus.Approved ||
+        status == JoinRequestStatus.Pending) {
+      return grayColor;
+    }
+    return whiteColor;
+  }
+
+  Color getButtonColor(JoinRequestStatus? status) {
+    if (status == JoinRequestStatus.Approved ||
+        status == JoinRequestStatus.Pending) {
+      return secondaryColor;
+    }
+    return primaryColor;
+  }
+
+  bool lock(BookClub bookClub) {
+    if (!bookClub.isPublic() && !bookClub.isUserInClub()) {
+      return true;
+    }
+    return false;
+  }
+
+  Widget buildInteractionsTabBar(BuildContext context, BookClub club) {
     final inheritedWidget = IdInheritedWidget.of(context);
     id = inheritedWidget.id;
     Size size = MediaQuery.of(context).size;
@@ -249,62 +293,73 @@ class _BookClubBody extends State<BookClubBody>
                     ),
                     Expanded(
                       child: TabBarView(
-                          controller: _tabController,
-                          children: [
-                            // first tab bar view widget
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SizedBox(
-                                    width: size.width,
-                                    child: ElevatedButton(
-                                      onPressed: () => {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: secondaryColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(25),
-                                        ),
+                        controller: _tabController,
+                        children: [
+                          // first tab bar view widget
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (club.getIsUserAdminInClub())
+                                SizedBox(
+                                  width: size.width,
+                                  child: ElevatedButton(
+                                    onPressed: () => showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AddEventDialog(
+                                              id: inheritedWidget.id,
+                                              clubId: club.getId(),
+                                            )).then(onGoBack),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: secondaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(25),
                                       ),
-                                      child: const Text('Добавить встречу',
-                                          style: TextStyle(color: grayColor)),
                                     ),
+                                    child: const Text('Добавить встречу',
+                                        style: TextStyle(color: grayColor)),
                                   ),
-                                  Expanded(
-                                    child: SizedBox(
-                                      height: size.height * 0.9,
-                                      child: SingleChildScrollView(
-                                          reverse: false,
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              for (int i = 0; i < events.length; ++i)
-                                                ClubFutureEventCard(
-                                                  event: events[i] as BookClubEvent,
-                                                ),
-                                            ],
-                                          )
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                ),
+                              if (!club.getIsUserAdminInClub())
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                              Expanded(
+                                child: SizedBox(
+                                  height: size.height * 0.9,
+                                  child: SingleChildScrollView(
+                                      reverse: false,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          for (int i = 1;
+                                              i < events.length;
+                                              ++i)
+                                            ClubFutureEventCard(
+                                              event: events[i] as BookClubEvent,
+                                            ),
+                                        ],
+                                      )),
+                                ),
+                              )
+                            ],
+                          ),
 
-                            // second tab bar view widget
-                            SingleChildScrollView(
-                              reverse: false,
-                              child: Column(
-                                children: [
-                                  // for (int i = 0; i < _allClubs.length; ++i)
-                                  //   SearchBookClubCard(
-                                  //     press: () => (context.router.push(
-                                  //         BookClubInfoRoute(bookId: _allClubs[i].getId()))),
-                                  //     bookClub: _allClubs[i],
-                                  //   ),
-                                ],
-                              ),
+                          // second tab bar view widget
+                          SingleChildScrollView(
+                            reverse: false,
+                            child: Column(
+                              children: [
+                                // for (int i = 0; i < _allClubs.length; ++i)
+                                //   SearchBookClubCard(
+                                //     press: () => (context.router.push(
+                                //         BookClubInfoRoute(bookId: _allClubs[i].getId()))),
+                                //     bookClub: _allClubs[i],
+                                //   ),
+                              ],
                             ),
-                          ],
-
+                          ),
+                        ],
                       ),
                     ),
                   ],

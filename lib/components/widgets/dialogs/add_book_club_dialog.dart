@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:http/http.dart' as http;
@@ -242,11 +243,24 @@ class AddBookClubDialog extends Dialog {
                                     await addClub(context);
                                     context.router.pop(true);
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            backgroundColor: redColor,
-                                            content: Text(
-                                                "Имя клуба не не может быть пустым!")));
+                                    Flushbar(
+                                      margin: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(15),
+                                      borderRadius: BorderRadius.circular(10),
+                                      backgroundColor: redColor,
+                                      messageText: const Text(
+                                        "Имя клуба не может быть пустым",
+                                        style: TextStyle(fontSize: 14.0,
+                                            color: whiteColor,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      icon: const Icon(
+                                        Icons.info_outline,
+                                        size: 28.0,
+                                        color: whiteColor,
+                                      ),
+                                      duration: const Duration(seconds: 3),
+                                    ).show(context);
                                   }
                                 },
                                 isAsync: true,
@@ -286,26 +300,5 @@ class AddBookClubDialog extends Dialog {
             fontWeight: FontWeight.bold),
       ),
     );
-  }
-
-
-  bool checkRestrictions(BuildContext context) {
-    if (_name.length < minQuoteText) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: redColor,
-          content: Text("Текст цитаты должен быть от 2 символов")));
-      return false;
-    }
-    return true;
-  }
-
-  bool checkNameRestrictions(BuildContext context) {
-    if (_name.length < minQuoteText) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: redColor,
-          content: Text("Текст цитаты должен быть от 2 символов")));
-      return false;
-    }
-    return true;
   }
 }

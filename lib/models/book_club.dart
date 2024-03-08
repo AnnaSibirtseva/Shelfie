@@ -2,6 +2,7 @@ import 'package:shelfie_diploma_app/models/parser.dart';
 import 'package:shelfie_diploma_app/models/tag.dart';
 
 import '../components/image_constants.dart';
+import 'enums/join_status.dart';
 
 class BookClub {
   late int _id;
@@ -13,6 +14,8 @@ class BookClub {
   late int _membersCount;
   late bool _isUserInClub;
   late bool _isUserAdminInClub;
+  late bool? _clubHasUnhandledRequests;
+  late JoinRequestStatus? _joinRequestStatus;
   late ClubTagList _tags;
 
   BookClub.light(this._id, this._name, this._coverImageUrl, this._isPublic,
@@ -28,7 +31,16 @@ class BookClub {
       this._membersCount,
       this._isUserInClub,
       this._isUserAdminInClub,
-      this._tags) {}
+      this._tags,
+      this._clubHasUnhandledRequests,
+      strStatus) {
+    if (strStatus != null) {
+      _joinRequestStatus = JoinRequestStatus.values
+          .firstWhere((e) => e.toString() == "JoinRequestStatus." + strStatus);
+    } else {
+      _joinRequestStatus = null;
+    }
+  }
 
   factory BookClub.lightFromJson(dynamic json) {
     String coverImageUrl = defaultCollectionImg;
@@ -66,6 +78,8 @@ class BookClub {
       json['isUserInClub'] as bool,
       json['isUserAdminInClub'] as bool,
       ClubTagList.fromJson(json),
+      json['clubHasUnhandledRequests'] as bool?,
+      json['joinRequestStatus'] as String?,
     );
   }
 
@@ -87,6 +101,24 @@ class BookClub {
 
   String? getDescription() {
     return _description;
+  }
+
+  String getDescriptionNotNull() {
+    if (_description?.isEmpty ?? true) {
+      return "-";
+    }
+    return _description!;
+  }
+
+  bool getClubHasUnhandledRequests() {
+    if (_clubHasUnhandledRequests == null) {
+      return false;
+    }
+    return _clubHasUnhandledRequests!;
+  }
+
+  JoinRequestStatus? getJoinRequestStatus() {
+    return _joinRequestStatus;
   }
 
   String getCoverImgUrl() {

@@ -143,7 +143,6 @@ class _ProfileHead extends State<BookClubHead> {
                             isUserAdminInClub: bookClub.getIsUserAdminInClub(),
                             club: bookClub,
                           ),
-
                           const SizedBox(height: 3),
                           membersWidget()
                         ]),
@@ -174,15 +173,16 @@ class _ProfileHead extends State<BookClubHead> {
               fontWeight: FontWeight.w500,
               fontSize: 13,
             )),
-        if (widget.bookClub.getIsUserAdminInClub())
-        const Align(
-          alignment: Alignment.bottomRight,
-          child: Icon(
-            Icons.circle,
-            color: redColor,
-            size: 7,
+        if (widget.bookClub.getIsUserAdminInClub() &&
+            widget.bookClub.getClubHasUnhandledRequests())
+          const Align(
+            alignment: Alignment.bottomRight,
+            child: Icon(
+              Icons.circle,
+              color: redColor,
+              size: 7,
+            ),
           ),
-        ),
         //),
       ],
     );

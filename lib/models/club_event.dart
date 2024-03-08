@@ -1,34 +1,37 @@
 import '../components/image_constants.dart';
 import 'book.dart';
 import 'enums/event_status.dart';
+import 'enums/user_event_status.dart';
 
 class BookClubEvent {
   late int _id;
   late String _title;
   late String _place;
   late String _coverImageUrl;
-  late Book _bookInfo;
-  late String _date;
+  late Book? _bookInfo;
+  late DateTime _date;
   late int _participantsAmount;
   late EventStatus _eventStatus;
-  late String? _userParticipationStatus;
+  late UserEventStatus _userParticipationStatus;
   late bool _canBeEditedByUser;
   late bool _isPassed;
 
-  BookClubEvent(
-      this._id,
+  BookClubEvent(this._id,
       this._title,
       this._place,
       this._coverImageUrl,
       this._bookInfo,
-      this._date,
+      date,
       this._participantsAmount,
-      this._userParticipationStatus,
       this._canBeEditedByUser,
       this._isPassed,
-      strStatus) {
+      eventStatus,
+      participationStatus) {
     _eventStatus = EventStatus.values
-        .firstWhere((e) => e.toString() == "EventStatus." + strStatus);
+        .firstWhere((e) => e.toString() == "EventStatus." + eventStatus);
+    _userParticipationStatus = UserEventStatus.values.firstWhere(
+            (e) => e.toString() == "UserEventStatus." + participationStatus);
+    _date = DateTime.parse(date);
   }
 
   factory BookClubEvent.fromJson(dynamic json) {
@@ -41,13 +44,14 @@ class BookClubEvent {
         json['title'] as String,
         json['place'] as String,
         coverImageUrl,
-        Book.eventInfoFromJson(json['bookInfo']),
+        json['bookInfo'] == null ? null : Book.eventInfoFromJson(
+            json['bookInfo']),
         json['date'] as String,
         json['participantsAmount'] as int,
-        json['userParticipationStatus'] as String?,
         json['canBeEditedByUser'] as bool,
         json['isPassed'] as bool,
-        json['eventStatus'] as String);
+        json['eventStatus'] as String,
+        json['userParticipationStatus'] as String);
   }
 
   int getId() {
@@ -66,11 +70,11 @@ class BookClubEvent {
     return _coverImageUrl;
   }
 
-  String getDate() {
+  DateTime getDate() {
     return _date;
   }
 
-  Book getBookInfo() {
+  Book? getBookInfo() {
     return _bookInfo;
   }
 
@@ -82,7 +86,7 @@ class BookClubEvent {
     return _eventStatus;
   }
 
-  String? getUserParticipationStatus() {
+  UserEventStatus getUserParticipationStatus() {
     return _userParticipationStatus;
   }
 

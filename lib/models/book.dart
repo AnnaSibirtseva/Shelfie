@@ -1,10 +1,12 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
+
 import '../components/image_constants.dart';
 import 'enums/book_status.dart';
 
 import 'book_stat.dart';
 import 'genre.dart';
 
-class Book {
+class Book with CustomDropdownListFilter {
   late int _id;
   late String _title;
   late List<String> _authors;
@@ -80,9 +82,7 @@ class Book {
   }
 
   factory Book.eventInfoFromJson(dynamic json) {
-    return Book.eventInfo(
-        json['id'] as int,
-        json['title'] as String);
+    return Book.eventInfo(json['id'] as int, json['title'] as String);
   }
 
   int getId() {
@@ -134,6 +134,31 @@ class Book {
 
   BookStatistic getStatistics() {
     return _statistics;
+  }
+
+  bool _isInAuthors(String query) {
+    for (var author in _authors) {
+      if (author.toLowerCase().contains(query.toLowerCase())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @override
+  bool filter(String query) {
+    return _title.toLowerCase().contains(query.toLowerCase()) ||
+        _isInAuthors(query);
+  }
+
+  String? getFirstAuthor() {
+    return _authors.isNotEmpty ? _authors[0] : null;
+  }
+
+  @override
+  String toString() {
+    var authors = getFirstAuthor() == null ? "" : "\n${getFirstAuthor()}";
+    return "$_title $authors";
   }
 }
 
