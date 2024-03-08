@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,6 +12,7 @@ import '../../../models/parser.dart';
 import '../../../models/user_collection.dart';
 import '../../constants.dart';
 import '../../image_constants.dart';
+import '../../routes/route.gr.dart';
 import '../dialogs/nothing_found_dialog.dart';
 import '../error.dart';
 
@@ -149,9 +151,12 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                                             "Книгa: ",
                                             size,
                                             (event.getBookInfo() == null)
-                                                ? "-"
+                                                ? "Не выбрана"
                                                 : '"${event.getBookInfo()!.getTitle()}"',
-                                            event.getBookInfo() != null),
+                                            event.getBookInfo() != null,
+                                            (event.getBookInfo() == null)
+                                                ? 0
+                                                : event.getBookInfo()!.getId()),
                                         const SizedBox(height: 10),
                                         eventPropText("Место: ", size,
                                             event.getPlace(), 3),
@@ -220,37 +225,43 @@ class _AddCollectionCardState extends State<FutureEventCard> {
             return WebErrorWidget(size: 150, errorMessage: message);
           } else {
             // By default, show a loading spinner.
-            return const Center(
-                child: CircularProgressIndicator(color: primaryColor));
+            return Center(
+                child: CircularProgressIndicator(
+                    color: Theme.of(context).scaffoldBackgroundColor));
           }
         });
   }
 
-  Widget eventPropNameText(String name, Size size, String text, bool selected) {
+  Widget eventPropNameText(
+      String name, Size size, String text, bool selected, int id) {
     return Flexible(
-        child: RichText(
-            softWrap: false,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.justify,
-            text: TextSpan(
-              text: name,
-              style: TextStyle(
-                  color: blackColor,
-                  fontWeight: FontWeight.w400,
-                  fontSize: size.width * 0.035),
-              children: <TextSpan>[
-                TextSpan(
-                    text: text,
-                    style: TextStyle(
-                        color: selected ? primaryColor : grayColor,
-                        decoration: selected
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                        fontWeight: FontWeight.w400,
-                        fontSize: size.width * 0.035)),
-              ],
-            )));
+      child: InkWell(
+          onTap: () =>
+              selected ? (context.router.push(BookInfoRoute(bookId: id))) : {},
+          child: RichText(
+              softWrap: false,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.justify,
+              text: TextSpan(
+                text: name,
+                style: TextStyle(
+                    color: blackColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: size.width * 0.035),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: text,
+                      style: TextStyle(
+                          color: selected ? primaryColor : grayColor,
+                          decoration: selected
+                              ? TextDecoration.underline
+                              : TextDecoration.none,
+                          fontWeight: FontWeight.w400,
+                          fontSize: size.width * 0.035)),
+                ],
+              ))),
+    );
   }
 
   Widget eventPropText(String name, Size size, String text, int maxLines) {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:shelfie_diploma_app/components/constants.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 import '../../../components/image_constants.dart';
 import '../../../components/routes/route.gr.dart';
@@ -58,14 +59,24 @@ class _ClubNameWithPrivacyNameState extends State<ClubNameWithPrivacyName> {
           ),
         if (!widget.isPublic) const SizedBox(width: 5),
         Expanded(
-            child: Text(widget.clubName.replaceAll("", "\u{200B}"),
-                softWrap: false,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontWeight:
-                        widget.isBold ? FontWeight.w900 : FontWeight.bold,
-                    fontSize: widget.fontSize))),
+          child: TextScroll(widget.clubName.replaceAll("", "\u{200B}"),
+              //intervalSpaces: 0,
+              velocity: Velocity(pixelsPerSecond: Offset(50, 0)),
+              fadedBorder: true,
+              fadeBorderVisibility: FadeBorderVisibility.auto,
+              fadeBorderSide: FadeBorderSide.right,
+              style: TextStyle(
+                  fontWeight: widget.isBold ? FontWeight.w900 : FontWeight.bold,
+                  fontSize: widget.fontSize)),
+          // Text(widget.clubName.replaceAll("", "\u{200B}"),
+          //     softWrap: false,
+          //     maxLines: 1,
+          //     overflow: TextOverflow.ellipsis,
+          //     style: TextStyle(
+          //         fontWeight:
+          //             widget.isBold ? FontWeight.w900 : FontWeight.bold,
+          //         fontSize: widget.fontSize))
+        ),
         //if (isUserAdminInClub) const Spacer(),
         if (widget.isUserAdminInClub)
           InkWell(

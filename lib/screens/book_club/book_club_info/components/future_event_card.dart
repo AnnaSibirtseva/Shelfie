@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../../../components/constants.dart';
 import '../../../../components/image_constants.dart';
+import '../../../../components/routes/route.gr.dart';
 import '../../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../../../../models/club_event.dart';
 import '../../../../models/enums/user_event_status.dart';
@@ -107,14 +109,11 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       text: TextSpan(
-                                          text: event
-                                              .getTitle(),
+                                          text: event.getTitle(),
                                           style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.w900,
+                                              fontWeight: FontWeight.w900,
                                               color: blackColor,
-                                              fontSize:
-                                              size.width * 0.045))),
+                                              fontSize: size.width * 0.045))),
                                 ),
                                 const SizedBox(height: 10),
                                 eventPropNameText(
@@ -123,12 +122,16 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
                                     (event.getBookInfo() == null)
                                         ? "Не выбрана"
                                         : '"${event.getBookInfo()!.getTitle()}"',
-                                    event.getBookInfo() != null),
+                                    event.getBookInfo() != null,
+                                    (event.getBookInfo() == null)
+                                        ? 0
+                                        : event.getBookInfo()!.getId()),
                                 const SizedBox(height: 10),
                                 eventPropText(
                                     "Место: ", size, event.getPlace(), 3),
                                 const SizedBox(height: 10),
-                                eventPropText("Время: ", size, getStringFromDate(event.getDate()), 1),
+                                eventPropText("Время: ", size,
+                                    getStringFromDate(event.getDate()), 1),
                                 const SizedBox(height: 10),
                                 eventPropText(
                                     "Участники: ",
@@ -176,31 +179,36 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
     );
   }
 
-  Widget eventPropNameText(String name, Size size, String text, bool selected) {
+  Widget eventPropNameText(
+      String name, Size size, String text, bool selected, int id) {
     return Flexible(
-        child: RichText(
-            softWrap: false,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.justify,
-            text: TextSpan(
-              text: name,
-              style: TextStyle(
-                  color: blackColor,
-                  fontWeight: FontWeight.w400,
-                  fontSize: size.width * 0.035),
-              children: <TextSpan>[
-                TextSpan(
-                    text: text,
-                    style: TextStyle(
-                        color: selected ? primaryColor : grayColor,
-                        decoration: selected
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                        fontWeight: FontWeight.w400,
-                        fontSize: size.width * 0.035)),
-              ],
-            )));
+      child: InkWell(
+          onTap: () =>
+              selected ? (context.router.push(BookInfoRoute(bookId: id))) : {},
+          child: RichText(
+              softWrap: false,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.justify,
+              text: TextSpan(
+                text: name,
+                style: TextStyle(
+                    color: blackColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: size.width * 0.035),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: text,
+                      style: TextStyle(
+                          color: selected ? primaryColor : grayColor,
+                          decoration: selected
+                              ? TextDecoration.underline
+                              : TextDecoration.none,
+                          fontWeight: FontWeight.w400,
+                          fontSize: size.width * 0.035)),
+                ],
+              ))),
+    );
   }
 
   Widget eventPropText(String name, Size size, String text, int maxLines) {
