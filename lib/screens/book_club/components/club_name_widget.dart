@@ -33,11 +33,6 @@ class ClubNameWithPrivacyName extends StatefulWidget {
 }
 
 class _ClubNameWithPrivacyNameState extends State<ClubNameWithPrivacyName> {
-  FutureOr onGoBack(dynamic value) {
-    context.router.pop();
-    context.router.push(BookClubInfoRoute(bookId: widget.club.getId()));
-  }
-
   @override
   void initState() {
     super.initState();
@@ -85,14 +80,16 @@ class _ClubNameWithPrivacyNameState extends State<ClubNameWithPrivacyName> {
                             child: ChangeClubInfoDialog(
                           userId: inheritedWidget.id,
                           club: widget.club,
-                        ))).then(onGoBack);
+                        )));
               },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 5),
-                child: Icon(
-                  Icons.settings_rounded,
-                  color: primaryColor,
-                  size: widget.fontSize,
+              child: InkWell(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: Icon(
+                    Icons.settings_rounded,
+                    color: primaryColor,
+                    size: widget.fontSize,
+                  ),
                 ),
               )),
         if (widget.isUserAdminInClub) const SizedBox(width: 15),

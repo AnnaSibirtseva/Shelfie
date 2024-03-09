@@ -125,6 +125,10 @@ class _BookClubBody extends State<BookClubBody>
     setState(() {});
   }
 
+  refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -202,6 +206,7 @@ class _BookClubBody extends State<BookClubBody>
                   if (!lock(club))
                     FutureEventCard(
                       clubId: club.getId(),
+                      notifyParent: refresh,
                     ),
                   if (!lock(club)) const SizedBox(height: 20),
                   if (!lock(club)) buildInteractionsTabBar(context, club),
@@ -360,6 +365,8 @@ class _BookClubBody extends State<BookClubBody>
                                               ++i)
                                             ClubFutureEventCard(
                                               event: futureEvents[i] as BookClubEvent,
+                                              clubId: club.getId(),
+                                              notifyParent: refresh,
                                             ),
                                         ],
                                       )),

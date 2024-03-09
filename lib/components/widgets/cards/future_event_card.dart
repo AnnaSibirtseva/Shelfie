@@ -9,19 +9,22 @@ import '../../../models/club_event.dart';
 import '../../../models/enums/user_event_status.dart';
 import '../../../models/inherited_id.dart';
 import '../../../models/parser.dart';
-import '../../../models/user_collection.dart';
 import '../../constants.dart';
 import '../../image_constants.dart';
 import '../../routes/route.gr.dart';
+import '../dialogs/confirmation_dialog.dart';
+import '../dialogs/edit_event_dialog.dart';
 import '../dialogs/nothing_found_dialog.dart';
 import '../error.dart';
 
 class FutureEventCard extends StatefulWidget {
+  final Function() notifyParent;
   final int clubId;
 
   const FutureEventCard({
     Key? key,
     required this.clubId,
+    required this.notifyParent,
   }) : super(key: key);
 
   @override
@@ -51,6 +54,54 @@ class _AddCollectionCardState extends State<FutureEventCard> {
             jsonDecode(utf8.decode(response.bodyBytes)));
       } else {
         throw Exception();
+      }
+    } finally {
+      client.close();
+    }
+  }
+
+  Future<void> deleteEvent(BuildContext context, int eventId) async {
+    var client = http.Client();
+    try {
+      var response =
+          await client.delete(Uri.https(url, '/events/admin/delete'), headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        'adminId': id.toString(),
+        'eventId': eventId.toString()
+      });
+      var msg = 'Что-то пошло не так!\n Не удалось удалить событие.';
+      if (response.statusCode != 200) {
+        if ([400, 404, 403].contains(response.statusCode)) {
+          msg = response.toString();
+        }
+        showDialog(
+            context: context,
+            builder: (BuildContext context) =>
+                Center(child: NothingFoundDialog(msg, warningGif, 'Ошибка')));
+      }
+    } finally {
+      client.close();
+    }
+  }
+
+  Future<void> cancelEvent(BuildContext context, int eventId) async {
+    var client = http.Client();
+    try {
+      var response =
+          await client.put(Uri.https(url, '/events/admin/cancel'), headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        'adminId': id.toString(),
+        'eventId': eventId.toString()
+      });
+      var msg = 'Что-то пошло не так!\n Не удалось отменить событие.';
+      if (response.statusCode != 200) {
+        if ([400, 404, 403].contains(response.statusCode)) {
+          msg = response.toString();
+        }
+        showDialog(
+            context: context,
+            builder: (BuildContext context) =>
+                Center(child: NothingFoundDialog(msg, warningGif, 'Ошибка')));
       }
     } finally {
       client.close();
@@ -104,19 +155,130 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                                   InkWell(
                                     onTap: () => {},
                                     child: Container(
-                                      width: size.width * 0.1,
-                                      height: size.width * 0.1,
-                                      decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(15),
-                                              topRight: Radius.circular(15),
-                                              bottomRight: Radius.circular(15)),
-                                          color: secondaryColor),
-                                      child: const Icon(
-                                        Icons.mode_edit_rounded,
-                                        color: primaryColor,
-                                      ),
-                                    ),
+                                        width: size.width * 0.1,
+                                        height: size.width * 0.1,
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(15),
+                                                topRight: Radius.circular(15),
+                                                bottomRight:
+                                                    Radius.circular(15)),
+                                            color: secondaryColor),
+                                        child: PopupMenuButton(
+                                            onSelected: (value) {
+                                              switch (value) {
+                                                case 'delete':
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          ConfirmationDialog(
+                                                            text:
+                                                                'Вы дейстивтельно хотите удалить встречу "${event.getTitle()}"?',
+                                                            press: () async {
+                                                              await deleteEvent(
+                                                                  context,
+                                                                  event
+                                                                      .getId());
+                                                              context.router
+                                                                  .pop(true);
+                                                              widget
+                                                                  .notifyParent();
+                                                            },
+                                                          ));
+                                                case 'edit':
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          EditEventDialog(
+                                                            id: inheritedWidget
+                                                                .id,
+                                                            event: event,
+                                                            clubId:
+                                                                widget.clubId,
+                                                          ));
+                                                case 'cancel':
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          YesNoConfirmationDialog(
+                                                            text:
+                                                                'Вы дейстивтельно хотите отменить встречу "${event.getTitle()}"?',
+                                                            press: () async {
+                                                              await cancelEvent(
+                                                                  context,
+                                                                  event
+                                                                      .getId());
+                                                              context.router
+                                                                  .pop(true);
+                                                              widget
+                                                                  .notifyParent();
+                                                            },
+                                                          ));
+                                              }
+                                            },
+                                            icon: Icon(
+                                              Icons.adaptive.more,
+                                              color: primaryColor,
+                                            ),
+                                            color: secondaryColor,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                            itemBuilder: (BuildContext bc) {
+                                              return const [
+                                                PopupMenuItem(
+                                                  value: 'edit',
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.mode_edit_rounded,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text("Редактировать")
+                                                    ],
+                                                  ),
+                                                ),
+                                                PopupMenuItem(
+                                                  value: 'cancel',
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .do_not_disturb_rounded,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text("Отменить")
+                                                    ],
+                                                  ),
+                                                ),
+                                                PopupMenuItem(
+                                                  value: 'delete',
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.delete_rounded,
+                                                        color: brightRedColor,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text("Удалить",
+                                                          style: TextStyle(
+                                                            color:
+                                                                brightRedColor,
+                                                          ))
+                                                    ],
+                                                  ),
+                                                ),
+                                              ];
+                                            })),
                                   ),
                               ],
                             ),
