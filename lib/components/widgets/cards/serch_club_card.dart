@@ -43,7 +43,7 @@ class _SearchBookClubCardState extends State<SearchBookClubCard> {
                 shape: BoxShape.circle,
                 border: Border.all(color: secondaryColor),
                 image: const DecorationImage(
-                  image: NetworkImage(wrongCircleImage),
+                  image: NetworkImage(defaultCollectionImg),
                   fit: BoxFit.cover,
                 ),
                 boxShadow: const [
@@ -60,7 +60,7 @@ class _SearchBookClubCardState extends State<SearchBookClubCard> {
                 image: DecorationImage(
                   image: NetworkImage(widget.bookClub.getCoverImgUrl()),
                   onError: (error, stackTrace) =>
-                      const NetworkImage(wrongCircleImage),
+                      const NetworkImage(defaultCollectionImg),
                   fit: BoxFit.cover,
                 ),
               ),

@@ -68,7 +68,7 @@ class _ProfileHead extends State<BookClubHead> {
                     decoration: BoxDecoration(
                       border: Border.all(color: secondaryColor),
                       image: const DecorationImage(
-                        image: NetworkImage(wrongLongImage),
+                        image: NetworkImage(defaultCollectionImg),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -113,7 +113,7 @@ class _ProfileHead extends State<BookClubHead> {
                         shape: BoxShape.circle,
                         border: Border.all(color: secondaryColor),
                         image: const DecorationImage(
-                          image: NetworkImage(wrongCircleImage),
+                          image: NetworkImage(defaultCollectionImg),
                           fit: BoxFit.cover,
                         ),
                       ),

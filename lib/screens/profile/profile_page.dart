@@ -83,6 +83,8 @@ class _ProfilePage extends State<ProfilePage> {
       () => context.router.push(const UserQuotesRoute()).then(onGoBack),
       // user collections page
       () => context.router.push(const UserCollectionsRoute()).then(onGoBack),
+      // user events page
+      () => context.router.push(const EventsRoute()).then(onGoBack),
       // user achievements page
       //() => {},
       // user stat page
@@ -101,13 +103,12 @@ class _ProfilePage extends State<ProfilePage> {
 
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(
-          left: 15, right: 15, top: 15, bottom: size.height * 0.1),
-      height: size.height,
+      margin: const EdgeInsets.all(15),
       width: size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           ProfileHead(user: user),
           StatisticRow(

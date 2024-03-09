@@ -17,6 +17,7 @@ class Menu extends StatelessWidget {
         width: size.width,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               for (var item = 0; item < titles.length; item++)
                 MenuListItem(press: routes[item], text: titles[item])

@@ -11,6 +11,7 @@ class BookClubEvent {
   late Book? _bookInfo;
   late DateTime _date;
   late int _participantsAmount;
+  late double? _rating;
   late EventStatus _eventStatus;
   late UserEventStatus _userParticipationStatus;
   late bool _canBeEditedByUser;
@@ -23,6 +24,7 @@ class BookClubEvent {
       this._bookInfo,
       date,
       this._participantsAmount,
+      this._rating,
       this._canBeEditedByUser,
       this._isPassed,
       eventStatus,
@@ -49,6 +51,7 @@ class BookClubEvent {
             json['bookInfo']),
         json['date'] as String,
         json['participantsAmount'] as int,
+        json['rating'] as double?,
         json['canBeEditedByUser'] as bool,
         json['isPassed'] as bool,
         json['eventStatus'] as String,
@@ -81,6 +84,10 @@ class BookClubEvent {
 
   int getParticipantsAmount() {
     return _participantsAmount;
+  }
+
+  double? getRating() {
+    return _rating;
   }
 
   EventStatus getEventStatus() {

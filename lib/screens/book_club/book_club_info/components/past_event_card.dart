@@ -66,46 +66,55 @@ class _AClubPastEventCardState extends State<ClubPastEventCard> {
                     Stack(
                       children: [
                         Container(
-                            width: size.width * 0.35,
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(15)),
-                              image: DecorationImage(
-                                image: NetworkImage(event.getCoverImageUrl()),
-                                fit: BoxFit.cover,
-                              ),
-                            )),
-                        if (event.getCanBeEditedByUser())
-                          InkWell(
-                            onTap: () => event.getCanBeEditedByUser() ? {} : {},
-                            child: Container(
-                              width: size.width * 0.2,
-                              height: size.width * 0.1,
-                              padding: EdgeInsets.all(5),
-                              decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(15),
-                                      topRight: Radius.circular(15),
-                                      bottomRight: Radius.circular(15)),
-                                  color: secondaryColor),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.star_rounded,
-                                    color: primaryColor,
-                                    size: 21,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Text('0.0',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: primaryColor,
-                                          fontSize: size.width * 0.035))
-                                ],
-                              ),
+                          width: size.width * 0.35,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(15)),
+                            image: DecorationImage(
+                              image: NetworkImage(event.getCoverImageUrl()),
+                              fit: BoxFit.cover,
                             ),
                           ),
+                          foregroundDecoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: const NetworkImage(defaultBookCoverImg),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () => event.getCanBeEditedByUser() ? {} : {},
+                          child: Container(
+                            width: size.width * 0.2,
+                            height: size.width * 0.1,
+                            padding: EdgeInsets.all(5),
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15),
+                                    topRight: Radius.circular(15),
+                                    bottomRight: Radius.circular(15)),
+                                color: secondaryColor),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.star_rounded,
+                                  color: primaryColor,
+                                  size: 21,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                    event.getRating() == null
+                                        ? "-"
+                                        : event.getRating()!.toStringAsFixed(2),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: primaryColor,
+                                        fontSize: size.width * 0.035))
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     Flexible(

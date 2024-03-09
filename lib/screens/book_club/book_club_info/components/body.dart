@@ -369,21 +369,25 @@ class _BookClubBody extends State<BookClubBody>
                           ),
 
                           // second tab bar view widget
-                          Expanded(
-                            child: SizedBox(
-                              height: size.height * 0.9,
-                              child: SingleChildScrollView(
-                                  reverse: false,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      for (int i = 0; i < pastEvents.length; ++i)
-                                        ClubPastEventCard(
-                                          event: pastEvents[i] as BookClubEvent,
-                                        ),
-                                    ],
-                                  )),
-                            ),
+                          Column(
+                            children: [
+                              Expanded(
+                                child: SizedBox(
+                                  height: size.height * 0.9,
+                                  child: SingleChildScrollView(
+                                      reverse: false,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          for (int i = 0; i < pastEvents.length; ++i)
+                                            ClubPastEventCard(
+                                              event: pastEvents[i] as BookClubEvent,
+                                            ),
+                                        ],
+                                      )),
+                                ),
+                              ),
+                            ],
                           )
                         ],
                       ),
