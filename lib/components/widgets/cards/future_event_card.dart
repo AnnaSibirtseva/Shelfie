@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -122,6 +123,8 @@ class _AddCollectionCardState extends State<FutureEventCard> {
             BookClubEvent event = snapshot.data!;
             selectedItem =
                 getStringStatForUi(event.getUserParticipationStatus());
+            bool disableDelete = event.getParticipantsAmount() != 0;
+
             return InkWell(
               child: Container(
                 margin: const EdgeInsets.only(right: 5, top: 5),
@@ -168,24 +171,44 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                                             onSelected: (value) {
                                               switch (value) {
                                                 case 'delete':
-                                                  showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          ConfirmationDialog(
-                                                            text:
-                                                                'Вы дейстивтельно хотите удалить встречу "${event.getTitle()}"?',
-                                                            press: () async {
-                                                              await deleteEvent(
-                                                                  context,
-                                                                  event
-                                                                      .getId());
-                                                              context.router
-                                                                  .pop(true);
-                                                              widget
-                                                                  .notifyParent();
-                                                            },
-                                                          ));
+                                                  if (!disableDelete) {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            ConfirmationDialog(
+                                                              text:
+                                                                  'Вы дейстивтельно хотите удалить встречу "${event.getTitle()}"?',
+                                                              press: () async {
+                                                                await deleteEvent(
+                                                                    context,
+                                                                    event
+                                                                        .getId());
+                                                                context.router
+                                                                    .pop(true);
+                                                                widget
+                                                                    .notifyParent();
+                                                              },
+                                                            ));
+                                                  } else {
+                                                    Flushbar(
+                                                      margin: const EdgeInsets.all(5),
+                                                      padding: const EdgeInsets.all(15),
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      backgroundColor: redColor,
+                                                      messageText: const Text(
+                                                        "Нельзя удалить встречу, на которой есть участники",
+                                                        style: TextStyle(
+                                                            fontSize: 14.0, color: whiteColor, fontWeight: FontWeight.w500),
+                                                      ),
+                                                      icon: const Icon(
+                                                        Icons.info_outline,
+                                                        size: 28.0,
+                                                        color: whiteColor,
+                                                      ),
+                                                      duration: const Duration(seconds: 3),
+                                                    ).show(context);
+                                                  }
                                                 case 'edit':
                                                   showDialog(
                                                       context: context,
@@ -228,8 +251,8 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                                                 borderRadius:
                                                     BorderRadius.circular(15)),
                                             itemBuilder: (BuildContext bc) {
-                                              return const [
-                                                PopupMenuItem(
+                                              return [
+                                                const PopupMenuItem(
                                                   value: 'edit',
                                                   child: Row(
                                                     children: [
@@ -243,7 +266,7 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                                                     ],
                                                   ),
                                                 ),
-                                                PopupMenuItem(
+                                                const PopupMenuItem(
                                                   value: 'cancel',
                                                   child: Row(
                                                     children: [
@@ -264,15 +287,15 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                                                     children: [
                                                       Icon(
                                                         Icons.delete_rounded,
-                                                        color: brightRedColor,
+                                                        color: disableDelete ? grayColor : brightRedColor,
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         width: 10,
                                                       ),
                                                       Text("Удалить",
                                                           style: TextStyle(
                                                             color:
-                                                                brightRedColor,
+                                                            disableDelete ? grayColor : brightRedColor,
                                                           ))
                                                     ],
                                                   ),

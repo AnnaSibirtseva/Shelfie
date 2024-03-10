@@ -49,3 +49,5 @@ const int maxPassword = 30;
 const int minRevText = 10;
 const int minCollectionTitle = 2;
 const int minQuoteText = 2;
+
+const List<int> errorWithMsg = [400, 403, 404];

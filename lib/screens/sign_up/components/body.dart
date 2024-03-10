@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +12,7 @@ import '../../../components/widgets/already_have_account.dart';
 import '../../../components/text_fields/password_text_field.dart';
 import '../../../components/text_fields/rounded_text_field.dart';
 import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
+import '../../../models/server_exception.dart';
 import '../../../models/user.dart';
 import 'package:auto_route/auto_route.dart';
 import '../../log_in/components/background.dart';
@@ -42,17 +44,26 @@ class _BodyState extends State<Body> {
           headers: {HttpHeaders.contentTypeHeader: 'application/json'},
           body: jsonString);
       if (response.statusCode != 200) {
+        var ex = ServerException.fromJson(
+            jsonDecode(utf8.decode(response.bodyBytes)));
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const NothingFoundDialog(
-                  'Что-то пошло не так! Не удалось зарегестрировать пользователя.',
-                  warningGif,
-                  'Ошибка');
+              return NothingFoundDialog(ex.getMessage(), warningGif, 'Ошибка');
             });
         return false;
       }
+    } on Exception {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const NothingFoundDialog(
+                'Что-то пошло не так! Не удалось зарегестрировать пользователя.',
+                warningGif,
+                'Ошибка');
+          });
+      return false;
     } finally {
       client.close();
     }
@@ -108,17 +119,16 @@ class _BodyState extends State<Body> {
                         text: 'Зарегистрироваться',
                         press: () async {
                           if (checkConstraints()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    margin: const EdgeInsets.all(5),
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    duration: const Duration(seconds: 30),
-                                    backgroundColor: primaryColor,
-                                    content: const
-                                    Text("Выполняется регистрация аккаунта...")));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                margin: const EdgeInsets.all(5),
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                duration: const Duration(seconds: 30),
+                                backgroundColor: primaryColor,
+                                content: const Text(
+                                    "Выполняется регистрация аккаунта...")));
                             if (await addUser()) {
                               int id = await loginUser();
                               SharedPreferences preferences =
@@ -139,22 +149,64 @@ class _BodyState extends State<Body> {
 
   bool checkConstraints() {
     if (_name.length < minName || _name.length > maxName) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: redColor,
-          content: Text("Имя должно содержать от 2 до 30 символов")));
+      Flushbar(
+        margin: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(15),
+        borderRadius: BorderRadius.circular(10),
+        backgroundColor: redColor,
+        messageText: const Text(
+          "Имя должно содержать от 2 до 30 символов",
+          style: TextStyle(
+              fontSize: 14.0, color: whiteColor, fontWeight: FontWeight.w500),
+        ),
+        icon: const Icon(
+          Icons.info_outline,
+          size: 28.0,
+          color: whiteColor,
+        ),
+        duration: const Duration(seconds: 3),
+      ).show(context);
       return false;
     }
     if (_email.length < minMail || _email.length > maxMail) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: redColor,
-          content: Text("Почта должна содержать от 7 до 100 символов")));
+      Flushbar(
+        margin: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(15),
+        borderRadius: BorderRadius.circular(10),
+        backgroundColor: redColor,
+        messageText: const Text(
+          "Почта должна содержать от 7 до 100 символов",
+          style: TextStyle(
+              fontSize: 14.0, color: whiteColor, fontWeight: FontWeight.w500),
+        ),
+        icon: const Icon(
+          Icons.info_outline,
+          size: 28.0,
+          color: whiteColor,
+        ),
+        duration: const Duration(seconds: 3),
+      ).show(context);
       return false;
     }
     if (passwordField.getPassword().length < minPassword ||
         passwordField.getPassword().length > maxPassword) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: redColor,
-          content: Text("Пароль должно состоять из 8-30 символов")));
+      Flushbar(
+        margin: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(15),
+        borderRadius: BorderRadius.circular(10),
+        backgroundColor: redColor,
+        messageText: const Text(
+          "Пароль должно состоять из 8-30 символов",
+          style: TextStyle(
+              fontSize: 14.0, color: whiteColor, fontWeight: FontWeight.w500),
+        ),
+        icon: const Icon(
+          Icons.info_outline,
+          size: 28.0,
+          color: whiteColor,
+        ),
+        duration: const Duration(seconds: 3),
+      ).show(context);
       return false;
     }
     return true;

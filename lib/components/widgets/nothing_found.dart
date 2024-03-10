@@ -5,9 +5,10 @@ import '../constants.dart';
 class NothingFoundWidget extends StatelessWidget {
   final String image;
   final String message;
+  final bool space;
 
   const NothingFoundWidget(
-      {Key? key, required this.image, required this.message})
+      {Key? key, required this.image, required this.message, required this.space})
       : super(key: key);
 
   @override
@@ -20,7 +21,7 @@ class NothingFoundWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: size.height * 0.1,
+              height: space ? size.height * 0.1 : 0,
             ),
             Image.network(
               image,
@@ -33,7 +34,7 @@ class NothingFoundWidget extends StatelessWidget {
               style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w900,
-                  color: blackColor),
+                  color: primaryColor),
             ),
           ],
         ),

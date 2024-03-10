@@ -6,23 +6,18 @@ import 'package:auto_route/auto_route.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../../components/buttons/scan_button.dart';
 import '../../components/constants.dart';
 import '../../components/image_constants.dart';
 import '../../components/widgets/cards/serch_club_card.dart';
 import '../../components/widgets/dialogs/add_book_club_dialog.dart';
 import '../../components/widgets/dialogs/book_club_filter_dialog.dart';
-import '../../components/widgets/dialogs/filters_dialog.dart';
 import '../../components/widgets/error.dart';
 import '../../components/widgets/loading.dart';
-import '../../models/book.dart';
+import '../../components/widgets/nothing_found.dart';
 import '../../models/book_club.dart';
 import '../../models/inherited_id.dart';
 
 import '../../components/routes/route.gr.dart';
-import '../../models/tag.dart';
-import '../filter/conponents/filter_list.dart';
-import 'tab_bars/search_tab_bar.dart';
 
 class BookClubsPage extends StatefulWidget {
   const BookClubsPage({Key? key}) : super(key: key);
@@ -315,12 +310,19 @@ class _ClubsSearchPage extends State<BookClubsPage>
                   reverse: false,
                   child: Column(
                     children: [
-                      for (int i = 0; i < _userClubs.length; ++i)
-                        SearchBookClubCard(
-                          press: () => (context.router.push(BookClubInfoRoute(
-                              bookId: _userClubs[i].getId()))),
-                          bookClub: _userClubs[i],
+                      if (_userClubs.isEmpty)
+                        const NothingFoundWidget(
+                          image: noTop10,
+                          message: "У вас еще нет книжных клубов",
+                          space: false,
                         ),
+                      if (_userClubs.isNotEmpty)
+                        for (int i = 0; i < _userClubs.length; ++i)
+                          SearchBookClubCard(
+                            press: () => (context.router.push(BookClubInfoRoute(
+                                bookId: _userClubs[i].getId()))),
+                            bookClub: _userClubs[i],
+                          ),
                       // for (BookReview review in reviewList.reviews)
                       //   ReviewCard(review: review)
                     ],

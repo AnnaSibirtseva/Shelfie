@@ -6,13 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../components/constants.dart';
+import '../../../../components/image_constants.dart';
 import '../../../../components/widgets/cards/future_event_card.dart';
 import '../../../../components/widgets/dialogs/add_event_dialog.dart';
+import '../../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../../../../components/widgets/error.dart';
 import '../../../../models/book_club.dart';
 import '../../../../models/club_event.dart';
 import '../../../../models/enums/join_status.dart';
 import '../../../../models/inherited_id.dart';
+import '../../../../models/server_exception.dart';
 import 'body_private.dart';
 import 'future_event_card.dart';
 import 'past_event_card.dart';
@@ -50,6 +53,40 @@ class _BookClubBody extends State<BookClubBody>
       );
       if (response.statusCode != 200) {
         throw Exception();
+      }
+    } finally {
+      client.close();
+    }
+  }
+
+  Future<void> leaveClub(int id) async {
+    var client = http.Client();
+    try {
+      var response = await client.delete(
+        Uri.https(url, '/clubs/${widget.clubId.toString()}/leave'),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          'userId': id.toString(),
+          'clubId': widget.clubId.toString()
+        },
+      );
+      if (errorWithMsg.contains(response.statusCode)) {
+        var ex = ServerException.fromJson(
+            jsonDecode(utf8.decode(response.bodyBytes)));
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return NothingFoundDialog(ex.getMessage(), warningGif, 'Ошибка');
+            });
+      } else {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const NothingFoundDialog(
+                  "Ой! Что-то пошло не так", warningGif, 'Ошибка');
+            });
       }
     } finally {
       client.close();
@@ -177,7 +214,11 @@ class _BookClubBody extends State<BookClubBody>
                     width: size.width,
                     child: ElevatedButton(
                       onPressed: () async {
-                        await makeMemberShipRequest(id);
+                        if (club.isUserInClub()) {
+                          await leaveClub(id);
+                        } else {
+                          await makeMemberShipRequest(id);
+                        }
                         setState(() {});
                       },
                       style: ElevatedButton.styleFrom(
@@ -364,7 +405,8 @@ class _BookClubBody extends State<BookClubBody>
                                               i < futureEvents.length;
                                               ++i)
                                             ClubFutureEventCard(
-                                              event: futureEvents[i] as BookClubEvent,
+                                              event: futureEvents[i]
+                                                  as BookClubEvent,
                                               clubId: club.getId(),
                                               notifyParent: refresh,
                                             ),
@@ -386,9 +428,12 @@ class _BookClubBody extends State<BookClubBody>
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          for (int i = 0; i < pastEvents.length; ++i)
+                                          for (int i = 0;
+                                              i < pastEvents.length;
+                                              ++i)
                                             ClubPastEventCard(
-                                              event: pastEvents[i] as BookClubEvent,
+                                              event: pastEvents[i]
+                                                  as BookClubEvent,
                                             ),
                                         ],
                                       )),

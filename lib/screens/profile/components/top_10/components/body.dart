@@ -124,6 +124,7 @@ class _BodyState extends State<Body> {
                       const NothingFoundWidget(
                         image: noTop10,
                         message: "Ой!\nУ вас еще нет любимых книг в топе",
+                        space: true,
                       ),
                     for (int i = 0; i < top10books.length; ++i)
                       Top10ListCard(

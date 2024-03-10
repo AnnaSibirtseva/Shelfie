@@ -156,35 +156,38 @@ class _ProfileHead extends State<BookClubHead> {
 
   Widget membersWidget() {
     int membersAmount = widget.bookClub.getMembersCount();
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const Icon(
-          Icons.person_rounded,
-          size: 20,
-        ),
-        const SizedBox(width: 5),
-        // Flexible(child:
-        Text('$membersAmount ${_parseMembersWord(membersAmount)}',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 13,
-            )),
-        if (widget.bookClub.getIsUserAdminInClub() &&
-            widget.bookClub.getClubHasUnhandledRequests())
-          const Align(
-            alignment: Alignment.bottomRight,
-            child: Icon(
-              Icons.circle,
-              color: redColor,
-              size: 7,
-            ),
+    return InkWell(
+      onTap: () => widget.bookClub.getIsUserAdminInClub() ? {} : {},
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.person_rounded,
+            size: 20,
           ),
-        //),
-      ],
+          const SizedBox(width: 5),
+          // Flexible(child:
+          Text('$membersAmount ${_parseMembersWord(membersAmount)}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 13,
+              )),
+          if (widget.bookClub.getIsUserAdminInClub() &&
+              widget.bookClub.getClubHasUnhandledRequests())
+            const Align(
+              alignment: Alignment.bottomRight,
+              child: Icon(
+                Icons.circle,
+                color: redColor,
+                size: 7,
+              ),
+            ),
+          //),
+        ],
+      ),
     );
   }
 
