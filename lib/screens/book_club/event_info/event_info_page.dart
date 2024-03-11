@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class EventInfoPage extends StatefulWidget {
-  const EventInfoPage({Key? key}) : super(key: key);
+  final int eventId;
+
+  const EventInfoPage({Key? key, required this.eventId}) : super(key: key);
 
   @override
   State<EventInfoPage> createState() => _EventInfoPage();

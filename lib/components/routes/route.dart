@@ -4,6 +4,8 @@ import '../../screens/book/book_info/book_info_page.dart';
 import '../../screens/book_club/book_club_info/book_club_info_page.dart';
 import '../../screens/book_club/book_clubs_page.dart';
 import '../../screens/book_club/event_info/event_info_page.dart';
+import '../../screens/book_club/members/members_page.dart';
+import '../../screens/book_club/reviews/event_reviews_page.dart';
 import '../../screens/collections/books/books_page.dart';
 import '../../screens/collections/collection_page.dart';
 import '../../screens/home/home_page.dart';
@@ -21,7 +23,6 @@ import '../../screens/profile/profile_page.dart';
 import '../../screens/search/search_page.dart';
 import '../../screens/sign_up/sign_up_page.dart';
 import '../../screens/splash/splash_screen.dart';
-
 
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',
@@ -85,6 +86,8 @@ import '../../screens/splash/splash_screen.dart';
             AutoRoute(path: 'bookClubInfo', page: BookClubInfoPage),
             AutoRoute(path: 'bookInfo', page: BookInfoPage),
             AutoRoute(path: 'eventInfo', page: EventInfoPage),
+            AutoRoute(path: 'eventReview', page: EventReviewsPage),
+            AutoRoute(path: 'clubMembers', page: ClubMembersPage),
             RedirectRoute(path: '*', redirectTo: ''),
           ],
         ),
