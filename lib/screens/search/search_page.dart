@@ -44,7 +44,7 @@ class _SearchPage extends State<SearchPage> {
     dialog = FiltersDialog();
   }
 
-  Future<List<Book>> searchBooks() async {
+  Future<List<Book>> searchBooks(int retry) async {
     var client = http.Client();
     final jsonString = json.encode({
       "query": query,
@@ -68,6 +68,9 @@ class _SearchPage extends State<SearchPage> {
         return BookList.fromJson(jsonDecode(utf8.decode(response.bodyBytes)))
             .foundBooks;
       } else {
+        if (retry != 0) {
+          return searchBooks(0);
+        }
         throw Exception();
       }
     } on TimeoutException catch (_) {
@@ -99,7 +102,7 @@ class _SearchPage extends State<SearchPage> {
     Size size = MediaQuery.of(context).size;
     // keyboard ScrollViewDismissBehavior on drag
     return FutureBuilder<List<Book>>(
-        future: searchBooks(),
+        future: searchBooks(1),
         builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
           if (snapshot.hasData) {
             return SafeArea(

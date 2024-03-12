@@ -152,7 +152,8 @@ class _ClubsSearchPage extends State<BookClubsPage>
                     ),
                     Container(
                       margin: EdgeInsets.only(
-                          left: 15, right: 15, bottom: size.height * 0.01),
+                          left: 15, right: 15),
+                      padding: EdgeInsets.only(bottom: 5),
                       height: size.height * 0.9,
                       width: size.width,
                       child: Column(

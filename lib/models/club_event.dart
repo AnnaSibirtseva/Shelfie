@@ -51,7 +51,7 @@ class BookClubEvent {
             json['bookInfo']),
         json['date'] as String,
         json['participantsAmount'] as int,
-        json['rating'] as double?,
+        json['rating']?.toDouble(),
         json['canBeEditedByUser'] as bool,
         json['isPassed'] as bool,
         json['eventStatus'] as String,

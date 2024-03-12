@@ -71,15 +71,24 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
                     Stack(
                       children: [
                         Container(
-                            width: size.width * 0.35,
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(15)),
-                              image: DecorationImage(
-                                image: NetworkImage(event.getCoverImageUrl()),
-                                fit: BoxFit.cover,
-                              ),
-                            )),
+                          width: size.width * 0.35,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15)),
+                            image: DecorationImage(
+                              image: NetworkImage(defaultBookCoverImg),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          foregroundDecoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(15)),
+                            image: DecorationImage(
+                              image: NetworkImage(event.getCoverImageUrl()),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                         if (event.getCanBeEditedByUser())
                           InkWell(
                             onTap: () => {},

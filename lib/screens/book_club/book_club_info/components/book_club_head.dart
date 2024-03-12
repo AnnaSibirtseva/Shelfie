@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:shelfie_diploma_app/components/routes/route.gr.dart';
 
 import '../../../../components/constants.dart';
 import '../../../../components/image_constants.dart';
@@ -20,30 +22,9 @@ class BookClubHead extends StatefulWidget {
 class _ProfileHead extends State<BookClubHead> {
   late int id;
 
-  // late ChangeBannerDialog banDialog;
-  // late ChangeAvatarDialog avDialog;
-  //
-  // FutureOr changeBanner(dynamic value) {
-  //   widget.bookClub.setBanner(banDialog.getAvatar());
-  //   setState(() {});
-  // }
-  //
-  // FutureOr changeAvatar(dynamic value) {
-  //   widget.bookClub.setAvatar(avDialog.getAvatar());
-  //   setState(() {});
-  // }
-  //
-  // void showChangeBannerDialog() {
-  //   banDialog = ChangeBannerDialog(id);
-  //   showDialog(context: context, builder: (BuildContext context) => banDialog)
-  //       .then(changeBanner);
-  // }
-  //
-  // void showChangeAvatarDialog() {
-  //   avDialog = ChangeAvatarDialog(id);
-  //   showDialog(context: context, builder: (BuildContext context) => avDialog)
-  //       .then(changeAvatar);
-  // }
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +125,7 @@ class _ProfileHead extends State<BookClubHead> {
                             club: bookClub,
                           ),
                           const SizedBox(height: 3),
-                          membersWidget()
+                          membersWidget(bookClub)
                         ]),
                   )
                 ],
@@ -154,10 +135,14 @@ class _ProfileHead extends State<BookClubHead> {
     ));
   }
 
-  Widget membersWidget() {
+  Widget membersWidget(BookClub bookClub) {
     int membersAmount = widget.bookClub.getMembersCount();
     return InkWell(
-      onTap: () => widget.bookClub.getIsUserAdminInClub() ? {} : {},
+      onTap: () => widget.bookClub.getIsUserAdminInClub()
+          ? context.router
+              .push(ClubMembersRoute(clubId: bookClub.getId()))
+              .then(onGoBack)
+          : {},
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,

@@ -23,20 +23,23 @@ class _CollectionsPage extends State<CollectionsPage> {
   @override
   void initState() {
     super.initState();
-    _futureCollections = getCollections();
+    _futureCollections = getCollections(1);
   }
 
-  Future<List<Collection>> getCollections() async {
+  Future<List<Collection>> getCollections(int retry) async {
     var client = http.Client();
     try {
       var response = await client
           .get(Uri.https(url, '/shelves/collections/common', {'take': '10'}))
-          .timeout(const Duration(seconds: 20));
+          .timeout(const Duration(seconds: 30));
       if (response.statusCode == 200) {
         return RecommendedCollections.fromJson(
                 jsonDecode(utf8.decode(response.bodyBytes)))
             .collections;
       } else {
+        if (retry != 0) {
+          return getCollections(0);
+        }
         throw Exception();
       }
     } on TimeoutException catch (_) {

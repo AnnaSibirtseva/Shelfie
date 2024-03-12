@@ -131,7 +131,8 @@ class _SearchBookClubCardState extends State<SearchBookClubCard> {
         ),
         const SizedBox(width: 5),
         // Flexible(child:
-        Text('${widget.bookClub.getMembersCount()} участников',
+        Text(
+            '${widget.bookClub.getMembersCount()} ${_parseMembersWord(widget.bookClub.getMembersCount())}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -148,5 +149,17 @@ class _SearchBookClubCardState extends State<SearchBookClubCard> {
           ),
       ],
     );
+  }
+
+  String _parseMembersWord(int amount) {
+    String ending = "";
+    int lastDigit = amount % 10;
+    if ([2, 3, 4].contains(lastDigit)) {
+      ending = "а";
+    } else if ([0, 5, 6, 7, 8, 9].contains(lastDigit)) {
+      ending = "ов";
+    }
+
+    return "участник" + ending;
   }
 }

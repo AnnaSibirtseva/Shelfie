@@ -67,17 +67,19 @@ class _AClubPastEventCardState extends State<ClubPastEventCard> {
                       children: [
                         Container(
                           width: size.width * 0.35,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(15)),
                             image: DecorationImage(
-                              image: NetworkImage(event.getCoverImageUrl()),
+                              image: NetworkImage(defaultBookCoverImg),
                               fit: BoxFit.cover,
                             ),
                           ),
                           foregroundDecoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(15)),
                             image: DecorationImage(
-                              image: const NetworkImage(defaultBookCoverImg),
+                              image: NetworkImage(event.getCoverImageUrl()),
                               fit: BoxFit.cover,
                             ),
                           ),

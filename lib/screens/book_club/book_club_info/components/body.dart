@@ -449,8 +449,7 @@ class _BookClubBody extends State<BookClubBody>
               ),
             );
           } else if (snapshot.hasError) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+            return const Center(
               child: Text(
                 "Не удалось получить события клуба",
                 textAlign: TextAlign.center,
