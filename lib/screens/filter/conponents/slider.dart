@@ -69,7 +69,7 @@ class _Slider extends State<SliderWidget> {
                 Text("Минимальное кол-во участников:",
                     textAlign: TextAlign.start,
                     style: TextStyle(
-                        fontSize: size.width * 0.03,
+                        fontSize: size.width * 0.028,
                         fontWeight: FontWeight.w700)),
                 const Spacer(),
                 Text('>${widget._value.round()}',

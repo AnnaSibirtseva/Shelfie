@@ -61,8 +61,8 @@ class _BodyState extends State<Body> {
           if (snapshot.hasData) {
             List<Top10BookInfo> top10books = snapshot.data!;
             return Container(
-                margin: EdgeInsets.only(top: 15, bottom: size.height * 0.1),
-                height: size.height * 0.85,
+                margin: EdgeInsets.only(top: 15, bottom: 0),
+                height: size.height * 1,
                 width: size.width,
                 child: SingleChildScrollView(
                   reverse: false,
@@ -133,6 +133,7 @@ class _BodyState extends State<Body> {
                               .then(onGoBack),
                           book: top10books[i],
                           index: i + 1),
+                    const SizedBox(height: 81,)
                   ]),
                 ));
           } else if (snapshot.hasError) {

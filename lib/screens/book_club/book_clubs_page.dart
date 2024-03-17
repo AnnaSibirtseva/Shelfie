@@ -174,7 +174,8 @@ class _ClubsSearchPage extends State<BookClubsPage>
                           //     )
                         ],
                       ),
-                    )
+                    ),
+                    const SizedBox(height: 81)
                   ],
                 ),
               ),

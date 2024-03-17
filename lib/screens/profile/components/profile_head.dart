@@ -81,13 +81,14 @@ class _ProfileHead extends State<ProfileHead> {
             ),
           ),
           Positioned(
-              right: size.height * 0.3,
+              top: size.height * 0.11,
               left: 0.0,
               bottom: 0.0,
               child: GestureDetector(
                 onTap: showChangeAvatarDialog,
                 child: Container(
-                  height: size.height * 0.2,
+                  height: size.width * 0.3,
+                  width: size.width * 0.3,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(color: secondaryColor),
@@ -116,7 +117,7 @@ class _ProfileHead extends State<ProfileHead> {
               child: Row(
                 children: [
                   SizedBox(
-                    width: size.height * 0.2,
+                    width: size.width * 0.3 + 15,
                   ),
                   Flexible(
                     child: Column(

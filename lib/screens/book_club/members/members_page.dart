@@ -126,7 +126,7 @@ class _ClubMembersPage extends State<ClubMembersPage>
                 height: size.height * 0.9,
                 width: size.width,
                 padding: EdgeInsets.only(
-                    top: 15, left: 15, right: 15, bottom: size.height * 0.1),
+                    top: 15, left: 15, right: 15),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -274,6 +274,7 @@ class _ClubMembersPage extends State<ClubMembersPage>
                         ],
                       ),
                     ),
+                    const SizedBox(height: 5,)
                   ],
                 ),
               ),
