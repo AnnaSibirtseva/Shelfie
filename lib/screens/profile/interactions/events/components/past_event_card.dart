@@ -18,10 +18,12 @@ import '../../../../../models/parser.dart';
 
 class UserPastEventCard extends StatefulWidget {
   final BookClubEvent event;
+  final Function() notifyParent;
 
   const UserPastEventCard({
     Key? key,
     required this.event,
+    required this.notifyParent,
   }) : super(key: key);
 
   @override
@@ -70,28 +72,34 @@ class _UserPastEventCard extends State<UserPastEventCard> {
                     color: secondaryColor),
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 10),
-                    height: size.height * 0.05,
-                    width: size.height * 0.05,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: secondaryColor),
-                      image: const DecorationImage(
-                        image: NetworkImage(defaultCollectionImg),
-                        fit: BoxFit.cover,
+                      Container(
+                        margin: const EdgeInsets.only(right: 10),
+                        height: size.height * 0.05,
+                        width: size.height * 0.05,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: NetworkImage(defaultCollectionImg),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        foregroundDecoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: NetworkImage(event.getClubImg()),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
                   Expanded(
-                    child: TextScroll("widget.event.clubNam",
+                    child: TextScroll(event.getClubName(),
                         intervalSpaces: 5,
                         velocity: Velocity(pixelsPerSecond: Offset(50, 0)),
                         fadedBorder: true,
                         fadeBorderVisibility: FadeBorderVisibility.auto,
                         fadeBorderSide: FadeBorderSide.right,
                         style: TextStyle(
-                            fontWeight:FontWeight.bold,
+                            fontWeight: FontWeight.bold,
                             fontSize: size.height / 45)),
                   ),
                   const SizedBox(width: 10),
@@ -122,15 +130,15 @@ class _UserPastEventCard extends State<UserPastEventCard> {
                           const EdgeInsets.only(left: 15, bottom: 10, right: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        image: DecorationImage(
-                          image: NetworkImage(event.getCoverImageUrl()),
+                        image: const DecorationImage(
+                          image: NetworkImage(defaultBookCoverImg),
                           fit: BoxFit.cover,
                         ),
                       ),
                       foregroundDecoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         image: DecorationImage(
-                          image: const NetworkImage(defaultBookCoverImg),
+                          image: NetworkImage(event.getCoverImageUrl()),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -288,54 +296,6 @@ class _UserPastEventCard extends State<UserPastEventCard> {
                         fontSize: size.width * 0.035)),
               ],
             )));
-  }
-
-  Future<void> getEvent(int eventId) async {
-    var client = http.Client();
-    try {
-      var response = await client.get(
-          Uri.https(url, '/clubs/detailed/event/${eventId.toString()}'),
-          headers: {
-            HttpHeaders.contentTypeHeader: 'application/json',
-            'userId': id.toString(),
-          });
-      if (response.statusCode == 200) {
-        event =
-            BookClubEvent.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
-      } else {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) => const Center(
-                child: NothingFoundDialog(
-                    'Не удалось обновить информацию о событии',
-                    warningGif,
-                    'Ошибка')));
-      }
-    } finally {
-      client.close();
-    }
-  }
-
-  Widget buildDropDown(BuildContext context, BookClubEvent event) {
-    Size size = MediaQuery.of(context).size;
-
-    return Flexible(
-      child: Container(
-          width: size.width * 0.5,
-          decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            border: Border.all(color: grayColor, width: 1.5),
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-          ),
-          padding: EdgeInsets.all(2),
-          child: Center(
-            child: Text(getStringStatForUi(event.getUserParticipationStatus()),
-                style: TextStyle(
-                    color: darkGrayColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: size.width * 0.035)),
-          )),
-    );
   }
 
   Widget builEventStatWidget(BuildContext context, BookClubEvent event) {

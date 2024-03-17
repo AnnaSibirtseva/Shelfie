@@ -14,10 +14,14 @@ class BookClubEvent {
   late double? _rating;
   late EventStatus _eventStatus;
   late UserEventStatus _userParticipationStatus;
-  late bool _canBeEditedByUser;
+  late bool? _canBeEditedByUser;
   late bool _isPassed;
+  late int _clubId;
+  late String _clubName;
+  late String _clubCoverImageUrl;
 
-  BookClubEvent(this._id,
+  BookClubEvent(
+      this._id,
       this._title,
       this._place,
       this._coverImageUrl,
@@ -33,7 +37,31 @@ class BookClubEvent {
         .firstWhere((e) => e.toString() == "EventStatus." + eventStatus);
     participationStatus ??= "NotSet";
     _userParticipationStatus = UserEventStatus.values.firstWhere(
-            (e) => e.toString() == "UserEventStatus." + participationStatus);
+        (e) => e.toString() == "UserEventStatus." + participationStatus);
+    _date = DateTime.parse(date);
+  }
+
+  BookClubEvent.forUser(
+      this._id,
+      this._title,
+      this._place,
+      this._coverImageUrl,
+      this._bookInfo,
+      date,
+      this._participantsAmount,
+      this._rating,
+      this._canBeEditedByUser,
+      this._isPassed,
+      eventStatus,
+      participationStatus,
+      this._clubId,
+      this._clubName,
+      this._clubCoverImageUrl) {
+    _eventStatus = EventStatus.values
+        .firstWhere((e) => e.toString() == "EventStatus." + eventStatus);
+    participationStatus ??= "NotSet";
+    _userParticipationStatus = UserEventStatus.values.firstWhere(
+        (e) => e.toString() == "UserEventStatus." + participationStatus);
     _date = DateTime.parse(date);
   }
 
@@ -43,23 +71,67 @@ class BookClubEvent {
       coverImageUrl = json['coverImageUrl'] as String;
     }
     return BookClubEvent(
-        json['id'] as int,
-        json['title'] as String,
-        json['place'] as String,
-        coverImageUrl,
-        json['bookInfo'] == null ? null : Book.eventInfoFromJson(
-            json['bookInfo']),
-        json['date'] as String,
-        json['participantsAmount'] as int,
-        json['rating']?.toDouble(),
-        json['canBeEditedByUser'] as bool,
-        json['isPassed'] as bool,
-        json['eventStatus'] as String,
-        json['userParticipationStatus'] as String?);
+      json['id'] as int,
+      json['title'] as String,
+      json['place'] as String,
+      coverImageUrl,
+      json['bookInfo'] == null
+          ? null
+          : Book.eventInfoFromJson(json['bookInfo']),
+      json['date'] as String,
+      json['participantsAmount'] as int,
+      json['rating']?.toDouble(),
+      json['canBeEditedByUser'] as bool?,
+      json['isPassed'] as bool,
+      json['eventStatus'] as String,
+      json['userParticipationStatus'] as String?,
+    );
+  }
+
+  factory BookClubEvent.forUserFromJson(dynamic json) {
+    String coverImageUrl = defaultBookCoverImg;
+    String clubCoverImageUrl = defaultCollectionImg;
+    if (json['clubCoverImageUrl'] != null) {
+      clubCoverImageUrl = json['clubCoverImageUrl'] as String;
+    }
+    if (json['coverImageUrl'] != null) {
+      coverImageUrl = json['coverImageUrl'] as String;
+    }
+    return BookClubEvent.forUser(
+      json['id'] as int,
+      json['title'] as String,
+      json['place'] as String,
+      coverImageUrl,
+      json['bookInfo'] == null
+          ? null
+          : Book.eventInfoFromJson(json['bookInfo']),
+      json['date'] as String,
+      json['participantsAmount'] as int,
+      json['rating']?.toDouble(),
+      json['canBeEditedByUser'] as bool?,
+      json['isPassed'] as bool,
+      json['eventStatus'] as String,
+      json['userParticipationStatus'] as String?,
+      json['clubId'] as int,
+      json['clubName'] as String,
+      clubCoverImageUrl,
+    );
   }
 
   int getId() {
     return _id;
+  }
+
+  int getClubId() {
+    return _clubId;
+  }
+
+  String getClubName() {
+    return _clubName;
+  }
+
+  String getClubImg() {
+    return _clubCoverImageUrl;
   }
 
   String getTitle() {
@@ -99,7 +171,10 @@ class BookClubEvent {
   }
 
   bool getCanBeEditedByUser() {
-    return _canBeEditedByUser;
+    if (_canBeEditedByUser == null) {
+      return false;
+    }
+    return _canBeEditedByUser!;
   }
 
   bool getIsPassed() {

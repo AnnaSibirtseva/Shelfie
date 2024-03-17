@@ -154,7 +154,7 @@ class _ClubsSearchPage extends State<BookClubsPage>
                       margin: EdgeInsets.only(
                           left: 15, right: 15),
                       padding: EdgeInsets.only(bottom: 5),
-                      height: size.height * 0.9,
+                      height: size.height * 0.88,
                       width: size.width,
                       child: Column(
                         children: [

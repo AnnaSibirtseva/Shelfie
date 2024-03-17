@@ -45,9 +45,7 @@ class EditEventDialog extends Dialog {
     final jsonString = json.encode({
       "title": _name,
       "place": _place,
-      if (_coverImageUrl.trim().isNotEmpty &&
-          _coverImageUrl.trim() != event.getCoverImageUrl())
-        "coverImageUrl": _coverImageUrl,
+      if (_coverImageUrl.trim().isNotEmpty) "coverImageUrl": _coverImageUrl,
       //"bannerImageUrl": , description
       if (_bookId != null) "bookId": _bookId,
       "date": _dateTime.toIso8601String()

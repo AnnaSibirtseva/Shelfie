@@ -37,12 +37,12 @@ class _CollectionsPage extends State<CollectionsPage> {
                 jsonDecode(utf8.decode(response.bodyBytes)))
             .collections;
       } else {
-        if (retry != 0) {
-          return getCollections(0);
-        }
         throw Exception();
       }
     } on TimeoutException catch (_) {
+      if (retry != 0) {
+        return getCollections(0);
+      }
       throw TimeoutException(
           "Превышел лимит ожидания ответа от сервера.\nПопробуйте позже, сейчас хостинг перезагружается - это может занять какое-то время");
     } finally {
