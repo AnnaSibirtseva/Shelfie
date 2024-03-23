@@ -22,7 +22,7 @@ class ConfirmationDialog extends Dialog {
         child: Container(
           padding: const EdgeInsets.all(15),
           width: size.width * 0.8,
-          height: size.height * 0.3,
+          height: text.length > 100 ? size.height * 0.35 : size.height * 0.3,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -53,7 +53,9 @@ class ConfirmationDialog extends Dialog {
                   text,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: size.width / 24, fontWeight: FontWeight.normal),
+                      fontSize:
+                          text.length > 100 ? size.width / 28 : size.width / 24,
+                      fontWeight: FontWeight.normal),
                 ),
               ),
               const SizedBox(height: 25),
@@ -155,10 +157,7 @@ class YesNoConfirmationDialog extends Dialog {
                     width: 10,
                   ),
                   DialogButton(
-                      press: press,
-                      isAsync: true,
-                      reverse: true,
-                      text: 'Да'),
+                      press: press, isAsync: true, reverse: true, text: 'Да'),
                 ],
               ),
             ],

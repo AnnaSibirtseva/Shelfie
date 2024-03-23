@@ -21,11 +21,13 @@ import '../error.dart';
 class FutureEventCard extends StatefulWidget {
   final Function() notifyParent;
   final int clubId;
+  final bool isUserInCLub;
 
   const FutureEventCard({
     Key? key,
     required this.clubId,
     required this.notifyParent,
+    required this.isUserInCLub,
   }) : super(key: key);
 
   @override
@@ -360,10 +362,11 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                                                 .toString(),
                                             1),
                                         const SizedBox(height: 10),
-                                        buildDropDown(
-                                          context,
-                                          event.getId(),
-                                        )
+                                        if (widget.isUserInCLub)
+                                          buildDropDown(
+                                            context,
+                                            event.getId(),
+                                          )
                                       ],
                                     ),
                                   ),
@@ -500,15 +503,17 @@ class _AddCollectionCardState extends State<FutureEventCard> {
   Widget buildDropDown(BuildContext context, int eventId) {
     Size size = MediaQuery.of(context).size;
 
+    bool canChange = widget.isUserInCLub;
+
     final inheritedWidget = IdInheritedWidget.of(context);
     id = inheritedWidget.id;
 
     return Flexible(
       child: Container(
         width: size.width * 0.5,
-        decoration: const BoxDecoration(
-          color: primaryColor,
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+        decoration:  BoxDecoration(
+          color: canChange ? primaryColor : lightGrayColor,
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
         padding: EdgeInsets.only(
           left: size.width * 0.1,
@@ -522,15 +527,15 @@ class _AddCollectionCardState extends State<FutureEventCard> {
               dropdownColor: primaryColor,
               value: selectedItem,
               style: TextStyle(fontWeight: FontWeight.bold),
-              icon: const Icon(
+              icon: Icon(
                 Icons.keyboard_arrow_down,
-                color: whiteColor,
+                color: canChange ? whiteColor : darkGrayColor,
               ),
-              onChanged: (newValue) async {
+              onChanged: canChange ? (newValue) async {
                 selectedItem = newValue!;
                 await changeStatus(selectedItem, eventId);
                 setState(() {});
-              },
+              } : null,
               items:
                   eventAttendance.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(

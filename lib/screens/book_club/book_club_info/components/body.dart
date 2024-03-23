@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shelfie_diploma_app/components/widgets/dialogs/confirmation_dialog.dart';
 
 import '../../../../components/constants.dart';
 import '../../../../components/image_constants.dart';
@@ -70,6 +72,9 @@ class _BookClubBody extends State<BookClubBody>
           'clubId': widget.clubId.toString()
         },
       );
+      if (response.statusCode == 200) {
+        return;
+      }
       if (errorWithMsg.contains(response.statusCode)) {
         var ex = ServerException.fromJson(
             jsonDecode(utf8.decode(response.bodyBytes)));
@@ -215,7 +220,24 @@ class _BookClubBody extends State<BookClubBody>
                     child: ElevatedButton(
                       onPressed: () async {
                         if (club.isUserInClub()) {
-                          await leaveClub(id);
+                          if (!club.isPublic()) {
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ConfirmationDialog(
+                                    text:
+                                        'Это приватный клуб, если вы выйдете из него, то для повторного вступления придется заново подавать заявку. \nВы уверены, что хотите покинуть этот книжный клуб?',
+                                    press: () async {
+                                      await leaveClub(id);
+                                      context.router.pop();
+                                      setState(() {});
+                                    },
+                                  );
+                                });
+                          } else {
+                            await leaveClub(id);
+                          }
                         } else {
                           await makeMemberShipRequest(id);
                         }
@@ -248,6 +270,7 @@ class _BookClubBody extends State<BookClubBody>
                     FutureEventCard(
                       clubId: club.getId(),
                       notifyParent: refresh,
+                      isUserInCLub: club.isUserInClub(),
                     ),
                   if (!lock(club)) const SizedBox(height: 20),
                   if (!lock(club)) buildInteractionsTabBar(context, club),
@@ -409,6 +432,7 @@ class _BookClubBody extends State<BookClubBody>
                                                   as BookClubEvent,
                                               clubId: club.getId(),
                                               notifyParent: refresh,
+                                              isUserInClub: club.isUserInClub(),
                                             ),
                                         ],
                                       )),

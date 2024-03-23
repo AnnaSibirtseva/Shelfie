@@ -5,8 +5,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:shelfie_diploma_app/components/widgets/nothing_found.dart';
 
 import '../../../../components/constants.dart';
+import '../../../../components/image_constants.dart';
 import '../../../../components/routes/route.gr.dart';
 import '../../../../components/widgets/error.dart';
 import '../../../../models/club_event.dart';
@@ -175,6 +177,12 @@ class _EventsPage extends State<EventsPage>
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
+                                          if (futureEvents.isEmpty)
+                                            const NothingFoundWidget(
+                                              image: noTop10,
+                                              message: "Ой!\nУ вас еще нет предстоящих встреч",
+                                              space: true,
+                                            ),
                                           for (int i = 0;
                                               i < futureEvents.length;
                                               ++i)
@@ -201,6 +209,12 @@ class _EventsPage extends State<EventsPage>
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
+                                          if (pastEvents.isEmpty)
+                                            const NothingFoundWidget(
+                                              image: noTop10,
+                                              message: "Ой!\nУ вас еще нет прошедших встреч",
+                                              space: true,
+                                            ),
                                           for (int i = 0;
                                               i < pastEvents.length;
                                               ++i)

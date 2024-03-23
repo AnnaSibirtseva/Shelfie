@@ -21,12 +21,14 @@ class ClubFutureEventCard extends StatefulWidget {
   final Function() notifyParent;
   final BookClubEvent event;
   final int clubId;
+  final bool isUserInClub;
 
   const ClubFutureEventCard({
     Key? key,
     required this.event,
     required this.clubId,
     required this.notifyParent,
+    required this.isUserInClub,
   }) : super(key: key);
 
   @override
@@ -252,7 +254,8 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
                                     event.getParticipantsAmount().toString(),
                                     1),
                                 const SizedBox(height: 10),
-                                buildDropDown(context, event)
+                                if (widget.isUserInClub)
+                                  buildDropDown(context, event)
                               ],
                             ),
                           ),
@@ -475,12 +478,12 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
                 Icons.keyboard_arrow_down,
                 color: whiteColor,
               ),
-              onChanged: (newValue) async {
+              onChanged: widget.isUserInClub ? (newValue) async {
                 selectedItem = newValue!;
                 await changeStatus(selectedItem, event.getId());
                 await getEvent(event.getId());
                 setState(() {});
-              },
+              } : null,
               items:
                   eventAttendance.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
