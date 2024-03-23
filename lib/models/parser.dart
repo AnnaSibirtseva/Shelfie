@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:instant/instant.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import '../components/constants.dart';
 import '../components/image_constants.dart';
+
+int offset = DateTime.now().toLocal().timeZoneOffset.inHours;
+int offsetMin = DateTime.now().toLocal().timeZoneOffset.inMinutes;
 
 String getImage(String imageUrl) {
   try {
@@ -21,8 +25,14 @@ String getImage(String imageUrl) {
 }
 
 String getStringFromDate(DateTime dt) {
+  var dtWithOffset = dateTimeToOffset(offset: 1.0 * offset, datetime: dt);
+
   initializeDateFormatting("ru_RU", null).then((_) {
-    return DateFormat('dd MMM yyyy HH:mm', 'ru_RU').format(dt);
+    return DateFormat('dd MMM yyyy HH:mm', 'ru_RU').format(dtWithOffset);
   });
-  return DateFormat('dd MMM yyyy HH:mm', 'ru_RU').format(dt);
+  return DateFormat('dd MMM yyyy HH:mm', 'ru_RU').format(dtWithOffset);
+}
+
+DateTime convertToUtcPlusZero(DateTime dt) {
+  return dateTimeToOffset(offset: -1.0 * offset, datetime: dt);
 }

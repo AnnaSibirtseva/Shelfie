@@ -11,6 +11,7 @@ import 'dart:convert';
 import 'dart:io';
 import '../../../models/book.dart';
 import '../../../models/club_event.dart';
+import '../../../models/parser.dart';
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
 import '../../image_constants.dart';
@@ -41,6 +42,7 @@ class EditEventDialog extends Dialog {
   }
 
   Future<void> editEvent(BuildContext context) async {
+    var s = convertToUtcPlusZero(_dateTime).toIso8601String();
     var client = http.Client();
     final jsonString = json.encode({
       "title": _name,
@@ -48,7 +50,7 @@ class EditEventDialog extends Dialog {
       if (_coverImageUrl.trim().isNotEmpty) "coverImageUrl": _coverImageUrl,
       //"bannerImageUrl": , description
       if (_bookId != null) "bookId": _bookId,
-      "date": _dateTime.toIso8601String()
+      "date": convertToUtcPlusZero(_dateTime).toIso8601String()
     });
     try {
       var response = await client.put(Uri.https(url, '/events/admin/edit'),

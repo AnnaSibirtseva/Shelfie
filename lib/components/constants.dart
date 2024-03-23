@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-const String url = 'shelfie-api-gateway-shlf-16.onrender.com';
+// shelfie-api-gateway-shlf-16
+const String url = 'bulk-select-shelfie-api-gateway-shlf-17.onrender.com';
 
 const int iconSplitPart = 5;
 

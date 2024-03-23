@@ -12,6 +12,7 @@ import 'dart:convert';
 import 'dart:io';
 import '../../../models/book.dart';
 import '../../../models/filters.dart';
+import '../../../models/parser.dart';
 import '../../../models/tag.dart';
 import '../../../screens/filter/conponents/filter_list.dart';
 import '../../buttons/dialog_button.dart';
@@ -69,14 +70,13 @@ class AddEventDialog extends Dialog {
 
   Future<void> addEvent(BuildContext context) async {
     var client = http.Client();
-    var a = _dateTime.toIso8601String();
     final jsonString = json.encode({
       "title": _name,
       "place": _description,
       if (_coverImageUrl.trim().isNotEmpty) "coverImageUrl": _coverImageUrl,
       //"bannerImageUrl": , description
       if (_bookId != null) "bookId": _bookId,
-      "date": _dateTime.toIso8601String()
+      "date": convertToUtcPlusZero(_dateTime).toIso8601String()
     });
     try {
       var response = await client.post(Uri.https(url, '/events/admin/create'),
