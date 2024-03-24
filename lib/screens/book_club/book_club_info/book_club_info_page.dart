@@ -51,6 +51,12 @@ class _BookClubInfoPage extends State<BookClubInfoPage> {
     }
   }
 
+  refresh () {
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final inheritedWidget = IdInheritedWidget.of(context);
@@ -73,7 +79,7 @@ class _BookClubInfoPage extends State<BookClubInfoPage> {
                       children: [
                         BookClubHead(bookClub: bookClub),
                         BookClubBody(
-                          clubId: bookClub.getId(),
+                          clubId: bookClub.getId(), notifyParent: refresh,
                         ),
                       ]),
                 ));

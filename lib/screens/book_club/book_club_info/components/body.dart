@@ -24,8 +24,9 @@ import 'past_event_card.dart';
 
 class BookClubBody extends StatefulWidget {
   final int clubId;
+  final Function() notifyParent;
 
-  const BookClubBody({Key? key, required this.clubId}) : super(key: key);
+  const BookClubBody({Key? key, required this.clubId, required this.notifyParent}) : super(key: key);
 
   @override
   _BookClubBody createState() => _BookClubBody();
@@ -232,7 +233,6 @@ class _BookClubBody extends State<BookClubBody>
                                     press: () async {
                                       await leaveClub(id);
                                       context.router.pop();
-                                      setState(() {});
                                     },
                                   );
                                 });
@@ -242,7 +242,7 @@ class _BookClubBody extends State<BookClubBody>
                         } else {
                           await makeMemberShipRequest(id);
                         }
-                        setState(() {});
+                        widget.notifyParent();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: club.isUserInClub()
@@ -283,8 +283,14 @@ class _BookClubBody extends State<BookClubBody>
             return const WebErrorWidget(errorMessage: noInternetErrorMessage);
           } else {
             // By default, show a loading spinner.
-            return const Center(
-                child: CircularProgressIndicator(color: primaryColor));
+            return const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                    child: CircularProgressIndicator(color: primaryColor)),
+              ],
+            );
           }
         });
   }
