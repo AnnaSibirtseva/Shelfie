@@ -6,6 +6,7 @@ import 'enums/user_event_status.dart';
 class BookClubEvent {
   late int _id;
   late String _title;
+  late String? _description;
   late String _place;
   late String _coverImageUrl;
   late Book? _bookInfo;
@@ -23,6 +24,7 @@ class BookClubEvent {
   BookClubEvent(
       this._id,
       this._title,
+      this._description,
       this._place,
       this._coverImageUrl,
       this._bookInfo,
@@ -73,6 +75,7 @@ class BookClubEvent {
     return BookClubEvent(
       json['id'] as int,
       json['title'] as String,
+      json['description'] as String?,
       json['place'] as String,
       coverImageUrl,
       json['bookInfo'] == null
@@ -132,6 +135,10 @@ class BookClubEvent {
 
   String getClubImg() {
     return _clubCoverImageUrl;
+  }
+
+  String? getDesc() {
+    return _description;
   }
 
   String getTitle() {

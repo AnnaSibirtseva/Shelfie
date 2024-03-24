@@ -194,21 +194,32 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                                                             ));
                                                   } else {
                                                     Flushbar(
-                                                      margin: const EdgeInsets.all(5),
-                                                      padding: const EdgeInsets.all(15),
-                                                      borderRadius: BorderRadius.circular(10),
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              5),
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              15),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
                                                       backgroundColor: redColor,
                                                       messageText: const Text(
                                                         "Нельзя удалить встречу, на которой есть участники",
                                                         style: TextStyle(
-                                                            fontSize: 14.0, color: whiteColor, fontWeight: FontWeight.w500),
+                                                            fontSize: 14.0,
+                                                            color: whiteColor,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
                                                       ),
                                                       icon: const Icon(
                                                         Icons.info_outline,
                                                         size: 28.0,
                                                         color: whiteColor,
                                                       ),
-                                                      duration: const Duration(seconds: 3),
+                                                      duration: const Duration(
+                                                          seconds: 3),
                                                     ).show(context);
                                                   }
                                                 case 'edit':
@@ -289,15 +300,18 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                                                     children: [
                                                       Icon(
                                                         Icons.delete_rounded,
-                                                        color: disableDelete ? grayColor : brightRedColor,
+                                                        color: disableDelete
+                                                            ? grayColor
+                                                            : brightRedColor,
                                                       ),
                                                       const SizedBox(
                                                         width: 10,
                                                       ),
                                                       Text("Удалить",
                                                           style: TextStyle(
-                                                            color:
-                                                            disableDelete ? grayColor : brightRedColor,
+                                                            color: disableDelete
+                                                                ? grayColor
+                                                                : brightRedColor,
                                                           ))
                                                     ],
                                                   ),
@@ -386,7 +400,10 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                               bottomLeft: Radius.circular(15)),
                           color: secondaryColor),
                       child: GestureDetector(
-                        onTap: () => {},
+                        onTap: () => context.router.push(EventInfoRoute(
+                            eventId: event.getId(),
+                            clubId: widget.clubId,
+                            isUserInClub: widget.isUserInCLub)),
                         child: const Align(
                           alignment: Alignment.center,
                           child: Text(
@@ -511,7 +528,7 @@ class _AddCollectionCardState extends State<FutureEventCard> {
     return Flexible(
       child: Container(
         width: size.width * 0.5,
-        decoration:  BoxDecoration(
+        decoration: BoxDecoration(
           color: canChange ? primaryColor : lightGrayColor,
           borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
@@ -531,11 +548,13 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                 Icons.keyboard_arrow_down,
                 color: canChange ? whiteColor : darkGrayColor,
               ),
-              onChanged: canChange ? (newValue) async {
-                selectedItem = newValue!;
-                await changeStatus(selectedItem, eventId);
-                setState(() {});
-              } : null,
+              onChanged: canChange
+                  ? (newValue) async {
+                      selectedItem = newValue!;
+                      await changeStatus(selectedItem, eventId);
+                      setState(() {});
+                    }
+                  : null,
               items:
                   eventAttendance.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(

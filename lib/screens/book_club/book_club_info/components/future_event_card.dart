@@ -75,8 +75,8 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
                         Container(
                           width: size.width * 0.35,
                           decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15)),
+                            borderRadius:
+                                BorderRadius.only(topLeft: Radius.circular(15)),
                             image: DecorationImage(
                               image: NetworkImage(defaultBookCoverImg),
                               fit: BoxFit.cover,
@@ -275,7 +275,10 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
                       bottomLeft: Radius.circular(15)),
                   color: secondaryColor),
               child: GestureDetector(
-                onTap: () => {},
+                onTap: () => context.router.push(EventInfoRoute(
+                    eventId: event.getId(),
+                    clubId: widget.clubId,
+                    isUserInClub: widget.isUserInClub)),
                 child: const Align(
                   alignment: Alignment.center,
                   child: Text(
@@ -478,12 +481,14 @@ class _AddCollectionCardState extends State<ClubFutureEventCard> {
                 Icons.keyboard_arrow_down,
                 color: whiteColor,
               ),
-              onChanged: widget.isUserInClub ? (newValue) async {
-                selectedItem = newValue!;
-                await changeStatus(selectedItem, event.getId());
-                await getEvent(event.getId());
-                setState(() {});
-              } : null,
+              onChanged: widget.isUserInClub
+                  ? (newValue) async {
+                      selectedItem = newValue!;
+                      await changeStatus(selectedItem, event.getId());
+                      await getEvent(event.getId());
+                      setState(() {});
+                    }
+                  : null,
               items:
                   eventAttendance.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(

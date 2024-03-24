@@ -25,7 +25,7 @@ String getImage(String imageUrl) {
 }
 
 String getStringFromDate(DateTime dt) {
-  var dtWithOffset = dateTimeToOffset(offset: 1.0 * offset, datetime: dt);
+  var dtWithOffset = convertToUtcWithOffset(dt);
 
   initializeDateFormatting("ru_RU", null).then((_) {
     return DateFormat('dd MMM yyyy HH:mm', 'ru_RU').format(dtWithOffset);
@@ -35,4 +35,8 @@ String getStringFromDate(DateTime dt) {
 
 DateTime convertToUtcPlusZero(DateTime dt) {
   return dateTimeToOffset(offset: -1.0 * offset, datetime: dt);
+}
+
+DateTime convertToUtcWithOffset(DateTime dt) {
+  return dateTimeToOffset(offset: 1.0 * offset, datetime: dt);
 }

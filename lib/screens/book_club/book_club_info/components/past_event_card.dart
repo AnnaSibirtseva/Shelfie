@@ -18,10 +18,14 @@ import '../../../../models/parser.dart';
 
 class ClubPastEventCard extends StatefulWidget {
   final BookClubEvent event;
+  final bool isUserInClub;
+  final int clubId;
 
   const ClubPastEventCard({
     Key? key,
     required this.event,
+    required this.isUserInClub,
+    required this.clubId,
   }) : super(key: key);
 
   @override
@@ -68,8 +72,8 @@ class _AClubPastEventCardState extends State<ClubPastEventCard> {
                         Container(
                           width: size.width * 0.35,
                           decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15)),
+                            borderRadius:
+                                BorderRadius.only(topLeft: Radius.circular(15)),
                             image: DecorationImage(
                               image: NetworkImage(defaultBookCoverImg),
                               fit: BoxFit.cover,
@@ -166,8 +170,10 @@ class _AClubPastEventCardState extends State<ClubPastEventCard> {
                                     size,
                                     event.getParticipantsAmount().toString(),
                                     1),
-                                const SizedBox(height: 10),
-                                buildDropDown(context, event),
+                                if (widget.isUserInClub)
+                                  const SizedBox(height: 10),
+                                if (widget.isUserInClub)
+                                  buildDropDown(context, event),
                                 const SizedBox(height: 10),
                                 builEventStatWidget(context, event),
                               ],
@@ -189,7 +195,10 @@ class _AClubPastEventCardState extends State<ClubPastEventCard> {
                       bottomLeft: Radius.circular(15)),
                   color: secondaryColor),
               child: GestureDetector(
-                onTap: () => {},
+                onTap: () => context.router.push(EventInfoRoute(
+                    eventId: event.getId(),
+                    clubId: widget.clubId,
+                    isUserInClub: widget.isUserInClub)),
                 child: const Align(
                   alignment: Alignment.center,
                   child: Text(

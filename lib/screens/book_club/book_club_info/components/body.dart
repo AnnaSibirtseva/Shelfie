@@ -181,7 +181,8 @@ class _BookClubBody extends State<BookClubBody>
     return FutureBuilder<BookClub>(
         future: getBookClubInfo(inheritedWidget.id),
         builder: (BuildContext context, AsyncSnapshot<BookClub> snapshot) {
-          if (snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
             BookClub club = snapshot.data!;
             return Flexible(
                 child: Container(
@@ -458,6 +459,8 @@ class _BookClubBody extends State<BookClubBody>
                                             ClubPastEventCard(
                                               event: pastEvents[i]
                                                   as BookClubEvent,
+                                              isUserInClub: club.isUserInClub(),
+                                              clubId: club.getId(),
                                             ),
                                         ],
                                       )),
@@ -483,6 +486,9 @@ class _BookClubBody extends State<BookClubBody>
                     color: primaryColor),
               ),
             );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+                child: CircularProgressIndicator(color: primaryColor));
           } else {
             // By default, show a loading spinner.
             return const Center(

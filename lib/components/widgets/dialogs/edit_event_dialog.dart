@@ -37,8 +37,9 @@ class EditEventDialog extends Dialog {
       : super(key: key) {
     _name = event.getTitle();
     _place = event.getPlace();
+    // todo add desc
     _coverImageUrl = event.getCoverImageUrl();
-    _dateTime = event.getDate();
+    _dateTime = convertToUtcWithOffset(event.getDate());
   }
 
   Future<void> editEvent(BuildContext context) async {

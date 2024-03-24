@@ -123,7 +123,11 @@ class AppRouter extends _i5.RootStackRouter {
       final args = routeData.argsAs<EventInfoRouteArgs>();
       return _i5.AdaptivePage<dynamic>(
           routeData: routeData,
-          child: _i12.EventInfoPage(key: args.key, eventId: args.eventId));
+          child: _i12.EventInfoPage(
+              key: args.key,
+              eventId: args.eventId,
+              clubId: args.clubId,
+              isUserInClub: args.isUserInClub));
     },
     EventReviewsRoute.name: (routeData) {
       final args = routeData.argsAs<EventReviewsRouteArgs>();
@@ -501,24 +505,40 @@ class BookClubInfoRouteArgs {
 /// generated route for
 /// [_i12.EventInfoPage]
 class EventInfoRoute extends _i5.PageRouteInfo<EventInfoRouteArgs> {
-  EventInfoRoute({_i25.Key? key, required int eventId})
+  EventInfoRoute(
+      {_i25.Key? key,
+      required int eventId,
+      required int clubId,
+      required bool isUserInClub})
       : super(EventInfoRoute.name,
             path: 'eventInfo',
-            args: EventInfoRouteArgs(key: key, eventId: eventId));
+            args: EventInfoRouteArgs(
+                key: key,
+                eventId: eventId,
+                clubId: clubId,
+                isUserInClub: isUserInClub));
 
   static const String name = 'EventInfoRoute';
 }
 
 class EventInfoRouteArgs {
-  const EventInfoRouteArgs({this.key, required this.eventId});
+  const EventInfoRouteArgs(
+      {this.key,
+      required this.eventId,
+      required this.clubId,
+      required this.isUserInClub});
 
   final _i25.Key? key;
 
   final int eventId;
 
+  final int clubId;
+
+  final bool isUserInClub;
+
   @override
   String toString() {
-    return 'EventInfoRouteArgs{key: $key, eventId: $eventId}';
+    return 'EventInfoRouteArgs{key: $key, eventId: $eventId, clubId: $clubId, isUserInClub: $isUserInClub}';
   }
 }
 

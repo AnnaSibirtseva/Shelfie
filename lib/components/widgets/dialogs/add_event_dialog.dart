@@ -26,6 +26,7 @@ class AddEventDialog extends Dialog {
   final int id;
   final int clubId;
   late String _name = '';
+  late String _place = '';
   late String _description = '';
   late String _coverImageUrl = '';
   late DateTime _dateTime = DateTime.now().add(const Duration(days: 1));
@@ -72,7 +73,8 @@ class AddEventDialog extends Dialog {
     var client = http.Client();
     final jsonString = json.encode({
       "title": _name,
-      "place": _description,
+      "place": _place,
+      if (_description.trim().isNotEmpty) "description": _description,
       if (_coverImageUrl.trim().isNotEmpty) "coverImageUrl": _coverImageUrl,
       //"bannerImageUrl": , description
       if (_bookId != null) "bookId": _bookId,
@@ -215,7 +217,15 @@ class AddEventDialog extends Dialog {
                               maxLen: 250,
                               height: 0.2,
                               onChanged: (String value) {
-                                // todo change to place
+                                _place = value;
+                              },
+                            ),
+                            const SizedBox(height: 10),
+                            textTitle(size, 'Описание'),
+                            InputTextField(
+                              maxLen: 250,
+                              height: 0.2,
+                              onChanged: (String value) {
                                 _description = value;
                               },
                             ),
@@ -342,7 +352,7 @@ class AddEventDialog extends Dialog {
     String? errorMessage;
     if (_name.trim().isEmpty) {
       errorMessage = "Название встречи не может быть пустым";
-    } else if (_description.trim().isEmpty) {
+    } else if (_place.trim().isEmpty) {
       errorMessage = "Место встречи не может быть пустым";
     } else if (_dateTime.isBefore(DateTime.now()) ||
         _dateTime.isAtSameMomentAs(DateTime.now())) {
