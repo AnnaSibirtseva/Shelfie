@@ -190,6 +190,7 @@ class _EventInfoPage extends State<EventInfoPage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 5, vertical: 5),
                                 child: TextField(
+                                  maxLines: 1,
                                   controller: commentController,
                                   cursorColor: primaryColor,
                                   style: const TextStyle(
@@ -198,6 +199,7 @@ class _EventInfoPage extends State<EventInfoPage> {
                                   ),
                                   textAlignVertical: TextAlignVertical.bottom,
                                   decoration: const InputDecoration(
+                                    contentPadding: EdgeInsets.fromLTRB(15.0, 0.0, 10.0, 20.0),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: primaryColor, width: 2),

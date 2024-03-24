@@ -391,29 +391,29 @@ class _AddCollectionCardState extends State<FutureEventCard> {
                         ),
                       ),
                     ),
-                    Container(
-                      height: size.height * 0.05,
-                      width: size.width,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(15),
-                              bottomLeft: Radius.circular(15)),
-                          color: secondaryColor),
-                      child: GestureDetector(
-                        onTap: () => context.router.push(EventInfoRoute(
-                            eventId: event.getId(),
-                            clubId: widget.clubId,
-                            isUserInClub: widget.isUserInCLub)),
+                    GestureDetector(
+                      onTap: () => context.router.push(EventInfoRoute(
+                          eventId: event.getId(),
+                          clubId: widget.clubId,
+                          isUserInClub: widget.isUserInCLub)),
+                      child: Container(
+                        height: size.height * 0.05,
+                        width: size.width,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(15),
+                                bottomLeft: Radius.circular(15)),
+                            color: secondaryColor),
                         child: const Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Комментарии",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 18,
-                                color: darkGrayColor),
-                          ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Комментарии",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 18,
+                                  color: darkGrayColor),
+                            ),
                         ),
                       ),
                     )

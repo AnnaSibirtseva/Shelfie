@@ -186,19 +186,19 @@ class _AClubPastEventCardState extends State<ClubPastEventCard> {
                 ),
               ),
             ),
-            Container(
-              height: size.height * 0.05,
-              width: size.width,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(15),
-                      bottomLeft: Radius.circular(15)),
-                  color: secondaryColor),
-              child: GestureDetector(
-                onTap: () => context.router.push(EventInfoRoute(
-                    eventId: event.getId(),
-                    clubId: widget.clubId,
-                    isUserInClub: widget.isUserInClub)),
+            GestureDetector(
+              onTap: () => context.router.push(EventInfoRoute(
+                  eventId: event.getId(),
+                  clubId: widget.clubId,
+                  isUserInClub: widget.isUserInClub)),
+              child: Container(
+                height: size.height * 0.05,
+                width: size.width,
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(15),
+                        bottomLeft: Radius.circular(15)),
+                    color: secondaryColor),
                 child: const Align(
                   alignment: Alignment.center,
                   child: Text(
