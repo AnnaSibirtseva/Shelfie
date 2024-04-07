@@ -131,6 +131,10 @@ class _EventInfoPage extends State<EventInfoPage> {
     }
   }
 
+  refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -171,7 +175,10 @@ class _EventInfoPage extends State<EventInfoPage> {
                                         fontSize: size.width * 0.045)),
                                 const SizedBox(height: 10),
                                 for (int i = 0; i < comments.length; ++i)
-                                  CommentCard(comment: comments[i] as Comment),
+                                  CommentCard(
+                                    comment: comments[i] as Comment,
+                                    notifyParent: refresh,
+                                  ),
                                 const SizedBox(height: 10),
                               ],
                             ))),
@@ -199,7 +206,8 @@ class _EventInfoPage extends State<EventInfoPage> {
                                   ),
                                   textAlignVertical: TextAlignVertical.bottom,
                                   decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.fromLTRB(15.0, 0.0, 10.0, 20.0),
+                                    contentPadding: EdgeInsets.fromLTRB(
+                                        15.0, 0.0, 10.0, 20.0),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: primaryColor, width: 2),
@@ -221,6 +229,10 @@ class _EventInfoPage extends State<EventInfoPage> {
                             ),
                             ElevatedButton(
                               onPressed: () async {
+                                FocusScopeNode currentFocus = FocusScope.of(context);
+                                if (!currentFocus.hasPrimaryFocus) {
+                                  currentFocus.unfocus();
+                                }
                                 if (commentController.text.trim().isNotEmpty) {
                                   await createComment();
                                   setState(() {

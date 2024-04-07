@@ -118,6 +118,10 @@ class _BodyState extends State<Body> {
                     RoundedButton(
                         text: 'Зарегистрироваться',
                         press: () async {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus) {
+                            currentFocus.unfocus();
+                          }
                           if (checkConstraints()) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 margin: const EdgeInsets.all(5),

@@ -70,6 +70,10 @@ class _BodyState extends State<Body> {
                     RoundedButton(
                         text: 'Войти',
                         press: () async {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus) {
+                            currentFocus.unfocus();
+                          }
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 margin: const EdgeInsets.all(5),
