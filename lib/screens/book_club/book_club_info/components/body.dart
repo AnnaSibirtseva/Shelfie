@@ -26,7 +26,9 @@ class BookClubBody extends StatefulWidget {
   final int clubId;
   final Function() notifyParent;
 
-  const BookClubBody({Key? key, required this.clubId, required this.notifyParent}) : super(key: key);
+  const BookClubBody(
+      {Key? key, required this.clubId, required this.notifyParent})
+      : super(key: key);
 
   @override
   _BookClubBody createState() => _BookClubBody();
@@ -36,6 +38,7 @@ class _BookClubBody extends State<BookClubBody>
     with SingleTickerProviderStateMixin {
   late int id;
   late TabController _tabController;
+  bool disabled = false;
 
   @override
   void initState() {
@@ -172,6 +175,12 @@ class _BookClubBody extends State<BookClubBody>
     setState(() {});
   }
 
+  unlockButton() {
+    setState(() {
+      disabled = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -221,26 +230,27 @@ class _BookClubBody extends State<BookClubBody>
                     width: size.width,
                     child: ElevatedButton(
                       onPressed: () async {
+                        disabled = true;
                         if (club.isUserInClub()) {
                           if (!club.isPublic()) {
                             ScaffoldMessenger.of(context).hideCurrentSnackBar();
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return ConfirmationDialog(
+                                  return YesNoConfirmationDialog(
                                     text:
-                                        'Это приватный клуб, если вы выйдете из него, то для повторного вступления придется заново подавать заявку. \nВы уверены, что хотите покинуть этот книжный клуб?',
+                                        'Это приватный клуб, если вы выйдете из него, то для повторного вступления придется заново подавать заявку. \n\nВы уверены, что хотите покинуть этот книжный клуб?',
                                     press: () async {
-                                      await leaveClub(id);
-                                      context.router.pop();
+                                      context.router.pop(true);
+                                      await leaveClub(id).then(unlockButton());
                                     },
                                   );
                                 });
                           } else {
-                            await leaveClub(id);
+                            await leaveClub(id).then(unlockButton());
                           }
                         } else {
-                          await makeMemberShipRequest(id);
+                          await makeMemberShipRequest(id).then(unlockButton());
                         }
                         widget.notifyParent();
                       },
@@ -287,8 +297,7 @@ class _BookClubBody extends State<BookClubBody>
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(
-                    child: CircularProgressIndicator(color: primaryColor)),
+                Center(child: CircularProgressIndicator(color: primaryColor)),
               ],
             );
           }

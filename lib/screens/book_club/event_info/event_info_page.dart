@@ -198,6 +198,7 @@ class _EventInfoPage extends State<EventInfoPage> {
                                     horizontal: 5, vertical: 5),
                                 child: TextField(
                                   maxLines: 1,
+                                  maxLength: 1000,
                                   controller: commentController,
                                   cursorColor: primaryColor,
                                   style: const TextStyle(
@@ -206,6 +207,7 @@ class _EventInfoPage extends State<EventInfoPage> {
                                   ),
                                   textAlignVertical: TextAlignVertical.bottom,
                                   decoration: const InputDecoration(
+                                    counterText: "",
                                     contentPadding: EdgeInsets.fromLTRB(
                                         15.0, 0.0, 10.0, 20.0),
                                     focusedBorder: OutlineInputBorder(

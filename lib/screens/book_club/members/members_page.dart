@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:auto_route/auto_route.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -10,6 +11,7 @@ import '../../../../models/inherited_id.dart';
 import '../../../components/custon_switch.dart';
 import '../../../components/image_constants.dart';
 import '../../../components/widgets/custom_icons.dart';
+import '../../../components/widgets/dialogs/confirmation_dialog.dart';
 import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../../../components/widgets/nothing_found.dart';
 import '../../../models/club_member.dart';
@@ -82,6 +84,31 @@ class _ClubMembersPage extends State<ClubMembersPage>
     }
   }
 
+  Future<void> kickMember(int userToKickId) async {
+    var client = http.Client();
+    try {
+      var response = await client.delete(
+          Uri.https(url, '/clubs/admin/${widget.clubId}/kick-member'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            'userId': userToKickId.toString(),
+            'adminId': id.toString(),
+          });
+      var msg = 'Что-то пошло не так!\n Не удалось удалить пользователя из клуба.';
+      if (response.statusCode != 200) {
+        if ([400, 404, 403].contains(response.statusCode)) {
+          msg = response.toString();
+        }
+        showDialog(
+            context: context,
+            builder: (BuildContext context) =>
+                Center(child: NothingFoundDialog(msg, warningGif, 'Ошибка')));
+      }
+    } finally {
+      client.close();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -125,8 +152,7 @@ class _ClubMembersPage extends State<ClubMembersPage>
               child: Container(
                 height: size.height * 0.9,
                 width: size.width,
-                padding: EdgeInsets.only(
-                    top: 15, left: 15, right: 15),
+                padding: EdgeInsets.only(top: 15, left: 15, right: 15),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -202,18 +228,56 @@ class _ClubMembersPage extends State<ClubMembersPage>
                                           for (int i = 1;
                                               i < memberList.length;
                                               ++i)
-                                            MemberCard(
-                                              notifyParent: refresh,
-                                              member:
-                                                  memberList[i] as ClubMember,
-                                              showSwitch:
-                                                  memberList[i].getId() != id,
-                                              roleText:
-                                                  memberList[i].getId() == id
-                                                      ? 'Вы'
-                                                      : '',
-                                              clubId: widget.clubId,
-                                            )
+                                            memberList[i].getId() != id
+                                                ? Dismissible(
+                                                    key: Key(memberList[i]
+                                                        .getId()
+                                                        .toString()),
+                                                    confirmDismiss:
+                                                        (DismissDirection
+                                                            direction) async {
+                                                      return await showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return ConfirmationDialog(
+                                                            text:
+                                                                'Вы действительно хотите удалить ${memberList[i].getName()} из книжного клуба?',
+                                                            press: () async {
+                                                              await kickMember(
+                                                                  memberList[i].getId());
+                                                              context.router
+                                                                  .pop(true);
+                                                            },
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                    background:
+                                                        deleteBackGroundItem(),
+                                                    onDismissed: (direction) {
+                                                      setState(() {
+                                                        memberList.removeAt(
+                                                            memberList[i]);
+                                                      });
+                                                    },
+                                                    child: MemberCard(
+                                                      notifyParent: refresh,
+                                                      member: memberList[i]
+                                                          as ClubMember,
+                                                      showSwitch: true,
+                                                      roleText: '',
+                                                      clubId: widget.clubId,
+                                                    ),
+                                                  )
+                                                : MemberCard(
+                                                    notifyParent: refresh,
+                                                    member: memberList[i]
+                                                        as ClubMember,
+                                                    showSwitch: false,
+                                                    roleText: 'Вы',
+                                                    clubId: widget.clubId,
+                                                  ),
 
                                           // for (int i = 1;
                                           //     i < futureEvents.length;
@@ -274,7 +338,9 @@ class _ClubMembersPage extends State<ClubMembersPage>
                         ],
                       ),
                     ),
-                    const SizedBox(height: 5,)
+                    const SizedBox(
+                      height: 5,
+                    )
                   ],
                 ),
               ),
@@ -297,5 +363,19 @@ class _ClubMembersPage extends State<ClubMembersPage>
                 child: CircularProgressIndicator(color: primaryColor));
           }
         });
+  }
+
+  Widget deleteBackGroundItem() {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: const BoxDecoration(
+          color: redColor, borderRadius: BorderRadius.all(Radius.circular(15))),
+      alignment: Alignment.centerRight,
+      padding: const EdgeInsets.only(right: 20),
+      child: const Icon(
+        Icons.delete,
+        color: whiteColor,
+      ),
+    );
   }
 }

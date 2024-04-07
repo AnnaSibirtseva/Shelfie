@@ -45,7 +45,7 @@ class _MemberCardState extends State<MemberCard> {
         "userId": widget.member.getId(),
         "role": getStringStatForApi(state)
       });
-      var response = await client.post(
+      var response = await client.put(
           Uri.https(url, '/clubs/admin/${widget.clubId}/change-member-role'),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
@@ -70,7 +70,7 @@ class _MemberCardState extends State<MemberCard> {
           context: context,
           builder: (BuildContext context) {
             return const NothingFoundDialog(
-                'Что-то пошло не так! Не удалось одобрить поменять роль пользователя.',
+                'Что-то пошло не так! Не удалось поменять роль пользователя.',
                 warningGif,
                 'Ошибка');
           });

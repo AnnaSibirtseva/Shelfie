@@ -108,7 +108,7 @@ class YesNoConfirmationDialog extends Dialog {
         child: Container(
           padding: const EdgeInsets.all(15),
           width: size.width * 0.8,
-          height: size.height * 0.3,
+          height: text.length > 120 ? size.height * 0.44 : size.height * 0.3,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
