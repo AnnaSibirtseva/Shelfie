@@ -48,6 +48,10 @@ class Comment {
     return _text;
   }
 
+  void changeText(String newText) {
+    _text = newText;
+  }
+
   String getUserName() {
     return _userName;
   }

@@ -120,7 +120,7 @@ class _QuoteCardState extends State<QuoteCard> {
                 style: TextStyle(
                     fontSize: size.width / 28, fontWeight: FontWeight.normal)),
             if (quote.getQuoteText().isNotEmpty &&
-                quote.getQuoteText().length > 300)
+                ('\n'.allMatches(quote.getQuoteText()).length + 1) > 6)
               InkWell(
                   onTap: () {
                     setState(() {

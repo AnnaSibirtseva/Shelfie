@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../components/constants.dart';
 import '../../../components/image_constants.dart';
 import '../../../components/widgets/dialogs/confirmation_dialog.dart';
+import '../../../components/widgets/dialogs/edit_comment_dialog.dart';
 import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../../../models/comment.dart';
 import '../../../models/inherited_id.dart';
@@ -53,6 +54,10 @@ class _CommentCardState extends State<CommentCard> {
     } finally {
       client.close();
     }
+  }
+
+  refresh() {
+    setState(() {});
   }
 
   @override
@@ -115,72 +120,83 @@ class _CommentCardState extends State<CommentCard> {
                     ],
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: PopupMenuButton(
-                      onSelected: (value) {
-                        switch (value) {
-                          case 'delete':
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    ConfirmationDialog(
-                                      text:
-                                          'Вы дейстивтельно хотите удалить этот комментарий?',
-                                      press: () async {
-                                        await deleteComment();
-                                        context.router.pop(true);
-                                        widget.notifyParent();
-                                      },
-                                    ));
-                          case 'edit':
-                            () => {};
-                        }
-                      },
-                      icon: Icon(
-                        Icons.adaptive.more,
-                        color: primaryColor,
-                      ),
-                      color: secondaryColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      itemBuilder: (BuildContext bc) {
-                        return const [
-                          PopupMenuItem(
-                            value: 'edit',
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.mode_edit_rounded,
+                if (widget.comment.getCanBeEditedByUser() ||
+                    widget.comment.getCanBeDeletedByUser())
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: PopupMenuButton(
+                        onSelected: (value) {
+                          switch (value) {
+                            case 'delete':
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      ConfirmationDialog(
+                                        text:
+                                            'Вы дейстивтельно хотите удалить этот комментарий?',
+                                        press: () async {
+                                          await deleteComment();
+                                          context.router.pop(true);
+                                          widget.notifyParent();
+                                        },
+                                      ));
+                            case 'edit':
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      EditCommentDialog(
+                                        userId: inheritedWidget.id,
+                                        comment: widget.comment,
+                                        notifyParent: widget.notifyParent,
+                                      )).then(refresh());
+                          }
+                        },
+                        icon: Icon(
+                          Icons.adaptive.more,
+                          color: primaryColor,
+                        ),
+                        color: secondaryColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        itemBuilder: (BuildContext bc) {
+                          return [
+                            if (widget.comment.getCanBeEditedByUser())
+                              const PopupMenuItem(
+                                value: 'edit',
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.mode_edit_rounded,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text("Редактировать")
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text("Редактировать")
-                              ],
-                            ),
-                          ),
-                          PopupMenuItem(
-                            value: 'delete',
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.delete_rounded,
-                                  color: brightRedColor,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text("Удалить",
-                                    style: TextStyle(
+                              ),
+                            if (widget.comment.getCanBeDeletedByUser())
+                              const PopupMenuItem(
+                                value: 'delete',
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.delete_rounded,
                                       color: brightRedColor,
-                                    ))
-                              ],
-                            ),
-                          ),
-                        ];
-                      }),
-                )
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text("Удалить",
+                                        style: TextStyle(
+                                          color: brightRedColor,
+                                        ))
+                                  ],
+                                ),
+                              ),
+                          ];
+                        }),
+                  )
               ],
             ),
             const SizedBox(height: 5),
@@ -194,7 +210,7 @@ class _CommentCardState extends State<CommentCard> {
                     fontSize: size.width / 28, fontWeight: FontWeight.w500),
               ),
             ),
-            if (revText.isNotEmpty && revText.length > 300)
+            if (revText.isNotEmpty && ('\n'.allMatches(revText).length + 1) > 6)
               InkWell(
                   onTap: () {
                     setState(() {
