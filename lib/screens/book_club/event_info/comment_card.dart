@@ -91,7 +91,7 @@ class _CommentCardState extends State<CommentCard> {
               textAlign: TextAlign.justify,
               maxLines: showFlag ? null : 7,
               style: TextStyle(
-                  fontSize: size.width / 28, fontWeight: FontWeight.normal),
+                  fontSize: size.width / 28, fontWeight: FontWeight.w500),
             ),
             if (revText.isNotEmpty && revText.length > 300)
               InkWell(

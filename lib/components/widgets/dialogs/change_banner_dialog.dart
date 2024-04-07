@@ -13,8 +13,9 @@ import 'nothing_found_dialog.dart';
 
 class ChangeBannerDialog extends Dialog {
   final int userId;
+  final Function() notifyParent;
 
-  ChangeBannerDialog(this.userId, {Key? key}) : super(key: key);
+  ChangeBannerDialog(this.userId, this.notifyParent, {Key? key}) : super(key: key);
 
   late String newBanner;
 
@@ -110,6 +111,7 @@ class ChangeBannerDialog extends Dialog {
                     press: () async {
                       try {
                         await setAvatar(newBanner);
+                        notifyParent();
                         context.router.pop();
                       } on Exception catch (_) {
                         showDialog(

@@ -13,8 +13,10 @@ import 'nothing_found_dialog.dart';
 
 class ChangeAvatarDialog extends Dialog {
   final int userId;
+  final Function() notifyParent;
 
-  ChangeAvatarDialog(this.userId, {Key? key}) : super(key: key);
+  ChangeAvatarDialog(this.userId, this.notifyParent, {Key? key})
+      : super(key: key);
 
   late String newAvatar;
 
@@ -110,6 +112,7 @@ class ChangeAvatarDialog extends Dialog {
                     press: () async {
                       try {
                         await setAvatar(newAvatar);
+                        notifyParent();
                         context.router.pop();
                       } on Exception catch (_) {
                         showDialog(

@@ -23,26 +23,24 @@ class _ProfileHead extends State<ProfileHead> {
   late ChangeBannerDialog banDialog;
   late ChangeAvatarDialog avDialog;
 
-  FutureOr changeBanner(dynamic value) {
+  setBanner() {
     widget.user.setBanner(banDialog.getAvatar());
     setState(() {});
   }
 
-  FutureOr changeAvatar(dynamic value) {
+  setAvatar() {
     widget.user.setAvatar(avDialog.getAvatar());
     setState(() {});
   }
 
   void showChangeBannerDialog() {
-    banDialog = ChangeBannerDialog(id);
-    showDialog(context: context, builder: (BuildContext context) => banDialog)
-        .then(changeBanner);
+    banDialog = ChangeBannerDialog(id, setBanner);
+    showDialog(context: context, builder: (BuildContext context) => banDialog);
   }
 
   void showChangeAvatarDialog() {
-    avDialog = ChangeAvatarDialog(id);
-    showDialog(context: context, builder: (BuildContext context) => avDialog)
-        .then(changeAvatar);
+    avDialog = ChangeAvatarDialog(id, setAvatar);
+    showDialog(context: context, builder: (BuildContext context) => avDialog);
   }
 
   @override
@@ -74,7 +72,7 @@ class _ProfileHead extends State<ProfileHead> {
                 image: DecorationImage(
                   image: NetworkImage(user.getBannerImageUrl()),
                   onError: (error, stackTrace) =>
-                  const NetworkImage(defaultCollectionImg),
+                      const NetworkImage(defaultCollectionImg),
                   fit: BoxFit.cover,
                 ),
               ),

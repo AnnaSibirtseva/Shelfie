@@ -281,9 +281,10 @@ class _EventInfoPage extends State<EventInfoPage> {
                         fontWeight: FontWeight.w900,
                         fontSize: size.width * 0.042)),
                 Text(event.getDesc() == null ? "-" : event.getDesc()!,
+                    textAlign: TextAlign.justify,
                     style: TextStyle(
                         color: blackColor,
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.w500,
                         fontSize: size.width * 0.035)),
               ],
             ),

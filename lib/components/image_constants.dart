@@ -1,6 +1,6 @@
 const String barcodeGif = 'https://ie.wampi.ru/2023/03/05/barcode4517c91479a3f592.gif';
 const String searchGif = "https://ic.wampi.ru/2023/03/05/search.gif";
-const String shelvesGif = "https://im.wampi.ru/2023/03/05/shelves.gif";
+const String shelvesGif = "https://im.wampi.ru/2024/04/07/shelves.gif";
 const String warningGif = "https://ie.wampi.ru/2023/03/12/warning.gif";
 const String splashScreenGif = "https://i8.wampi.ru/2023/12/21/magic-book.gif";
 const String privateClub = "https://i1.wampi.ru/2024/03/03/output-onlinegiftools.gif";
