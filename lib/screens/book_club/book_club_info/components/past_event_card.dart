@@ -15,6 +15,7 @@ import '../../../../models/club_event.dart';
 import '../../../../models/enums/user_event_status.dart';
 import '../../../../models/inherited_id.dart';
 import '../../../../models/parser.dart';
+import '../../reviews/event_reviews_page.dart';
 
 class ClubPastEventCard extends StatefulWidget {
   final BookClubEvent event;
@@ -89,7 +90,10 @@ class _AClubPastEventCardState extends State<ClubPastEventCard> {
                           ),
                         ),
                         InkWell(
-                          onTap: () => event.getCanBeEditedByUser() ? {} : {},
+                          onTap: () => event.getCanBeEditedByUser()
+                              ? (context.router.push(
+                                  EventReviewsRoute(eventId: event.getId())))
+                              : {},
                           child: Container(
                             width: size.width * 0.2,
                             height: size.width * 0.1,
@@ -112,7 +116,7 @@ class _AClubPastEventCardState extends State<ClubPastEventCard> {
                                 Text(
                                     event.getRating() == null
                                         ? "-"
-                                        : event.getRating()!.toStringAsFixed(2),
+                                        : event.getRating()!.toStringAsFixed(1),
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: primaryColor,

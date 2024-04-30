@@ -60,7 +60,7 @@ class AboutAppDialog extends Dialog {
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Версия: 1.0.0.',
+                  'Версия: 1.5.9.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: size.width / 22, fontWeight: FontWeight.normal),

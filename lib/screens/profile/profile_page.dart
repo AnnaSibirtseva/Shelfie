@@ -8,6 +8,7 @@ import 'package:auto_route/auto_route.dart';
 import '../../components/constants.dart';
 import '../../components/routes/route.gr.dart';
 import '../../components/widgets/dialogs/about_dialog.dart';
+import '../../components/widgets/dialogs/confirmation_dialog.dart';
 import '../../components/widgets/error.dart';
 import '../../components/widgets/loading.dart';
 import '../../models/inherited_id.dart';
@@ -76,15 +77,18 @@ class _ProfilePage extends State<ProfilePage> {
   Widget buildBody(User user) {
     List mainRoutes = [
       // user books page
-      () => context.router.push(const UserBooksRoute()).then(onGoBack),
+          () => context.router.push(const UserBooksRoute()).then(onGoBack),
       // user reviews page
-      () => context.router.push(const UserReviewRoute())..then(onGoBack),
+          () =>
+      context.router.push(const UserReviewRoute())
+        ..then(onGoBack),
       // user quotes page
-      () => context.router.push(const UserQuotesRoute()).then(onGoBack),
+          () => context.router.push(const UserQuotesRoute()).then(onGoBack),
       // user collections page
-      () => context.router.push(const UserCollectionsRoute()).then(onGoBack),
+          () =>
+          context.router.push(const UserCollectionsRoute()).then(onGoBack),
       // user events page
-      () => context.router.push(const EventsRoute()).then(onGoBack),
+          () => context.router.push(const EventsRoute()).then(onGoBack),
       // user achievements page
       //() => {},
       // user stat page
@@ -94,14 +98,28 @@ class _ProfilePage extends State<ProfilePage> {
       // settings page
       // () => context.router.push(const SettingsRoute()).then(onGoBack),
       // about page
-      () => showDialog(
-          context: context,
-          builder: (BuildContext context) => const AboutAppDialog()),
+          () =>
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => const AboutAppDialog()),
       // log out page
-      () => context.router.navigate(const LogInRoute())
+          () =>
+          showDialog(
+              context: context,
+              builder: (BuildContext context) =>
+                  YesNoConfirmationDialog(
+                    text:
+                    'Вы дейстивтельно хотите выйти из приложения?',
+                    press: () {
+                      context.router.pop(true);
+                      context.router.navigate(const LogInRoute());
+                    },
+                  )),
     ];
 
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Container(
       margin: const EdgeInsets.all(15),
       width: size.width,
@@ -122,14 +140,14 @@ class _ProfilePage extends State<ProfilePage> {
             padding: const EdgeInsets.only(top: 15, left: 10),
             child: Text('Общее'.toUpperCase(),
                 style:
-                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
           ),
           Menu(titles: mainUserMenu, routes: mainRoutes),
           Padding(
             padding: const EdgeInsets.only(top: 15, left: 10),
             child: Text('дополнительно'.toUpperCase(),
                 style:
-                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
           ),
           Menu(titles: extraUserMenu, routes: extraRoutes),
         ],

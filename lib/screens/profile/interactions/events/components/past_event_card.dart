@@ -10,6 +10,7 @@ import 'dart:convert';
 import '../../../../../components/constants.dart';
 import '../../../../../components/image_constants.dart';
 import '../../../../../components/routes/route.gr.dart';
+import '../../../../../components/widgets/dialogs/add_event_review_dialog.dart';
 import '../../../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../../../../../models/club_event.dart';
 import '../../../../../models/enums/user_event_status.dart';
@@ -72,25 +73,25 @@ class _UserPastEventCard extends State<UserPastEventCard> {
                     color: secondaryColor),
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        height: size.height * 0.05,
-                        width: size.height * 0.05,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: NetworkImage(defaultCollectionImg),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        foregroundDecoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: NetworkImage(event.getClubImg()),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                  Container(
+                    margin: const EdgeInsets.only(right: 10),
+                    height: size.height * 0.05,
+                    width: size.height * 0.05,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: NetworkImage(defaultCollectionImg),
+                        fit: BoxFit.cover,
                       ),
+                    ),
+                    foregroundDecoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: NetworkImage(event.getClubImg()),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                   Expanded(
                     child: TextScroll(event.getClubName(),
                         intervalSpaces: 5,
@@ -212,7 +213,16 @@ class _UserPastEventCard extends State<UserPastEventCard> {
                       bottomLeft: Radius.circular(15)),
                   color: secondaryColor),
               child: GestureDetector(
-                onTap: () => {},
+                onTap: () => event.getHasUserEventReview()
+                    ? {}
+                    : showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AddEventReviewDialog(
+                              event: event,
+                              userId: id,
+                              notifyParent: widget.notifyParent);
+                        }),
                 child: Align(
                   alignment: Alignment.center,
                   child: Container(
@@ -220,16 +230,21 @@ class _UserPastEventCard extends State<UserPastEventCard> {
                     width: size.width,
                     height: size.height,
                     decoration: BoxDecoration(
+                        border: Border.all(color: primaryColor, width: 1.5),
                         borderRadius: BorderRadius.circular(15),
-                        color: primaryColor),
+                        color: event.getHasUserEventReview()
+                            ? secondaryColor
+                            : primaryColor),
                     child: Center(
-                      child: const Text(
-                        "Оценить",
+                      child: Text(
+                        event.getHasUserEventReview() ? "Оценено" : "Оценить",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: 14,
-                            color: whiteColor),
+                            color: event.getHasUserEventReview()
+                                ? primaryColor
+                                : whiteColor),
                       ),
                     ),
                   ),

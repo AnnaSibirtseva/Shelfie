@@ -88,12 +88,24 @@ class AddBookToCollectionDialog extends Dialog {
                             reverse: false,
                             child: Column(
                               children: [
-                                for (int i = 0; i < snapshot.data!.length; ++i)
-                                  AddCollectionCard(
-                                    collection: snapshot.data![i],
-                                    bookId: bookId,
-                                    userId: userId,
-                                  )
+                                if (snapshot.data!.isEmpty)
+                                   Column(
+                                     mainAxisAlignment: MainAxisAlignment.center,
+                                     crossAxisAlignment: CrossAxisAlignment.center,
+                                     children: [
+                                       SizedBox(height: size.height * 0.1,),
+                                       const Text("У вас нет сборников"),
+                                     ],
+                                   ),
+                                if (snapshot.data!.isNotEmpty)
+                                  for (int i = 0;
+                                      i < snapshot.data!.length;
+                                      ++i)
+                                    AddCollectionCard(
+                                      collection: snapshot.data![i],
+                                      bookId: bookId,
+                                      userId: userId,
+                                    )
                               ],
                             ));
                       } else if (snapshot.hasError) {

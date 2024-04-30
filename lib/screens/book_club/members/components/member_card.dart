@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 import '../../../../components/constants.dart';
-import '../../../../components/custon_switch.dart';
+import '../../../../components/widgets/custon_switch.dart';
 import '../../../../components/image_constants.dart';
 import '../../../../components/widgets/custom_icons.dart';
 import '../../../../components/widgets/dialogs/nothing_found_dialog.dart';

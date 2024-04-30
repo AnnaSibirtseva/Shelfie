@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../components/image_constants.dart';
 import '../../../../components/widgets/cards/user_quote_card.dart';
+import '../../../../components/widgets/nothing_found.dart';
 import '../../../../models/user_quote.dart';
 import '../header_widget.dart';
 
@@ -25,6 +27,12 @@ class Body extends StatelessWidget {
                 text: 'Цитаты',
                 icon: 'quote',
               ),
+              if (quotes.isEmpty)
+                const NothingFoundWidget(
+                  image: noTop10,
+                  message: "Ой!\n У вас еще нет сохраненных цитат",
+                  space: true,
+                ),
               for (UserQuote quote in quotes)
                 UserQuoteCard(
                   quote: quote,

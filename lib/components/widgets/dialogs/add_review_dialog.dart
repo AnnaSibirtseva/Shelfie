@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:http/http.dart' as http;
@@ -161,9 +162,9 @@ class AddReviewDialog extends Dialog {
                   DialogButton(
                       press: () async {
                         if (checkRestrictions(context)) {
-                            await addReview(context);
-                            context.router.pop(true);
-                          }
+                          await addReview(context);
+                          context.router.pop(true);
+                        }
                       },
                       isAsync: true,
                       reverse: false,
@@ -182,15 +183,43 @@ class AddReviewDialog extends Dialog {
       return true;
     }
     if (_title.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: redColor,
-          content: Text("Название рецензии не может быть пустым")));
+      Flushbar(
+        margin: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(15),
+        borderRadius: BorderRadius.circular(10),
+        backgroundColor: redColor,
+        messageText: const Text(
+          "Название рецензии не может быть пустым",
+          style: TextStyle(
+              fontSize: 14.0, color: whiteColor, fontWeight: FontWeight.w500),
+        ),
+        icon: const Icon(
+          Icons.info_outline,
+          size: 28.0,
+          color: whiteColor,
+        ),
+        duration: const Duration(seconds: 3),
+      ).show(context);
       return false;
     }
     if (_text.length < minRevText) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: redColor,
-          content: Text("Текст рецензии должен быть от 10 символов")));
+      Flushbar(
+        margin: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(15),
+        borderRadius: BorderRadius.circular(10),
+        backgroundColor: redColor,
+        messageText: const Text(
+          "Текст рецензии должен быть от 10 символов",
+          style: TextStyle(
+              fontSize: 14.0, color: whiteColor, fontWeight: FontWeight.w500),
+        ),
+        icon: const Icon(
+          Icons.info_outline,
+          size: 28.0,
+          color: whiteColor,
+        ),
+        duration: const Duration(seconds: 3),
+      ).show(context);
       return false;
     }
     return true;

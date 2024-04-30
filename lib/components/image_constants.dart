@@ -1,16 +1,16 @@
-const String barcodeGif = 'https://ie.wampi.ru/2023/03/05/barcode4517c91479a3f592.gif';
-const String searchGif = "https://ic.wampi.ru/2023/03/05/search.gif";
+const String barcodeGif = 'https://im.wampi.ru/2024/04/13/barcode.gif';
+const String searchGif = "https://i1.wampi.ru/2024/04/13/search.gif";
 const String shelvesGif = "https://im.wampi.ru/2024/04/07/shelves.gif";
-const String warningGif = "https://ie.wampi.ru/2023/03/12/warning.gif";
+const String warningGif = "https://i1.wampi.ru/2024/04/14/warning.gif";
 const String splashScreenGif = "https://i8.wampi.ru/2023/12/21/magic-book.gif";
 const String privateClub = "https://i1.wampi.ru/2024/03/03/output-onlinegiftools.gif";
 
-const String logoImg = "https://im.wampi.ru/2023/03/17/logo6cfe8c071f7929bc.png";
+const String logoImg = "https://i1.wampi.ru/2024/04/20/imagecb43e01d6a81a89c.png";
 const String nothingFoundImg = "https://ic.wampi.ru/2023/03/19/geography-2.png";
 const String noTop10 = "https://im.wampi.ru/2023/12/09/free-sticker-reading.png";
-const String quoteImg = 'https://ie.wampi.ru/2023/03/04/imageef4a214a62549bba.png';
+const String quoteImg = 'https://im.wampi.ru/2024/04/14/image0d5f3d2e5247fdaf.png';
 
-const String top10Background = "https://ie.wampi.ru/2023/10/30/imageacadfd106622bcd3.png";
+const String top10Background = "https://i1.wampi.ru/2024/04/14/image0c7076376d156de0.png";
 const String splashBook = "https://im.wampi.ru/2024/01/02/magic-book.gif";
 
 const String defaultCollectionImg = 'https://i8.wampi.ru/2024/02/07/imagec2395a4da7139f4b.png';

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 const String url = 'bulk-select-shelfie-api-gateway-shlf-17.onrender.com';
 
 const int iconSplitPart = 5;
+const int aliasesAmount = 9;
 
 const primaryColor = Color(0xFF3949AB);
 const secondaryColor = Color(0xFFE8EAF6);

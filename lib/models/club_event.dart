@@ -17,6 +17,7 @@ class BookClubEvent {
   late UserEventStatus _userParticipationStatus;
   late bool? _canBeEditedByUser;
   late bool _isPassed;
+  late bool? _hasUserEventReview;
   late int _clubId;
   late String _clubName;
   late String _clubCoverImageUrl;
@@ -54,6 +55,7 @@ class BookClubEvent {
       this._rating,
       this._canBeEditedByUser,
       this._isPassed,
+      this._hasUserEventReview,
       eventStatus,
       participationStatus,
       this._clubId,
@@ -113,6 +115,7 @@ class BookClubEvent {
       json['rating']?.toDouble(),
       json['canBeEditedByUser'] as bool?,
       json['isPassed'] as bool,
+      json['hasUserEventReview'] as bool?,
       json['eventStatus'] as String,
       json['userParticipationStatus'] as String?,
       json['clubId'] as int,
@@ -127,6 +130,13 @@ class BookClubEvent {
 
   int getClubId() {
     return _clubId;
+  }
+
+  bool getHasUserEventReview() {
+    if (_hasUserEventReview == null) {
+      return false;
+    }
+    return _hasUserEventReview!;
   }
 
   String getClubName() {

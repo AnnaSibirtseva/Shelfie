@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../models/user_quote.dart';
 import '../../constants.dart';
+import '../../image_constants.dart';
 
 class UserQuoteCard extends StatefulWidget {
   final UserQuote quote;
@@ -29,8 +30,7 @@ class _UserQuoteCardState extends State<UserQuoteCard> {
       decoration: const BoxDecoration(
           color: secondaryColor,
           image: DecorationImage(
-            image: NetworkImage(
-                'https://ie.wampi.ru/2023/03/04/imageef4a214a62549bba.png'),
+            image: NetworkImage(quoteImg),
             alignment: Alignment.topRight,
           ),
           borderRadius: BorderRadius.all(Radius.circular(15))),

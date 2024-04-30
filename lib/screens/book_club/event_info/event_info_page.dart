@@ -231,7 +231,8 @@ class _EventInfoPage extends State<EventInfoPage> {
                             ),
                             ElevatedButton(
                               onPressed: () async {
-                                FocusScopeNode currentFocus = FocusScope.of(context);
+                                FocusScopeNode currentFocus =
+                                    FocusScope.of(context);
                                 if (!currentFocus.hasPrimaryFocus) {
                                   currentFocus.unfocus();
                                 }
@@ -416,7 +417,10 @@ class _EventInfoPage extends State<EventInfoPage> {
                 ),
               if (event.getEventStatus() != EventStatus.Featured)
                 InkWell(
-                  onTap: () => event.getCanBeEditedByUser() ? {} : {},
+                  onTap: () => event.getCanBeEditedByUser()
+                      ? (context.router
+                          .push(EventReviewsRoute(eventId: event.getId())))
+                      : {},
                   child: Container(
                     width: size.width * 0.2,
                     height: size.width * 0.1,
@@ -439,7 +443,7 @@ class _EventInfoPage extends State<EventInfoPage> {
                         Text(
                             event.getRating() == null
                                 ? "-"
-                                : event.getRating()!.toStringAsFixed(2),
+                                : event.getRating()!.toStringAsFixed(1),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: primaryColor,

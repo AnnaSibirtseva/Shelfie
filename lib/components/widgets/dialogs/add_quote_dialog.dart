@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:http/http.dart' as http;
@@ -151,11 +152,23 @@ class AddQuoteDialog extends Dialog {
                           await addQuote(context);
                           context.router.pop(true);
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  backgroundColor: redColor,
-                                  content:
-                                      Text("Цитата не может быть пустой!")));
+                          Flushbar(
+                            margin: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(15),
+                            borderRadius: BorderRadius.circular(10),
+                            backgroundColor: redColor,
+                            messageText: const Text(
+                              "Цитата не может быть пустой!",
+                              style: TextStyle(
+                                  fontSize: 14.0, color: whiteColor, fontWeight: FontWeight.w500),
+                            ),
+                            icon: const Icon(
+                              Icons.info_outline,
+                              size: 28.0,
+                              color: whiteColor,
+                            ),
+                            duration: const Duration(seconds: 3),
+                          ).show(context);
                         }
                       },
                       isAsync: true,
@@ -172,9 +185,23 @@ class AddQuoteDialog extends Dialog {
 
   bool checkRestrictions(BuildContext context) {
     if (_text.length < minQuoteText) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: redColor,
-          content: Text("Текст цитаты должен быть от 2 символов")));
+      Flushbar(
+        margin: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(15),
+        borderRadius: BorderRadius.circular(10),
+        backgroundColor: redColor,
+        messageText: const Text(
+          "Текст цитаты должен быть от 2 символов",
+          style: TextStyle(
+              fontSize: 14.0, color: whiteColor, fontWeight: FontWeight.w500),
+        ),
+        icon: const Icon(
+          Icons.info_outline,
+          size: 28.0,
+          color: whiteColor,
+        ),
+        duration: const Duration(seconds: 3),
+      ).show(context);
       return false;
     }
     return true;
