@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../components/constants.dart';
 import '../../../models/event_review.dart';
 import '../../../models/inherited_id.dart';
+import '../../../models/parser.dart';
 
 class EventReviewCard extends StatefulWidget {
   final EventReview review;
@@ -33,7 +34,7 @@ class _EventReviewCardState extends State<EventReviewCard> {
 
   @override
   Widget build(BuildContext context) {
-    String revText = widget.review.getText();
+    String? revText = widget.review.getText();
     Size size = MediaQuery.of(context).size;
 
     final inheritedWidget = IdInheritedWidget.of(context);
@@ -66,12 +67,27 @@ class _EventReviewCardState extends State<EventReviewCard> {
                           )),
                       const SizedBox(width: 15),
                       Expanded(
-                        child: Text(
-                          widget.review.getAliasName(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.review.getAliasName(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              getStringFromDate(widget.review.getCreatedDT()),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: darkGrayColor,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
@@ -85,8 +101,7 @@ class _EventReviewCardState extends State<EventReviewCard> {
                               size: 21,
                             ),
                             const SizedBox(width: 5),
-                            Text(
-                                widget.review.getRating(),
+                            Text(widget.review.getRating(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: primaryColor,
@@ -99,39 +114,42 @@ class _EventReviewCardState extends State<EventReviewCard> {
                 ),
               ],
             ),
-            const SizedBox(height: 5),
-            Padding(
-              padding: EdgeInsets.only(right: 15),
-              child: Text(
-                widget.review.getText(),
-                textAlign: TextAlign.justify,
-                maxLines: showFlag ? null : 7,
-                style: TextStyle(
-                    fontSize: size.width / 28, fontWeight: FontWeight.w500),
+            if (revText != null) const SizedBox(height: 5),
+            if (revText != null)
+              Padding(
+                padding: EdgeInsets.only(right: 15),
+                child: Text(
+                  revText,
+                  textAlign: TextAlign.justify,
+                  maxLines: showFlag ? null : 7,
+                  style: TextStyle(
+                      fontSize: size.width / 28, fontWeight: FontWeight.w500),
+                ),
               ),
-            ),
-            if (revText.isNotEmpty && ('\n'.allMatches(revText).length + 1) > 6)
-              InkWell(
-                  onTap: () {
-                    setState(() {
-                      showFlag = !showFlag;
-                    });
-                  },
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(showFlag ? "Свернуть" : "Развернуть",
-                              style: const TextStyle(
-                                  color: primaryColor,
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold))
-                        ],
-                      ),
-                    ],
-                  )),
+            if (revText != null)
+              if (revText.isNotEmpty &&
+                  ('\n'.allMatches(revText).length + 1) > 6)
+                InkWell(
+                    onTap: () {
+                      setState(() {
+                        showFlag = !showFlag;
+                      });
+                    },
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(showFlag ? "Свернуть" : "Развернуть",
+                                style: const TextStyle(
+                                    color: primaryColor,
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                      ],
+                    )),
           ],
         ),
       ),

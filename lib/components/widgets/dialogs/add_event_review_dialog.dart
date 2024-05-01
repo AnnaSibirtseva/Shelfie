@@ -32,7 +32,7 @@ class AddEventReviewDialog extends Dialog {
     var client = http.Client();
 
     final jsonString = json.encode({
-      "text": _text,
+      if (_text.trim().isNotEmpty) "text": _text,
       "rating": _rating,
       "aliasId": random.nextInt(aliasesAmount) + 1
     });

@@ -113,11 +113,11 @@ class _UserPastEventCard extends State<UserPastEventCard> {
                   Text(
                       event.getRating() == null
                           ? "-"
-                          : event.getRating()!.toStringAsFixed(2),
+                          : event.getRating()!.toStringAsFixed(1),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: primaryColor,
-                          fontSize: size.width * 0.035))
+                          fontSize: size.width * 0.04))
                 ])),
             Expanded(
               child: Container(

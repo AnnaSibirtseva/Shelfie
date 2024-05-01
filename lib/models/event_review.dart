@@ -1,20 +1,23 @@
 class EventReview {
   late int _id;
-  late String _text;
+  late String? _text;
   late double? _rating;
   late String _aliasName;
   late String _aliasAvatarUrl;
 
   late DateTime _createdAt;
 
-  EventReview(this._id, this._text, this._rating, this._aliasName,
-      this._aliasAvatarUrl);
+  EventReview(this._id, this._text, this._rating, date, this._aliasName,
+      this._aliasAvatarUrl) {
+    _createdAt = DateTime.parse(date);
+  }
 
   factory EventReview.fromJson(dynamic json) {
     return EventReview(
         json['id'] as int,
-        json['text'] as String,
+        json['text'] as String?,
         json['rating']?.toDouble(),
+        json['createdAt'] as String,
         json['aliasName'] as String,
         json['aliasAvatarImageUrl'] as String);
   }
@@ -34,7 +37,7 @@ class EventReview {
     return _aliasAvatarUrl;
   }
 
-  String getText() {
+  String? getText() {
     return _text;
   }
 
