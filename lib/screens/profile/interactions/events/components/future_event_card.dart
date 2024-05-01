@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shelfie_diploma_app/models/enums/event_status.dart';
 import 'package:text_scroll/text_scroll.dart';
-import 'dart:convert';
 
 import '../../../../../components/constants.dart';
 import '../../../../../components/image_constants.dart';
@@ -64,7 +62,7 @@ class _UserFutureEventCardState extends State<UserFutureEventCard> {
                 height: size.height * 0.06,
                 width: size.width,
                 padding:
-                    EdgeInsets.only(left: 10, right: 15, top: 10, bottom: 10),
+                    const EdgeInsets.only(left: 10, right: 15, top: 10, bottom: 10),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15),
@@ -94,7 +92,7 @@ class _UserFutureEventCardState extends State<UserFutureEventCard> {
                   Expanded(
                     child: TextScroll(event.getClubName(),
                         intervalSpaces: 5,
-                        velocity: Velocity(pixelsPerSecond: Offset(50, 0)),
+                        velocity: const Velocity(pixelsPerSecond: Offset(50, 0)),
                         fadedBorder: true,
                         fadeBorderVisibility: FadeBorderVisibility.auto,
                         fadeBorderSide: FadeBorderSide.right,
@@ -133,7 +131,7 @@ class _UserFutureEventCardState extends State<UserFutureEventCard> {
                       child: SingleChildScrollView(
                         child: SizedBox(
                           child: Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                 bottom: 10, left: 10, right: 10),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -295,7 +293,7 @@ class _UserFutureEventCardState extends State<UserFutureEventCard> {
           color: primaryColor,
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         padding: EdgeInsets.only(
           left: size.width * 0.3,
         ),
@@ -304,10 +302,10 @@ class _UserFutureEventCardState extends State<UserFutureEventCard> {
             alignedDropdown: true,
             child: DropdownButton<String>(
               isDense: true,
-              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
               dropdownColor: primaryColor,
               value: selectedItem,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
               icon: const Icon(
                 Icons.keyboard_arrow_down,
                 color: whiteColor,

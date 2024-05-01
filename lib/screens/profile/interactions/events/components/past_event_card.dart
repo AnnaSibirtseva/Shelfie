@@ -1,17 +1,12 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:shelfie_diploma_app/models/enums/event_status.dart';
 import 'package:text_scroll/text_scroll.dart';
-import 'dart:convert';
 
 import '../../../../../components/constants.dart';
 import '../../../../../components/image_constants.dart';
 import '../../../../../components/routes/route.gr.dart';
 import '../../../../../components/widgets/dialogs/add_event_review_dialog.dart';
-import '../../../../../components/widgets/dialogs/nothing_found_dialog.dart';
 import '../../../../../models/club_event.dart';
 import '../../../../../models/enums/user_event_status.dart';
 import '../../../../../models/inherited_id.dart';
@@ -65,7 +60,7 @@ class _UserPastEventCard extends State<UserPastEventCard> {
                 height: size.height * 0.06,
                 width: size.width,
                 padding:
-                    EdgeInsets.only(left: 10, right: 15, top: 10, bottom: 10),
+                    const EdgeInsets.only(left: 10, right: 15, top: 10, bottom: 10),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15),
@@ -95,7 +90,7 @@ class _UserPastEventCard extends State<UserPastEventCard> {
                   Expanded(
                     child: TextScroll(event.getClubName(),
                         intervalSpaces: 5,
-                        velocity: Velocity(pixelsPerSecond: Offset(50, 0)),
+                        velocity: const Velocity(pixelsPerSecond: Offset(50, 0)),
                         fadedBorder: true,
                         fadeBorderVisibility: FadeBorderVisibility.auto,
                         fadeBorderSide: FadeBorderSide.right,
@@ -148,7 +143,7 @@ class _UserPastEventCard extends State<UserPastEventCard> {
                       child: SingleChildScrollView(
                         child: SizedBox(
                           child: Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                 bottom: 10, left: 10, right: 10),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -323,9 +318,9 @@ class _UserPastEventCard extends State<UserPastEventCard> {
             color: event.getEventStatus() == EventStatus.Canceled
                 ? brightRedColor
                 : greenColor,
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
           ),
-          padding: EdgeInsets.all(3),
+          padding: const EdgeInsets.all(3),
           child: Center(
             child: Text(getStringEventStatForUi(event.getEventStatus()),
                 style: TextStyle(

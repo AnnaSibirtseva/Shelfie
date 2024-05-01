@@ -68,7 +68,7 @@ class _BookClubInfoPage extends State<BookClubInfoPage> {
           if (snapshot.hasData) {
             BookClub bookClub = snapshot.data!;
             return Container(
-                margin: EdgeInsets.only(bottom: 0),
+                margin: const EdgeInsets.only(bottom: 0),
                 height: size.height * 1,
                 width: size.width,
                 child: SingleChildScrollView(

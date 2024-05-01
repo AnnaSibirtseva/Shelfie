@@ -15,7 +15,6 @@ import '../../../../models/club_event.dart';
 import '../../../../models/enums/user_event_status.dart';
 import '../../../../models/inherited_id.dart';
 import '../../../../models/parser.dart';
-import '../../reviews/event_reviews_page.dart';
 
 class ClubPastEventCard extends StatefulWidget {
   final BookClubEvent event;
@@ -97,7 +96,7 @@ class _AClubPastEventCardState extends State<ClubPastEventCard> {
                           child: Container(
                             width: size.width * 0.2,
                             height: size.width * 0.1,
-                            padding: EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(5),
                             decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(15),
@@ -131,7 +130,7 @@ class _AClubPastEventCardState extends State<ClubPastEventCard> {
                       child: SingleChildScrollView(
                         child: SizedBox(
                           child: Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -313,9 +312,9 @@ class _AClubPastEventCardState extends State<ClubPastEventCard> {
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
             border: Border.all(color: grayColor, width: 1.5),
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
           ),
-          padding: EdgeInsets.all(2),
+          padding: const EdgeInsets.all(2),
           child: Center(
             child: Text(getStringStatForUi(event.getUserParticipationStatus()),
                 style: TextStyle(
@@ -336,9 +335,9 @@ class _AClubPastEventCardState extends State<ClubPastEventCard> {
             color: event.getEventStatus() == EventStatus.Canceled
                 ? brightRedColor
                 : greenColor,
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
           ),
-          padding: EdgeInsets.all(3),
+          padding: const EdgeInsets.all(3),
           child: Center(
             child: Text(getStringEventStatForUi(event.getEventStatus()),
                 style: TextStyle(

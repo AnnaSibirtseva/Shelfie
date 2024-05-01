@@ -118,7 +118,7 @@ class _EventsPage extends State<EventsPage>
               child: Container(
                 height: size.height * 0.9,
                 width: size.width,
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -258,7 +258,7 @@ class _EventsPage extends State<EventsPage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Center(
+                      Center(
                           child: CircularProgressIndicator(color: primaryColor))
                     ]));
           }
