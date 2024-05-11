@@ -92,7 +92,7 @@ class _ReviewCardState extends State<ReviewCard> {
               style: TextStyle(
                   fontSize: size.width / 28, fontWeight: FontWeight.normal),
             ),
-            if (revText.isNotEmpty && ('\n'.allMatches(revText).length + 1) > 6)
+            if (revText.isNotEmpty && (('\n'.allMatches(revText).length + 1) >= 6 || ((revText).length > 300)))
               InkWell(
                   onTap: () {
                     setState(() {

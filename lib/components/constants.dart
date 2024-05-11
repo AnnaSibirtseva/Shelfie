@@ -27,7 +27,7 @@ const List mainUserMenu = [
   'Цитаты',
   'Сборники',
   'События',
-//  'Достижения',
+  'Достижения',
 //  'Статистика'
 ];
 const List extraUserMenu = [

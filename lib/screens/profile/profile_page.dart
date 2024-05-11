@@ -90,7 +90,7 @@ class _ProfilePage extends State<ProfilePage> {
       // user events page
           () => context.router.push(const EventsRoute()).then(onGoBack),
       // user achievements page
-      //() => {},
+          () => context.router.push(const AchievementsRoute()).then(onGoBack),
       // user stat page
       //() => {}
     ];

@@ -33,6 +33,11 @@ String getStringFromDate(DateTime dt) {
   return DateFormat('dd MMM yyyy HH:mm', 'ru_RU').format(dtWithOffset);
 }
 
+String parseDateTimeToDMY(DateTime dt) {
+  var format = DateFormat('dd.MM.yy');
+  return format.format(dt);
+}
+
 DateTime convertToUtcPlusZero(DateTime dt) {
   return dateTimeToOffset(offset: -1.0 * offset, datetime: dt);
 }
