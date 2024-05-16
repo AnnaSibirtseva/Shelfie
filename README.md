@@ -12,4 +12,4 @@ Design layouts can be found at the [link](https://www.figma.com/file/0aQGfHeEaQg
 * Front-end developer: [**Sibirtseva Anna Sergeevna**](https://github.com/AnnaSibirtseva)
 * Project mentor: **Stepanov Andrey Nikolaevich**
 
-### Course work, 3 year
+### Diploma work, 4th year
