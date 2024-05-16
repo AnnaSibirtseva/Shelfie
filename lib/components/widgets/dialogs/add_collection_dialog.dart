@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -87,7 +88,7 @@ class AddCollectionDialog extends Dialog {
                 child: Tooltip(
                     message: 'Прямая ссылка на изображение',
                     child: Text(
-                      '🔹 Обложка:',
+                      '🔹 Обложка',
                       style: TextStyle(
                           fontSize: size.width / 22,
                           fontWeight: FontWeight.bold),
@@ -99,12 +100,13 @@ class AddCollectionDialog extends Dialog {
                 },
                 maxLen: 0,
                 height: 0.1,
+                hintText: "Прямая ссылка на изображение",
               ),
               const SizedBox(height: 15),
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  '🔹 Название:',
+                  '🔹 Название',
                   style: TextStyle(
                       fontSize: size.width / 22, fontWeight: FontWeight.bold),
                 ),
@@ -120,7 +122,7 @@ class AddCollectionDialog extends Dialog {
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  '🔹 Описание:',
+                  '🔹 Описание',
                   style: TextStyle(
                       fontSize: size.width / 22, fontWeight: FontWeight.bold),
                 ),
@@ -176,10 +178,24 @@ class AddCollectionDialog extends Dialog {
   }
 
   bool checkRestrictions(BuildContext context) {
-    if (title.length < minCollectionTitle) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: redColor,
-          content: Text("Название сборника должно быть от 2 символов")));
+    if (title.trim().length < minCollectionTitle) {
+      Flushbar(
+        margin: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(15),
+        borderRadius: BorderRadius.circular(10),
+        backgroundColor: redColor,
+        messageText: const Text(
+          "Название сборника должно быть от 2 символов",
+          style: TextStyle(
+              fontSize: 14.0, color: whiteColor, fontWeight: FontWeight.w500),
+        ),
+        icon: const Icon(
+          Icons.info_outline,
+          size: 28.0,
+          color: whiteColor,
+        ),
+        duration: const Duration(seconds: 3),
+      ).show(context);
       return false;
     }
     return true;

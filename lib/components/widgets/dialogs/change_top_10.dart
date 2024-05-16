@@ -40,8 +40,9 @@ class ChangeTop10Dialog extends Dialog {
   Future<void> saveUserTopBooks(
       List<Top10BookInfo> books) async {
     var client = http.Client();
+    var sub_list = books.map((book) => book.getId()).toList().sublist(0, 10);
     final jsonString =
-        json.encode({"bookIds": books.map((book) => book.getId()).toList()});
+        json.encode({"bookIds": sub_list});
     try {
       var response =
           await client.post(Uri.https(url, '/books/top/$userId/save-top'),

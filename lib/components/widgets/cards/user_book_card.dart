@@ -48,7 +48,7 @@ class UserBookCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(book.getTitle(),
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20.0)),
@@ -87,7 +87,7 @@ class UserBookCard extends StatelessWidget {
           color: hasRating ? primaryColor : grayColor,
           size: 30,
         ),
-        Text(rating + '/10',
+        Text('$rating/10',
             textAlign: TextAlign.start,
             style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold))
       ],

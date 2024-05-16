@@ -13,6 +13,7 @@ import '../../../components/image_constants.dart';
 import '../../../components/widgets/custom_icons.dart';
 import '../../../components/widgets/dialogs/confirmation_dialog.dart';
 import '../../../components/widgets/dialogs/nothing_found_dialog.dart';
+import '../../../components/widgets/loading.dart';
 import '../../../components/widgets/nothing_found.dart';
 import '../../../models/club_member.dart';
 import '../../../models/club_requests.dart';
@@ -94,7 +95,8 @@ class _ClubMembersPage extends State<ClubMembersPage>
             'userId': userToKickId.toString(),
             'adminId': id.toString(),
           });
-      var msg = 'Что-то пошло не так!\n Не удалось удалить пользователя из клуба.';
+      var msg =
+          'Что-то пошло не так!\n Не удалось удалить пользователя из клуба.';
       if (response.statusCode != 200) {
         if ([400, 404, 403].contains(response.statusCode)) {
           msg = response.toString();
@@ -245,7 +247,8 @@ class _ClubMembersPage extends State<ClubMembersPage>
                                                                 'Вы действительно хотите удалить ${memberList[i].getName()} из книжного клуба?',
                                                             press: () async {
                                                               await kickMember(
-                                                                  memberList[i].getId());
+                                                                  memberList[i]
+                                                                      .getId());
                                                               context.router
                                                                   .pop(true);
                                                             },
@@ -349,7 +352,7 @@ class _ClubMembersPage extends State<ClubMembersPage>
             return const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                "Не удалось получить события пользователя",
+                "Не удалось получить список участников",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 14.0,
@@ -359,8 +362,7 @@ class _ClubMembersPage extends State<ClubMembersPage>
             );
           } else {
             // By default, show a loading spinner.
-            return const Center(
-                child: CircularProgressIndicator(color: primaryColor));
+            return SizedBox(height: size.height * 0.9, child: const LoadingWidget());
           }
         });
   }

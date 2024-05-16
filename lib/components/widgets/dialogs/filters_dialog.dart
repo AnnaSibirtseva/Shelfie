@@ -90,9 +90,16 @@ class FiltersDialog extends Dialog {
                               DialogButton(
                                   press: () {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
+                                        SnackBar(
+                                            margin: const EdgeInsets.all(5),
+                                            behavior: SnackBarBehavior.floating,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            duration: const Duration(seconds: 3),
                                             backgroundColor: primaryColor,
-                                            content: Text("Загрузка...")));
+                                            content: const
+                                            Text("Загрузка...")));
                                     context.router.pop();
                                   },
                                   isAsync: true,

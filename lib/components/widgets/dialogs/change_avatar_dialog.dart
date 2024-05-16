@@ -62,7 +62,7 @@ class ChangeAvatarDialog extends Dialog {
                     size: size.width / 15,
                   ),
                   const Spacer(),
-                  Text('Новый аватар:',
+                  Text('Новый аватар',
                       style: TextStyle(
                           fontFamily: 'VelaSansExtraBold',
                           fontSize: size.width / 20,
@@ -81,7 +81,7 @@ class ChangeAvatarDialog extends Dialog {
                 child: Tooltip(
                     message: 'Прямая ссылка на изображение',
                     child: Text(
-                      '🖼️ Изображение:',
+                      '🖼️ Изображение',
                       style: TextStyle(
                           fontSize: size.width / 23,
                           fontWeight: FontWeight.bold),
@@ -93,6 +93,7 @@ class ChangeAvatarDialog extends Dialog {
                 },
                 maxLen: 0,
                 height: 0.1,
+                hintText: "Прямая ссылка на изображение",
               ),
               const SizedBox(height: 15),
               Row(

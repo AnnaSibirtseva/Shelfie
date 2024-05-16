@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -74,34 +75,56 @@ class _BodyState extends State<Body> {
                           if (!currentFocus.hasPrimaryFocus) {
                             currentFocus.unfocus();
                           }
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                          if (_email.trim().isEmpty ||
+                              passwordField.getPassword().trim().isEmpty) {
+                            Flushbar(
+                              margin: const EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(15),
+                              borderRadius: BorderRadius.circular(10),
+                              backgroundColor: redColor,
+                              messageText: const Text(
+                                "Поля почты и пароля являются обязательными для заполнения",
+                                style: TextStyle(
+                                    fontSize: 14.0, color: whiteColor, fontWeight: FontWeight.w500),
+                              ),
+                              icon: const Icon(
+                                Icons.info_outline,
+                                size: 28.0,
+                                color: whiteColor,
+                              ),
+                              duration: const Duration(seconds: 5),
+                            ).show(context);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 margin: const EdgeInsets.all(5),
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  duration: const Duration(seconds: 30),
-                                  backgroundColor: primaryColor,
-                                  content: const
-                                      Text("Выполняется вход в аккаунт...")));
-                          try {
-                            int id = await loginUser();
-                            SharedPreferences preferences =
-                                await SharedPreferences.getInstance();
-                            preferences.setInt('userId', id);
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                            context.router.push(HomeRoute(userId: id));
-                          } on Exception catch (_) {
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return const NothingFoundDialog(
-                                      'Ошибка входа!\nПроверьте корректность почты и пароля',
-                                      warningGif,
-                                      'Ошибка');
-                                });
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                duration: const Duration(seconds: 30),
+                                backgroundColor: primaryColor,
+                                content: const Text(
+                                    "Выполняется вход в аккаунт...")));
+                            try {
+                              int id = await loginUser();
+                              SharedPreferences preferences =
+                                  await SharedPreferences.getInstance();
+                              preferences.setInt('userId', id);
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+                              context.router.push(HomeRoute(userId: id));
+                            } on Exception catch (_) {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const NothingFoundDialog(
+                                        'Ошибка входа!\nПроверьте корректность почты и пароля',
+                                        warningGif,
+                                        'Ошибка');
+                                  });
+                            }
                           }
                         }),
                     SizedBox(height: size.height * 0.05),
