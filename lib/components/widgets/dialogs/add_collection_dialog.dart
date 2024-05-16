@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 
+import '../../../models/server_exception.dart';
 import '../../buttons/dialog_button.dart';
 import '../../constants.dart';
 import '../../image_constants.dart';
@@ -20,8 +21,11 @@ class AddCollectionDialog extends Dialog {
 
   Future<void> createCollection() async {
     var client = http.Client();
-    final jsonString =
-        json.encode({"name": title, "description": desc, "imageUrl": coverUrl});
+    final jsonString = json.encode({
+      "name": title,
+      "description": desc,
+      if (coverUrl.trim().isNotEmpty) "imageUrl": coverUrl
+    });
     try {
       var response = await client.post(
           Uri.https(url, '/shelves/collections/create'),
@@ -30,7 +34,11 @@ class AddCollectionDialog extends Dialog {
             'userId': userId.toString()
           },
           body: jsonString);
-      if (response.statusCode != 200) {
+      if (errorWithMsg.contains(response.statusCode)) {
+        var ex = ServerException.fromJson(
+            jsonDecode(utf8.decode(response.bodyBytes)));
+        throw Exception(ex.getMessage());
+      } else if (response.statusCode != 200) {
         throw Exception();
       }
     } finally {

@@ -1,12 +1,12 @@
 const String barcodeGif = 'https://im.wampi.ru/2024/04/13/barcode.gif';
 const String searchGif = "https://i1.wampi.ru/2024/04/13/search.gif";
-const String shelvesGif = "https://im.wampi.ru/2024/04/07/shelves.gif";
+const String shelvesGif = "https://i1.wampi.ru/2024/05/16/shelves-1.gif";
 const String warningGif = "https://i1.wampi.ru/2024/04/14/warning.gif";
 const String splashScreenGif = "https://i8.wampi.ru/2023/12/21/magic-book.gif";
 const String privateClub = "https://i1.wampi.ru/2024/03/03/output-onlinegiftools.gif";
 
 const String logoImg = "https://i1.wampi.ru/2024/04/20/imagecb43e01d6a81a89c.png";
-const String nothingFoundImg = "https://ic.wampi.ru/2023/03/19/geography-2.png";
+const String nothingFoundImg = "https://i1.wampi.ru/2024/05/11/no_internet.png";
 const String noTop10 = "https://im.wampi.ru/2023/12/09/free-sticker-reading.png";
 const String quoteImg = 'https://im.wampi.ru/2024/04/14/image0d5f3d2e5247fdaf.png';
 

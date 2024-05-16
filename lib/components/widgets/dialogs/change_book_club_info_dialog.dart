@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:io';
 import '../../../models/book_club.dart';
 import '../../../models/filters.dart';
+import '../../../models/server_exception.dart';
 import '../../../models/tag.dart';
 import '../../../screens/filter/conponents/filter_list.dart';
 import '../../buttons/dialog_button.dart';
@@ -88,16 +89,24 @@ class ChangeClubInfoDialog extends Dialog {
           Uri.https(url, '/clubs/admin/${club.getId().toString()}/edit'),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
-            'adminId': 1.toString()
+            'adminId': userId.toString()
           },
           body: jsonString);
+
+      var msg =
+          'Что-то пошло не так!\n Не удалось изменить информацию о клубе.';
+
+      if (errorWithMsg.contains(response.statusCode)) {
+        msg = ServerException.fromJson(
+                jsonDecode(utf8.decode(response.bodyBytes)))
+            .getMessage();
+      }
       if (response.statusCode != 200) {
-        var a = jsonDecode(utf8.decode(response.bodyBytes));
         showDialog(
             context: context,
-            builder: (BuildContext context) => const Center(
+            builder: (BuildContext context) => Center(
                 child: NothingFoundDialog(
-                    'Что-то пошло не так!\n Не удалось изменить информацию о клубе.',
+                    msg,
                     warningGif,
                     'Ошибка')));
       }
